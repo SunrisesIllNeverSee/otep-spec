@@ -1,0 +1,331 @@
+{
+  "registry_version": "otep-metrics/0.1-draft",
+  "registry_maturity": "experimental",
+  "last_updated": "2026-08-28",
+  "metrics": [
+    {
+      "metric_id": "otep.yield",
+      "name": "Yield",
+      "symbol": "\u03a5",
+      "maturity": "experimental",
+      "formula": "(cache_read \u00d7 output) / input\u00b2",
+      "equivalent": "Leverage \u00d7 Velocity",
+      "input_requirements": [
+        "input > 0",
+        "cache_read is not null"
+      ],
+      "valid_domain": "[0, +\u221e)",
+      "zero_behavior": "Yield = 0 when cache_read = 0 or output = 0 (and input > 0)",
+      "missingness_behavior": "null when input = 0 or cache_read is null",
+      "aggregation_behavior": "Compute from aggregated sums, not averaged from per-request values",
+      "normalization_profile": "None normative in v0.1. Proposed profiles in metrics/normalization-profiles.md: window-normalized (\u03a5_w), linear-input (\u03a5_lin), sqrt-input (\u03a5_sqrt), log-yield (log_\u03a5). All experimental, deferred to v0.2 via OEP.",
+      "interpretation": "A composite signal combining cache reuse (Leverage) and output generation (Velocity). Higher values indicate more output per unit of fresh input, amplified by cache reuse.",
+      "prohibited_interpretation": "Must not be presented as proof of code quality, productivity, task success, employee performance, or business impact.",
+      "known_limitations": [
+        "Quadratically sensitive to input scale due to input\u00b2 in denominator",
+        "Non-monotonic: doubling both input and output (same ratio) halves Yield if cache_read is constant",
+        "Not comparable across observation windows of different granularity without disclosure"
+      ],
+      "security_gaming_considerations": [
+        "An operator can inflate Yield by maximizing cache_read (reusing cached context) while minimizing fresh input",
+        "An operator can inflate Yield by generating verbose output",
+        "Anti-gaming is a platform-layer concern, not a protocol concern"
+      ],
+      "rounding": {
+        "decimal_places": 2,
+        "mode": "round-half-to-even"
+      },
+      "test_vectors": [
+        {
+          "id": "canonical-moses",
+          "input": 1251211,
+          "output": 11296121,
+          "cache_write": 128196310,
+          "cache_read": 2555179769,
+          "expected_value": 18436.98
+        },
+        {
+          "id": "zero-cache-read",
+          "input": 1000,
+          "output": 500,
+          "cache_write": 200,
+          "cache_read": 0,
+          "expected_value": 0.0
+        },
+        {
+          "id": "zero-input",
+          "input": 0,
+          "output": 500,
+          "cache_write": 200,
+          "cache_read": 1000,
+          "expected_value": null
+        },
+        {
+          "id": "missing-cache-read",
+          "input": 1000,
+          "output": 500,
+          "cache_write": 200,
+          "cache_read": null,
+          "expected_value": null
+        }
+      ],
+      "legacy_aliases": [
+        "yield"
+      ],
+      "spec_section": "SPEC.md \u00a726.1"
+    },
+    {
+      "metric_id": "otep.leverage",
+      "name": "Leverage",
+      "symbol": "L",
+      "maturity": "experimental",
+      "formula": "cache_read / input",
+      "input_requirements": [
+        "input > 0",
+        "cache_read is not null"
+      ],
+      "valid_domain": "[0, +\u221e)",
+      "zero_behavior": "Leverage = 0 when cache_read = 0 (and input > 0)",
+      "missingness_behavior": "null when input = 0 or cache_read is null",
+      "aggregation_behavior": "Compute from aggregated sums, not averaged from per-request values",
+      "normalization_profile": "None normative in v0.1. See metrics/normalization-profiles.md for proposed profiles.",
+      "interpretation": "How much cached context an operator reuses relative to fresh input. Higher values indicate greater cache utilization.",
+      "prohibited_interpretation": "Must not be presented as proof of skill, productivity, or efficiency in any absolute sense.",
+      "known_limitations": [
+        "Sensitive to provider caching policy: providers with aggressive caching will produce higher Leverage",
+        "Not comparable across providers without adapter disclosure",
+        "Can be gamed by artificially reducing fresh input"
+      ],
+      "security_gaming_considerations": [
+        "An operator can inflate Leverage by minimizing fresh input tokens (e.g., very short prompts with large cached context)",
+        "Provider caching policy changes can cause artificial Leverage shifts unrelated to operator behavior"
+      ],
+      "rounding": {
+        "decimal_places": 1,
+        "mode": "round-half-to-even"
+      },
+      "test_vectors": [
+        {
+          "id": "canonical-moses",
+          "input": 1251211,
+          "output": 11296121,
+          "cache_write": 128196310,
+          "cache_read": 2555179769,
+          "expected_value": 2042.2
+        },
+        {
+          "id": "zero-cache-read",
+          "input": 1000,
+          "output": 500,
+          "cache_write": 200,
+          "cache_read": 0,
+          "expected_value": 0.0
+        },
+        {
+          "id": "zero-input",
+          "input": 0,
+          "output": 500,
+          "cache_write": 200,
+          "cache_read": 1000,
+          "expected_value": null
+        }
+      ],
+      "legacy_aliases": [
+        "leverage"
+      ],
+      "spec_section": "SPEC.md \u00a726.2"
+    },
+    {
+      "metric_id": "otep.velocity",
+      "name": "Velocity",
+      "symbol": "V",
+      "maturity": "experimental",
+      "formula": "output / input",
+      "input_requirements": [
+        "input > 0"
+      ],
+      "valid_domain": "[0, +\u221e)",
+      "zero_behavior": "Velocity = 0 when output = 0 (and input > 0)",
+      "missingness_behavior": "null when input = 0. Does not require cache fields.",
+      "aggregation_behavior": "Compute from aggregated sums, not averaged from per-request values",
+      "normalization_profile": "None normative in v0.1. See metrics/normalization-profiles.md for proposed profiles.",
+      "interpretation": "How much output an operator generates relative to fresh input. Higher values indicate more output per unit of fresh input.",
+      "prohibited_interpretation": "Must not be presented as proof of output quality, usefulness, or task success. High Velocity may indicate verbose, low-quality output.",
+      "known_limitations": [
+        "Does not account for output quality",
+        "Sensitive to task type: code generation tasks may produce different Velocity than explanation tasks",
+        "Can be gamed by generating verbose output"
+      ],
+      "security_gaming_considerations": [
+        "An operator can inflate Velocity by generating unnecessarily verbose output",
+        "An operator can inflate Velocity by minimizing fresh input (short prompts)"
+      ],
+      "rounding": {
+        "decimal_places": 3,
+        "mode": "round-half-to-even"
+      },
+      "test_vectors": [
+        {
+          "id": "canonical-moses",
+          "input": 1251211,
+          "output": 11296121,
+          "cache_write": 128196310,
+          "cache_read": 2555179769,
+          "expected_value": 9.028
+        },
+        {
+          "id": "zero-output",
+          "input": 1000,
+          "output": 0,
+          "cache_write": 200,
+          "cache_read": 1000,
+          "expected_value": 0.0
+        },
+        {
+          "id": "zero-input",
+          "input": 0,
+          "output": 500,
+          "cache_write": 200,
+          "cache_read": 1000,
+          "expected_value": null
+        }
+      ],
+      "legacy_aliases": [
+        "velocity"
+      ],
+      "spec_section": "SPEC.md \u00a726.3"
+    },
+    {
+      "metric_id": "otep.output_fraction",
+      "name": "output_fraction",
+      "symbol": "F",
+      "maturity": "experimental",
+      "formula": "output / (input + output)",
+      "input_requirements": [
+        "input + output > 0"
+      ],
+      "valid_domain": "[0, 1]",
+      "zero_behavior": "output_fraction = 0 when output = 0 (and input > 0)",
+      "missingness_behavior": "null when input + output = 0. Does not require cache fields.",
+      "aggregation_behavior": "Compute from aggregated sums, not averaged from per-request values",
+      "normalization_profile": "None normative in v0.1. See metrics/normalization-profiles.md for proposed profiles.",
+      "interpretation": "What fraction of total token flow (input + output) is output. A value of 0.9 means 90% of tokens are output.",
+      "prohibited_interpretation": "Must not be presented as a signal-to-noise ratio. The name 'SNR' is a legacy alias and is misleading. This is an output fraction, not a signal-to-noise measure.",
+      "known_limitations": [
+        "Does not distinguish between useful and verbose output",
+        "A high output_fraction does not indicate high-quality output",
+        "The legacy name 'SNR' implies signal-processing semantics that this formula does not have"
+      ],
+      "security_gaming_considerations": [
+        "An operator can inflate output_fraction by generating verbose output",
+        "An operator can inflate output_fraction by minimizing fresh input"
+      ],
+      "rounding": {
+        "decimal_places": 4,
+        "mode": "round-half-to-even"
+      },
+      "test_vectors": [
+        {
+          "id": "canonical-moses",
+          "input": 1251211,
+          "output": 11296121,
+          "cache_write": 128196310,
+          "cache_read": 2555179769,
+          "expected_value": 0.9003
+        },
+        {
+          "id": "zero-output",
+          "input": 1000,
+          "output": 0,
+          "cache_write": 200,
+          "cache_read": 1000,
+          "expected_value": 0.0
+        },
+        {
+          "id": "zero-both",
+          "input": 0,
+          "output": 0,
+          "cache_write": 0,
+          "cache_read": 0,
+          "expected_value": null
+        }
+      ],
+      "legacy_aliases": [
+        "snr"
+      ],
+      "spec_section": "SPEC.md \u00a726.4"
+    },
+    {
+      "metric_id": "otep.log_leverage",
+      "name": "log_leverage",
+      "symbol": "D",
+      "maturity": "experimental",
+      "formula": "log10(cache_read / input)",
+      "equivalent": "log10(Leverage)",
+      "input_requirements": [
+        "input > 0",
+        "output > 0",
+        "cache_write > 0",
+        "cache_read > 0"
+      ],
+      "valid_domain": "(-\u221e, +\u221e)",
+      "zero_behavior": "Not applicable: requires all four pillars > 0. Zero in any pillar \u2192 null.",
+      "missingness_behavior": "null when any of input, output, cache_write, cache_read is zero or null",
+      "aggregation_behavior": "Compute from aggregated sums, not averaged from per-request values",
+      "normalization_profile": "None normative in v0.1. log_\u03a5 = log_leverage + log10(Velocity) proposed in metrics/normalization-profiles.md as experimental.",
+      "interpretation": "Logarithmic scale of cache reuse leverage. Compresses the wide dynamic range of Leverage into a more interpretable scale.",
+      "prohibited_interpretation": "Must not be presented as a '10x developer' classification or developer productivity measure. The name '10xDEV' is a legacy alias that implies productivity, which the protocol explicitly disclaims.",
+      "known_limitations": [
+        "Requires all four pillars > 0, making it undefined for many real-world observations",
+        "The reference implementation policy (all four pillars > 0) is stricter than the mathematical requirement (only input > 0 and cache_read > 0)",
+        "The '10xDEV' label creates a false implication of developer productivity classification"
+      ],
+      "security_gaming_considerations": [
+        "Same gaming opportunities as Leverage, compressed to a log scale",
+        "The '10xDEV' name may incentivize gaming to reach a '10x' threshold"
+      ],
+      "rounding": {
+        "decimal_places": 2,
+        "mode": "round-half-to-even"
+      },
+      "test_vectors": [
+        {
+          "id": "canonical-moses",
+          "input": 1251211,
+          "output": 11296121,
+          "cache_write": 128196310,
+          "cache_read": 2555179769,
+          "expected_value": 3.31
+        },
+        {
+          "id": "zero-cache-write",
+          "input": 1000,
+          "output": 500,
+          "cache_write": 0,
+          "cache_read": 1000,
+          "expected_value": null
+        },
+        {
+          "id": "zero-output",
+          "input": 1000,
+          "output": 0,
+          "cache_write": 200,
+          "cache_read": 1000,
+          "expected_value": null
+        },
+        {
+          "id": "missing-cache",
+          "input": 1000,
+          "output": 500,
+          "cache_write": null,
+          "cache_read": null,
+          "expected_value": null
+        }
+      ],
+      "legacy_aliases": [
+        "dev10x"
+      ],
+      "spec_section": "SPEC.md \u00a726.5"
+    }
+  ]
+}

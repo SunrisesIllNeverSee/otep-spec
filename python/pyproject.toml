@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sigrank-standard"
+version = "0.1.0"
+description = "SigRank Standard v0.1-draft — portable five-metric core for AI operator token-processing efficiency. No dependencies."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.9"
+authors = [
+    {name = "SunrisesIllNeverSee"}
+]
+keywords = [
+    "sigrank",
+    "signalaf",
+    "ai-operators",
+    "token-efficiency",
+    "yield-cascade",
+    "telemetry",
+    "benchmark",
+    "standard",
+    "mcp",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://signalaf.com/standard"
+Repository = "https://github.com/SunrisesIllNeverSee/sigrank-standard"
+Documentation = "https://github.com/SunrisesIllNeverSee/sigrank-standard#readme"
+"Bug Tracker" = "https://github.com/SunrisesIllNeverSee/sigrank-standard/issues"
+
+[project.scripts]
+sigrank-conformance = "sigrank_standard.conformance:main"
+
+[tool.setuptools]
+packages = ["sigrank_standard"]
+package-dir = {"" = "."}

@@ -1,0 +1,13 @@
+{
+  "id": "08-alias-translation",
+  "description": "Alias translation — cache_creation must be accepted as cache_write. The record must normalize to cache_write in output. 10xDEV = log10(R/I) = log10(3) = 0.48.",
+  "input": {
+    "telemetry": { "input": 1000, "output": 5000, "cache_creation": 500, "cache_read": 3000 },
+    "source": { "provider": "test", "model": "test", "tool": "test" }
+  },
+  "expected": {
+    "metrics": { "yield": 15.0, "leverage": 3.0, "velocity": 5.0, "snr": 0.8333, "dev10x": 0.48 },
+    "warnings": [],
+    "output_telemetry_keys": ["input", "output", "cache_write", "cache_read"]
+  }
+}

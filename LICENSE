@@ -1,0 +1,11 @@
+SigRank Standard
+
+Dual license:
+
+1. Specification documents (docs/, schema/, examples/, rfc/) are licensed under
+   Creative Commons Attribution 4.0 International (CC BY 4.0).
+   https://creativecommons.org/licenses/by/4.0/
+
+2. Executable code (conformance/, integrations/) is licensed under
+   Apache License, Version 2.0.
+   https://www.apache.org/licenses/LICENSE-2.0

@@ -1,0 +1,75 @@
+{
+  "report_version": "otep-conformance/0.1-draft",
+  "timestamp": "2026-08-28T19:00:00Z",
+  "protocol_version": "otep/0.1-draft",
+  "metric_spec_version": "otep-metrics/0.1-draft",
+  "conformance_runner_version": "otep-conformance/0.1.0",
+  "implementation_under_test": {
+    "name": "SignalAF",
+    "version": "1.0.7",
+    "organization": "SunrisesIllNeverSee"
+  },
+  "conformance_class": "full-platform",
+  "privacy_profile_tested": "all",
+  "overall_result": "pass",
+  "tests": [
+    {
+      "test_id": "PROD-001",
+      "requirement_id": "SRP-DATA-001",
+      "description": "Emits valid protocol_version",
+      "result": "pass",
+      "error_message": null,
+      "fixture_id": "01-canonical-reference"
+    },
+    {
+      "test_id": "PROD-010",
+      "requirement_id": "SRP-VAL-001",
+      "description": "Envelope validates against JSON Schema",
+      "result": "pass",
+      "error_message": null,
+      "fixture_id": "01-canonical-reference"
+    },
+    {
+      "test_id": "METR-008",
+      "requirement_id": "SRP-METRIC-001",
+      "description": "Canonical MOSES seed vector: Υ=18436.98, L=2042.2, V=9.028, F=0.9003, D=3.31",
+      "result": "pass",
+      "error_message": null,
+      "fixture_id": "canonical-moses"
+    },
+    {
+      "test_id": "METR-009",
+      "requirement_id": "SRP-METRIC-003",
+      "description": "Zero-input boundary: all input-dependent metrics null",
+      "result": "pass",
+      "error_message": null,
+      "fixture_id": "zero-input"
+    },
+    {
+      "test_id": "PRIV-005",
+      "requirement_id": "SRP-PRIV-005",
+      "description": "Small-cell suppression (n < 5)",
+      "result": "pass",
+      "error_message": null,
+      "fixture_id": null
+    }
+  ],
+  "summary": {
+    "total": 45,
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0
+  },
+  "allowed_claims": [
+    "OTEP Full-Platform Conformant — v0.1-draft",
+    "OTEP Producer Conformant — v0.1-draft",
+    "OTEP Consumer Conformant — v0.1-draft",
+    "OTEP Metric-Engine Conformant — v0.1-draft",
+    "OTEP Privacy-Profile Conformant — v0.1-draft (all modes)"
+  ],
+  "prohibited_claims": [
+    "OTEP Conformant (reserved for third-party validation)",
+    "OTEP Certified (no certification program exists)",
+    "OTEP Standard (not a formal standard)"
+  ]
+}

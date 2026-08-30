@@ -1,0 +1,12 @@
+{
+  "id": "01-canonical-reference",
+  "description": "Canonical reference vector — MO§ES seed values. Yield must be 18436.98.",
+  "input": {
+    "telemetry": { "input": 1251211, "output": 11296121, "cache_write": 128196310, "cache_read": 2555179769 },
+    "source": { "provider": "anthropic", "model": "claude-sonnet-4", "tool": "claude-code" }
+  },
+  "expected": {
+    "metrics": { "yield": 18436.98, "leverage": 2042.2, "velocity": 9.028, "snr": 0.9003, "dev10x": 3.31 },
+    "warnings": []
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "zero-output",
+  "description": "Boundary case: output=0. Yield=0, Leverage computable, Velocity=0, log_leverage=null (requires output>0).",
+  "input": {
+    "telemetry": { "input": 1000, "output": 0, "cache_write": 200, "cache_read": 1000 },
+    "source": { "provider": "anthropic", "model": "claude-sonnet-4", "tool": "test-tool" }
+  },
+  "expected": {
+    "metrics": { "yield": 0.0, "leverage": 1.0, "velocity": 0.0, "output_fraction": 0.0, "log_leverage": null },
+    "warnings": ["log_leverage_undefined: requires all four pillars > 0"]
+  }
+}

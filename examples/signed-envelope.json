@@ -1,0 +1,66 @@
+{
+  "protocol_version": "otep/0.1-draft",
+  "metric_spec_version": "otep-metrics/0.1-draft",
+  "collector_version": "enterprise-collector/2.1.0",
+  "operator": {
+    "pseudonymous_key": "op_e5d9a3b7f1c8",
+    "cohort_id": null
+  },
+  "observation": {
+    "timestamp": "2026-08-28T18:00:00Z",
+    "window_start": "2026-08-28T09:00:00Z",
+    "window_end": "2026-08-28T18:00:00Z",
+    "window_duration_seconds": 32400
+  },
+  "source": {
+    "tool": "enterprise-agent",
+    "platform": "internal",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4",
+    "adapter_id": "anthropic-v1",
+    "adapter_version": "1.0.0"
+  },
+  "telemetry": {
+    "input": 45000,
+    "output": 89000,
+    "cache_write": 120000,
+    "cache_read": 980000
+  },
+  "validity": {
+    "status": "valid",
+    "missingness_flags": [],
+    "anomaly_flags": []
+  },
+  "provenance": {
+    "level": "signed",
+    "signature_status": "valid"
+  },
+  "privacy": {
+    "mode": "enterprise-isolated"
+  },
+  "metrics": {
+    "yield": 43.07,
+    "leverage": 21.8,
+    "velocity": 1.978,
+    "output_fraction": 0.6642,
+    "log_leverage": 1.34
+  },
+  "warnings": [],
+  "extensions": {
+    "com.example.signature": {
+      "algorithm": "Ed25519",
+      "key_fingerprint": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+      "value": "base64:MEUCIQDZ+7 example signature value truncated for documentation",
+      "signed_fields": [
+        "protocol_version",
+        "telemetry.input",
+        "telemetry.output",
+        "telemetry.cache_write",
+        "telemetry.cache_read",
+        "observation.timestamp",
+        "observation.window_start",
+        "observation.window_end"
+      ]
+    }
+  }
+}

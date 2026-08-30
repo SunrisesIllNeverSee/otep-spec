@@ -1,0 +1,90 @@
+{
+  "description": "Expected validation results for all example payloads in examples/",
+  "results": {
+    "minimal-valid.json": {
+      "expected_result": "valid",
+      "schema_errors": [],
+      "semantic_errors": [],
+      "metrics": {
+        "yield": null,
+        "leverage": null,
+        "velocity": 0.5,
+        "output_fraction": 0.3333,
+        "log_leverage": null
+      },
+      "warnings": [
+        "cache_write is unavailable; log_leverage is undefined.",
+        "cache_read is unavailable; Yield, Leverage, and log_leverage are undefined.",
+        "log_leverage_undefined: requires all four pillars > 0"
+      ],
+      "notes": "Minimal envelope with null cache fields. Velocity and output_fraction are computable; Yield, Leverage, and log_leverage are null."
+    },
+    "complete-valid.json": {
+      "expected_result": "valid",
+      "schema_errors": [],
+      "semantic_errors": [],
+      "metrics": {
+        "yield": 18436.98,
+        "leverage": 2042.2,
+        "velocity": 9.028,
+        "output_fraction": 0.9003,
+        "log_leverage": 3.31
+      },
+      "warnings": [],
+      "notes": "Complete envelope with all fields. Matches MOSES canonical seed vector."
+    },
+    "unsupported-cache.json": {
+      "expected_result": "valid",
+      "schema_errors": [],
+      "semantic_errors": [],
+      "metrics": {
+        "yield": 0.07,
+        "leverage": 0.2,
+        "velocity": 0.376,
+        "output_fraction": 0.2735,
+        "log_leverage": null
+      },
+      "warnings": [
+        "cache_write is unavailable; log_leverage is undefined.",
+        "log_leverage_undefined: requires all four pillars > 0"
+      ],
+      "notes": "OpenAI provider with cache_write unsupported. cache_read is available (1500). input=8500 (total_input 10000 minus cached 1500 per SRP-ADAPT-003 option a). Yield = (1500 × 3200) / 8500² = 0.0664 → 0.07. log_leverage is null because cache_write is null (all four pillars required)."
+    },
+    "invalid-payload.json": {
+      "expected_result": "invalid",
+      "schema_errors": [
+        "record.telemetry.input: value -500 below minimum 0",
+        "record.telemetry.output: expected type integer, got string",
+        "record.observation.timestamp: not a valid RFC 3339 date-time",
+        "record.source: missing required field 'tool'",
+        "record.provenance: missing required field 'level'",
+        "record.privacy: missing required field 'mode'"
+      ],
+      "semantic_errors": [
+        "input is negative",
+        "output is not an integer",
+        "timestamp is not valid RFC 3339",
+        "source.tool is missing",
+        "provenance.level is missing",
+        "privacy.mode is missing"
+      ],
+      "metrics": null,
+      "warnings": null,
+      "notes": "Deliberately invalid payload for negative testing. Multiple schema and semantic violations."
+    },
+    "signed-envelope.json": {
+      "expected_result": "valid",
+      "schema_errors": [],
+      "semantic_errors": [],
+      "metrics": {
+        "yield": 43.07,
+        "leverage": 21.8,
+        "velocity": 1.978,
+        "output_fraction": 0.6642,
+        "log_leverage": 1.34
+      },
+      "warnings": [],
+      "notes": "Signed envelope with Ed25519 signature in extensions. Provenance level is 'signed' with signature_status 'valid'. Privacy mode is enterprise-isolated."
+    }
+  }
+}

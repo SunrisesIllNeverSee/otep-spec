@@ -1,0 +1,17 @@
+{
+  "id": "zero-input",
+  "description": "Boundary case: input=0. All metrics with input in denominator must be null.",
+  "input": {
+    "telemetry": { "input": 0, "output": 500, "cache_write": 200, "cache_read": 1000 },
+    "source": { "provider": "anthropic", "model": "claude-sonnet-4", "tool": "test-tool" }
+  },
+  "expected": {
+    "metrics": { "yield": null, "leverage": null, "velocity": null, "output_fraction": 1.0, "log_leverage": null },
+    "warnings": [
+      "velocity_undefined: input=0",
+      "leverage_undefined: input=0",
+      "yield_undefined: requires input>0 and cache_read available",
+      "log_leverage_undefined: requires all four pillars > 0"
+    ]
+  }
+}

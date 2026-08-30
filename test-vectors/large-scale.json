@@ -1,0 +1,19 @@
+{
+  "id": "large-scale",
+  "description": "Boundary case: large token counts near safe integer limit. Tests overflow detection.",
+  "input": {
+    "telemetry": { "input": 9007199254740, "output": 9007199254740, "cache_write": 9007199254740, "cache_read": 9007199254740 },
+    "source": { "provider": "test", "model": "test", "tool": "test-tool" }
+  },
+  "expected": {
+    "metrics": {
+      "yield": 1.0,
+      "leverage": 1.0,
+      "velocity": 1.0,
+      "output_fraction": 0.5,
+      "log_leverage": 0.0
+    },
+    "warnings": [],
+    "notes": "All values at 9007199254740 (just under 2^53-1 = 9007199254740991). Yield = (R×O)/I² = R/I × O/I = 1×1 = 1."
+  }
+}

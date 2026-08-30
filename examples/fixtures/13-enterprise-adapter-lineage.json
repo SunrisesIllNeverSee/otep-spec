@@ -1,0 +1,32 @@
+{
+  "id": "13-enterprise-adapter-lineage",
+  "description": "Enterprise adapter lineage chain preserves portable core metrics while adding outcome correlation. The portable record (spec, telemetry, metrics) must remain conformant. Outcome and lineage data are extensions, not base record fields.",
+  "input": {
+    "telemetry": {
+      "input": 1251211,
+      "output": 11296121,
+      "cache_write": 128196310,
+      "cache_read": 2555179769
+    },
+    "source": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4",
+      "tool": "claude-code"
+    }
+  },
+  "expected": {
+    "spec": "sigrank/0.1-draft",
+    "metrics": {
+      "yield": 18436.98,
+      "leverage": 2042.2,
+      "velocity": 9.028,
+      "snr": 0.9003,
+      "dev10x": 3.31
+    },
+    "required_metrics": ["yield", "leverage", "velocity", "snr", "dev10x"],
+    "forbidden_metrics": ["construction", "scale_v", "rs05", "build_archetype", "quality_score", "cycle_time", "bug_count", "outcome", "lineage"],
+    "forbidden_fields": ["outcome", "lineage", "quality_score", "cycle_time", "bug_count", "enterprise_data"],
+    "required_fields": ["spec", "timestamp", "source", "telemetry", "metrics"],
+    "output_telemetry_keys": ["cache_read", "cache_write", "input", "output"]
+  }
+}

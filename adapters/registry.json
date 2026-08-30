@@ -1,0 +1,63 @@
+{
+  "registry_version": "otep-adapters/0.1-draft",
+  "last_updated": "2026-08-28",
+  "adapters": [
+    {
+      "adapter_id": "anthropic-v1",
+      "provider": "anthropic",
+      "supported_api_versions": ["2023-06-01", "2024-10-22"],
+      "definition_file": "adapters/anthropic.md",
+      "field_mappings": {
+        "input": "usage.input_tokens",
+        "output": "usage.output_tokens",
+        "cache_write": "usage.cache_creation_input_tokens",
+        "cache_read": "usage.cache_read_input_tokens"
+      },
+      "double_counting_policy": "none",
+      "cache_creation_exposed": true,
+      "cache_read_exposed": true,
+      "test_vectors": [
+        { "id": "anthropic-normal", "description": "Normal case with all fields present" },
+        { "id": "anthropic-no-cache", "description": "Response without cache fields" }
+      ]
+    },
+    {
+      "adapter_id": "openai-v1",
+      "provider": "openai",
+      "supported_api_versions": ["2024-08-01", "2024-10-01"],
+      "definition_file": "adapters/openai.md",
+      "field_mappings": {
+        "input": "usage.prompt_tokens - usage.prompt_tokens_details.cached_tokens",
+        "output": "usage.completion_tokens",
+        "cache_write": null,
+        "cache_read": "usage.prompt_tokens_details.cached_tokens"
+      },
+      "double_counting_policy": "subtract_cached_from_input",
+      "cache_creation_exposed": false,
+      "cache_read_exposed": true,
+      "test_vectors": [
+        { "id": "openai-normal", "description": "Normal case with cached tokens" },
+        { "id": "openai-no-cache", "description": "Response without cached tokens" }
+      ]
+    },
+    {
+      "adapter_id": "google-v1",
+      "provider": "google",
+      "supported_api_versions": ["v1beta", "v1"],
+      "definition_file": "adapters/google.md",
+      "field_mappings": {
+        "input": "usageMetadata.promptTokenCount",
+        "output": "usageMetadata.candidatesTokenCount",
+        "cache_write": null,
+        "cache_read": "usageMetadata.cachedContentTokenCount"
+      },
+      "double_counting_policy": "provider_dependent",
+      "cache_creation_exposed": false,
+      "cache_read_exposed": true,
+      "test_vectors": [
+        { "id": "google-normal", "description": "Normal case with cached content" },
+        { "id": "google-no-cache", "description": "Response without cached content" }
+      ]
+    }
+  ]
+}

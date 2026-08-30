@@ -1,0 +1,14 @@
+{
+  "name": "sigrank-standard",
+  "version": "0.1.0-draft",
+  "description": "Open measurement specification for AI operator token-processing efficiency.",
+  "type": "module",
+  "scripts": {
+    "conformance": "node conformance/runner.mjs"
+  },
+  "license": "SEE LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SunrisesIllNeverSee/sigrank-standard.git"
+  }
+}

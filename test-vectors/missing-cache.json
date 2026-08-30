@@ -1,0 +1,16 @@
+{
+  "id": "missing-cache",
+  "description": "Boundary case: both cache fields null (unsupported). Yield, Leverage, log_leverage null. Velocity and output_fraction computable.",
+  "input": {
+    "telemetry": { "input": 1000, "output": 500, "cache_write": null, "cache_read": null },
+    "source": { "provider": "openai", "model": "gpt-4o", "tool": "test-tool" }
+  },
+  "expected": {
+    "metrics": { "yield": null, "leverage": null, "velocity": 0.5, "output_fraction": 0.3333, "log_leverage": null },
+    "warnings": [
+      "cache_write is unavailable; log_leverage is undefined.",
+      "cache_read is unavailable; Yield, Leverage, and log_leverage are undefined.",
+      "log_leverage_undefined: requires all four pillars > 0"
+    ]
+  }
+}

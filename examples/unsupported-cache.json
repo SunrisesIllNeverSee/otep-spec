@@ -1,0 +1,58 @@
+{
+  "protocol_version": "otep/0.1-draft",
+  "metric_spec_version": "otep-metrics/0.1-draft",
+  "collector_version": "openai-collector/0.5.0",
+  "operator": {
+    "pseudonymous_key": "op_b3c8e1f7a2d6",
+    "cohort_id": null
+  },
+  "observation": {
+    "timestamp": "2026-08-28T14:30:00Z",
+    "window_start": "2026-08-28T14:00:00Z",
+    "window_end": "2026-08-28T14:30:00Z",
+    "window_duration_seconds": 1800
+  },
+  "source": {
+    "tool": "cursor",
+    "platform": "vscode",
+    "provider": "openai",
+    "model": "gpt-4o",
+    "adapter_id": "openai-v1",
+    "adapter_version": "1.0.0"
+  },
+  "telemetry": {
+    "input": 8500,
+    "output": 3200,
+    "cache_write": null,
+    "cache_read": 1500
+  },
+  "raw_provider_fields": {
+    "usage.prompt_tokens": 10000,
+    "usage.completion_tokens": 3200,
+    "usage.prompt_tokens_details.cached_tokens": 1500
+  },
+  "validity": {
+    "status": "partial",
+    "missingness_flags": ["cache_write_unsupported"],
+    "anomaly_flags": []
+  },
+  "provenance": {
+    "level": "collector-attested",
+    "signature_status": "unsigned"
+  },
+  "privacy": {
+    "mode": "public-pseudonymous"
+  },
+  "metrics": {
+    "yield": 0.07,
+    "leverage": 0.2,
+    "velocity": 0.376,
+    "output_fraction": 0.2735,
+    "log_leverage": null
+  },
+  "warnings": [
+    "cache_write is unavailable; log_leverage is undefined.",
+    "log_leverage_undefined: requires all four pillars > 0"
+  ],
+  "extensions": {}
+}

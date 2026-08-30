@@ -1,0 +1,26 @@
+{
+  "protocol_version": "otep/0.1-draft",
+  "telemetry": {
+    "input": 1000,
+    "output": 500,
+    "cache_write": null,
+    "cache_read": null
+  },
+  "observation": {
+    "timestamp": "2026-08-28T12:00:00Z"
+  },
+  "source": {
+    "tool": "my-collector"
+  },
+  "validity": {
+    "status": "partial",
+    "missingness_flags": ["cache_write_unsupported", "cache_read_unsupported"],
+    "anomaly_flags": []
+  },
+  "provenance": {
+    "level": "self-reported"
+  },
+  "privacy": {
+    "mode": "public-pseudonymous"
+  }
+}

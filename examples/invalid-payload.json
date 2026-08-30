@@ -1,0 +1,15 @@
+{
+  "protocol_version": "otep/0.1-draft",
+  "telemetry": {
+    "input": -500,
+    "output": "3200",
+    "cache_write": null,
+    "cache_read": null
+  },
+  "observation": {
+    "timestamp": "not-a-date"
+  },
+  "source": {},
+  "provenance": {},
+  "privacy": {}
+}

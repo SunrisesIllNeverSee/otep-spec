@@ -1,0 +1,12 @@
+{
+  "id": "05-zero-cache-read",
+  "description": "Zero cache read (not null) — Yield is 0, Leverage is 0. Velocity and SNR are defined. 10xDEV is null.",
+  "input": {
+    "telemetry": { "input": 1000, "output": 5000, "cache_write": 500, "cache_read": 0 },
+    "source": { "provider": "test", "model": "test", "tool": "test" }
+  },
+  "expected": {
+    "metrics": { "yield": 0, "leverage": 0, "velocity": 5.0, "snr": 0.8333, "dev10x": null },
+    "warnings": ["dev10x_undefined: requires all four pillars > 0"]
+  }
+}
