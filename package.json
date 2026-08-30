@@ -1,14 +1,20 @@
 {
-  "name": "sigrank-standard",
+  "name": "otep-spec",
   "version": "0.1.0-draft",
-  "description": "Open measurement specification for AI operator token-processing efficiency.",
+  "description": "OTEP — Operator Token Efficiency Protocol: an open, vendor-neutral interoperability standard for measuring AI-operator token efficiency.",
   "type": "module",
   "scripts": {
-    "conformance": "node conformance/runner.mjs"
+    "conformance": "node conformance/otep-runner.mjs",
+    "validate": "node conformance/otep-validate.mjs",
+    "legacy-conformance": "node conformance/runner.mjs"
   },
   "license": "SEE LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SunrisesIllNeverSee/sigrank-standard.git"
+    "url": "https://github.com/SunrisesIllNeverSee/otep-spec.git"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
   }
 }

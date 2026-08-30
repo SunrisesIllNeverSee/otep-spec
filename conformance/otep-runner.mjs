@@ -406,9 +406,14 @@ function testSignatureModel(schema) {
          (complete.provenance.signature_status === "unsigned" || complete.provenance.signature_status === "not-applicable"),
     "SIG-002", "non-signed envelope has unsigned or not-applicable status");
 
-  // SRP-SIG-003: signature verification sets status (verified by signed-envelope having valid)
-  assert(signed.provenance.signature_status === "valid",
-    "SIG-003", "signed envelope has signature_status 'valid'");
+  // SRP-SIG-003: v0.1 does not implement cryptographic verification.
+  // Signed envelopes MUST use 'signature-present-unverified' until verification
+  // is implemented in v0.2. A signed envelope claiming 'valid' is a conformance
+  // violation (SRP-PROV-005).
+  assert(signed.provenance.signature_status === "signature-present-unverified",
+    "SIG-003", "signed envelope uses 'signature-present-unverified' (v0.1 does not verify)");
+  assert(signed.provenance.level === "signed",
+    "SIG-003", "signed envelope has provenance.level 'signed'");
 }
 
 /**

@@ -33,7 +33,7 @@
   },
   "provenance": {
     "level": "signed",
-    "signature_status": "valid"
+    "signature_status": "signature-present-unverified"
   },
   "privacy": {
     "mode": "enterprise-isolated"

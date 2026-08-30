@@ -5,14 +5,16 @@
  * `otep validate` CLI — validates a single OTEP v0.1-draft telemetry envelope
  * against the schema and semantic rules, and optionally computes metrics.
  *
+ * Uses ajv for full JSON Schema 2020-12 validation.
+ *
  * Usage:
  *   node conformance/otep-validate.mjs <payload.json> [--profile <mode>] [--report <format>]
  *
  * Arguments:
  *   <payload.json>              path to the telemetry envelope JSON file
- *   --profile <privacy-mode>    privacy mode to validate against
- *                               (public-pseudonymous|private-managed-cohort|enterprise-isolated|all)
- *                               default: all
+ *   --profile <privacy-mode>    expected deployment profile (asserts envelope matches)
+ *                               (public-pseudonymous|private-managed-cohort|enterprise-isolated)
+ *                               If omitted, only the envelope's declared mode is enforced.
  *   --report <format>           output format (json|text)  default: text
  *
  * Exit codes (per conformance/classes.md §2.3):
@@ -26,15 +28,11 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import Ajv from "ajv/dist/2020.js";
+import addFormats from "ajv-formats";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-
-// Reuse the runner's validator and metric engine by dynamic import.
-const runnerUrl = new URL("./otep-runner.mjs", import.meta.url);
-// The runner exports its internals via a side-effect-free module? No — it
-// runs main() on import. To avoid that, we re-implement the needed functions
-// inline (they are small and self-contained).
 
 function roundBankers(n, d) {
   if (n === null || !Number.isFinite(n)) return null;
@@ -55,8 +53,9 @@ function computeMetrics(t) {
   const cacheWrite = t.cache_write ?? null;
   const cacheRead = t.cache_read ?? null;
   const warnings = [];
-  if (cacheWrite === null) warnings.push("cache_write is unavailable; log_leverage is undefined.");
-  if (cacheRead === null) warnings.push("cache_read is unavailable; Yield, Leverage, and log_leverage are undefined.");
+  const cacheWarnings = [];
+  if (cacheWrite === null) cacheWarnings.push("cache_write is unavailable; log_leverage is undefined.");
+  if (cacheRead === null) cacheWarnings.push("cache_read is unavailable; Yield, Leverage, and log_leverage are undefined.");
   const ofDenom = input + output;
   const outputFraction = ofDenom > 0 ? output / ofDenom : null;
   if (outputFraction === null) warnings.push("output_fraction_undefined: input+output=0");
@@ -82,41 +81,8 @@ function computeMetrics(t) {
       output_fraction: roundBankers(outputFraction, 4),
       log_leverage: roundBankers(logLeverage, 2),
     },
-    warnings,
+    warnings: [...cacheWarnings, ...warnings],
   };
-}
-
-function checkType(value, typeDecl, path, errors) {
-  const types = Array.isArray(typeDecl) ? typeDecl : [typeDecl];
-  let matched = false;
-  for (const t of types) {
-    if (value === null) { if (t === "null") { matched = true; break; } continue; }
-    if (t === "integer") { if (typeof value === "number" && Number.isInteger(value) && !Number.isNaN(value)) { matched = true; break; } }
-    else if (t === "number") { if (typeof value === "number" && !Number.isNaN(value)) { matched = true; break; } }
-    else if (t === "string") { if (typeof value === "string") { matched = true; break; } }
-    else if (t === "object") { if (typeof value === "object" && value !== null && !Array.isArray(value)) { matched = true; break; } }
-    else if (t === "array") { if (Array.isArray(value)) { matched = true; break; } }
-    else if (t === "boolean") { if (typeof value === "boolean") { matched = true; break; } }
-  }
-  if (!matched) errors.push(`schema ${path}: expected type ${JSON.stringify(typeDecl)}, got ${value === null ? "null" : typeof value}`);
-}
-
-function validateSchemaNode(value, node, path, errors) {
-  if ("const" in node) { if (value !== node.const) errors.push(`schema ${path}: expected const ${JSON.stringify(node.const)}, got ${JSON.stringify(value)}`); return; }
-  if ("enum" in node) { if (!node.enum.includes(value)) errors.push(`schema ${path}: expected one of ${JSON.stringify(node.enum)}, got ${JSON.stringify(value)}`); }
-  if ("type" in node) checkType(value, node.type, path, errors);
-  if ("minimum" in node && typeof value === "number" && !Number.isNaN(value)) { if (value < node.minimum) errors.push(`schema ${path}: value ${value} below minimum ${node.minimum}`); }
-  if ("minLength" in node && typeof value === "string") { if (value.length < node.minLength) errors.push(`schema ${path}: string length ${value.length} below minLength ${node.minLength}`); }
-  if ("required" in node && typeof value === "object" && value !== null && !Array.isArray(value)) { for (const req of node.required) { if (!(req in value)) errors.push(`schema ${path}: missing required field "${req}"`); } }
-  if (node.additionalProperties === false && typeof value === "object" && value !== null && !Array.isArray(value)) { const allowed = new Set(Object.keys(node.properties || {})); for (const key of Object.keys(value)) { if (!allowed.has(key)) errors.push(`schema ${path}: additional property "${key}" not allowed`); } }
-  if ("properties" in node && typeof value === "object" && value !== null && !Array.isArray(value)) { for (const [key, sub] of Object.entries(node.properties)) { if (key in value) validateSchemaNode(value[key], sub, `${path}.${key}`, errors); } }
-  if ("items" in node && Array.isArray(value)) { for (let i = 0; i < value.length; i++) validateSchemaNode(value[i], node.items, `${path}[${i}]`, errors); }
-}
-
-function validateAgainstSchema(record, schema) {
-  const errors = [];
-  validateSchemaNode(record, schema, "", errors);
-  return errors;
 }
 
 const FORBIDDEN_FIELDS = ["prompt", "prompt_text", "completion", "completion_text", "response_text", "source_code", "code", "diff", "keystrokes", "screen_content", "file_path", "file_content", "repo_content"];
@@ -147,23 +113,50 @@ function validateSemantics(envelope) {
     }
   }
   checkForbidden(envelope, "envelope");
+
+  // P2-8: raw_provider_fields must only contain adapter-declared scalar metadata
+  if (envelope.raw_provider_fields) {
+    for (const [key, val] of Object.entries(envelope.raw_provider_fields)) {
+      if (typeof val === "object" && val !== null) {
+        errors.push(`raw_provider_fields.${key} contains non-scalar value (SRP-VAL-007)`);
+      }
+    }
+  }
+
+  // P1-5: signed provenance with signature_status "valid" is not verified in v0.1
+  if (envelope.provenance?.level === "signed" && envelope.provenance?.signature_status === "valid") {
+    errors.push("provenance.level is 'signed' with signature_status 'valid' but v0.1 does not implement cryptographic verification (SRP-PROV-005). Use 'signature-present-unverified' or downgrade to 'collector-attested'.");
+  }
+
   return errors;
 }
 
-function validatePrivacyProfile(envelope, profile) {
+// P1-4: Always enforce the envelope's declared privacy mode
+function validatePrivacyMode(envelope) {
   const errors = [];
   const mode = envelope.privacy?.mode;
-  if (profile === "all") return errors;
-  if (profile === "public-pseudonymous") {
-    if (envelope.operator?.cohort_id != null) errors.push("public-pseudonymous mode MUST NOT include cohort_id (SRP-PRIV-002)");
+  if (!mode) return errors; // schema will catch missing mode
+
+  if (mode === "public-pseudonymous") {
+    if (envelope.operator?.cohort_id != null) {
+      errors.push("public-pseudonymous mode MUST NOT include cohort_id (SRP-PRIV-002)");
+    }
   }
-  if (profile === "enterprise-isolated") {
-    // Enterprise mode not transmitted externally — this check only flags
-    // if the envelope claims enterprise-isolated but is being validated
-    // against a public profile.
+  if (mode === "private-managed-cohort") {
+    if (envelope.operator?.cohort_id == null) {
+      errors.push("private-managed-cohort mode SHOULD include cohort_id (SRP-PRIV-004)");
+    }
   }
-  if (mode && profile !== "all" && mode !== profile) {
-    errors.push(`privacy.mode is "${mode}" but validating against profile "${profile}"`);
+  // enterprise-isolated: no external transmission, no additional field checks needed
+  return errors;
+}
+
+// P1-4: --profile asserts an expected mode, does not enable/disable rules
+function validateProfileAssertion(envelope, expectedProfile) {
+  const errors = [];
+  const mode = envelope.privacy?.mode;
+  if (expectedProfile && mode && mode !== expectedProfile) {
+    errors.push(`privacy.mode is "${mode}" but expected profile "${expectedProfile}" (--profile assertion)`);
   }
   return errors;
 }
@@ -176,7 +169,7 @@ function main() {
     process.exit(4);
   }
   const profileIdx = args.indexOf("--profile");
-  const profile = profileIdx !== -1 ? args[profileIdx + 1] : "all";
+  const expectedProfile = profileIdx !== -1 ? args[profileIdx + 1] : null;
   const reportIdx = args.indexOf("--report");
   const reportFormat = reportIdx !== -1 ? args[reportIdx + 1] : "text";
 
@@ -211,7 +204,16 @@ function main() {
     process.exit(3);
   }
 
-  const schemaErrors = validateAgainstSchema(envelope, schema);
+  // P1-3: Full JSON Schema 2020-12 validation via ajv
+  const ajv = new Ajv({ allErrors: true, strict: false });
+  addFormats(ajv);
+  const validate = ajv.compile(schema);
+  const schemaValid = validate(envelope);
+  const schemaErrors = schemaValid ? [] : (validate.errors || []).map(e => {
+    const path = e.instancePath || "(root)";
+    return `schema ${path}: ${e.message}${e.params ? ` (${JSON.stringify(e.params)})` : ""}`;
+  });
+
   if (schemaErrors.length > 0) {
     if (reportFormat === "json") {
       console.log(JSON.stringify({ overall_result: "fail", schema_errors: schemaErrors }, null, 2));
@@ -223,8 +225,9 @@ function main() {
   }
 
   const semanticErrors = validateSemantics(envelope);
-  const privacyErrors = validatePrivacyProfile(envelope, profile);
-  const allErrors = [...semanticErrors, ...privacyErrors];
+  const privacyErrors = validatePrivacyMode(envelope); // always enforce declared mode
+  const profileErrors = expectedProfile ? validateProfileAssertion(envelope, expectedProfile) : [];
+  const allErrors = [...semanticErrors, ...privacyErrors, ...profileErrors];
 
   // Compute metrics
   const { metrics, warnings } = computeMetrics(envelope.telemetry);
@@ -237,11 +240,13 @@ function main() {
       timestamp: new Date().toISOString(),
       protocol_version: envelope.protocol_version,
       payload: payloadPath,
-      privacy_profile_tested: profile,
+      privacy_mode_declared: envelope.privacy?.mode,
+      privacy_profile_asserted: expectedProfile,
       overall_result: overall,
       schema_errors: schemaErrors,
       semantic_errors: semanticErrors,
       privacy_errors: privacyErrors,
+      profile_errors: profileErrors,
       computed_metrics: metrics,
       warnings,
     }, null, 2));
@@ -249,7 +254,8 @@ function main() {
     console.log(`OTEP validate: ${payloadPath}`);
     console.log(`Overall: ${overall.toUpperCase()}`);
     console.log(`Protocol version: ${envelope.protocol_version}`);
-    console.log(`Privacy profile: ${profile}`);
+    console.log(`Privacy mode (declared): ${envelope.privacy?.mode}`);
+    if (expectedProfile) console.log(`Privacy profile (asserted): ${expectedProfile}`);
     if (allErrors.length === 0) {
       console.log("All checks passed.");
     } else {

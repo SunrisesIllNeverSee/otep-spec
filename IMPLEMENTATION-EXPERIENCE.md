@@ -15,10 +15,12 @@ This document tracks known implementations of the OTEP specification, their conf
 
 | # | Implementation | Organization | Type | Conformance class | Status | Independent? |
 |---|----------------|-------------|------|-------------------|--------|--------------|
-| 1 | SignalAF | SunrisesIllNeverSee | Full-platform | Full-platform | Conformant (v0.1-draft) | No — reference product |
-| 2 | @sigrank/cascade | SunrisesIllNeverSee | Metric-engine | Metric-engine | Conformant (v0.1-draft) | No — reference math library |
-| 3 | sigrank-mcp | SunrisesIllNeverSee | Producer + Metric-engine | Producer + Metric-engine | Conformant (v0.1-draft) | No — reference instrument |
+| 1 | SignalAF | SunrisesIllNeverSee | Full-platform | Full-platform | Reference candidate (v0.1-draft) | No — reference product |
+| 2 | @sigrank/cascade | SunrisesIllNeverSee | Metric-engine | Metric-engine | Reference candidate (v0.1-draft) | No — reference math library |
+| 3 | sigrank-mcp | SunrisesIllNeverSee | Producer + Metric-engine | Producer + Metric-engine | Reference candidate (v0.1-draft) | No — reference instrument |
 | 4 | *Pending* | *Seeking* | *Target: IDE or observability platform* | *Target: Producer or Consumer* | *Not started* | *Yes — target* |
+
+> **Note:** No implementation has been certified as OTEP Conformant yet. The implementations above are reference candidates maintained by the specification author. Certification requires passing the conformance suite via an independent harness, not a self-test.
 
 ---
 
@@ -50,7 +52,7 @@ An implementation is **independent** if:
 
 **Organization:** SunrisesIllNeverSee
 **Conformance class:** Full-platform
-**Status:** Conformant (v0.1-draft)
+**Status:** Reference candidate (v0.1-draft) — not certified
 **Independent:** No — SignalAF is the reference product
 
 **What was implemented:**
@@ -99,7 +101,8 @@ An implementation is **independent** if:
 
 Before v1.0 can be released:
 
-1. ✅ Implementation #1 (SignalAF) passes full-platform conformance — DONE
+1. ✅ Implementation #1 (SignalAF) passes self-test conformance — DONE (but self-test, not independent certification)
+2. ⬜ Implementation #1 certified by independent harness — PENDING
 2. ⬜ Implementation #2 (independent) passes at least one conformance class — PENDING
 3. ⬜ Interoperability demonstration between #1 and #2 — PENDING
 4. ⬜ Implementation-experience reports from both — #1 DONE, #2 PENDING

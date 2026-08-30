@@ -8,89 +8,51 @@ on:
 
 jobs:
   conformance:
-    name: Run conformance suite
+    name: Run OTEP conformance suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Run conformance suite
-        run: node conformance/runner.mjs
-      - name: Run conformance self-test
-        run: node conformance/tests/runner-self-test.mjs
-      - name: Validate canonical example against schema
+      - name: Install dependencies
+        run: npm install
+      - name: Run OTEP conformance suite
+        run: node conformance/otep-runner.mjs
+      - name: Run OTEP validator on all examples
         run: |
-          node -e "
-            const { readFileSync } = require('fs');
-            const { join } = require('path');
-
-            // Load the schema and canonical example
-            const schema = JSON.parse(readFileSync('schema/sigrank-operator-record-v0.1.schema.json', 'utf-8'));
-            const example = JSON.parse(readFileSync('examples/canonical-reference.json', 'utf-8'));
-
-            // Structural validation against schema required fields
-            const required = schema.required || [];
-            const errors = [];
-            for (const field of required) {
-              if (!(field in example)) {
-                errors.push('Schema validation failed: missing ' + field);
-              }
-            }
-
-            // Validate spec version
-            if (example.spec !== schema.properties.spec.const) {
-              errors.push('Schema validation failed: spec must be ' + schema.properties.spec.const);
-            }
-
-            // Validate telemetry primitives are non-negative integers
-            const t = example.telemetry;
-            if (!Number.isInteger(t.input) || t.input < 0) errors.push('input must be non-negative integer');
-            if (!Number.isInteger(t.output) || t.output < 0) errors.push('output must be non-negative integer');
-            if (t.cache_write !== null && (!Number.isInteger(t.cache_write) || t.cache_write < 0)) errors.push('cache_write must be non-negative integer or null');
-            if (t.cache_read !== null && (!Number.isInteger(t.cache_read) || t.cache_read < 0)) errors.push('cache_read must be non-negative integer or null');
-
-            // Validate metrics object has all five metrics
-            const requiredMetrics = schema.properties.metrics.required;
-            for (const m of requiredMetrics) {
-              if (!(m in example.metrics)) errors.push('missing metric: ' + m);
-            }
-
-            // Validate no additional properties in metrics
-            const allowedMetrics = Object.keys(schema.properties.metrics.properties);
-            for (const k of Object.keys(example.metrics)) {
-              if (!allowedMetrics.includes(k)) errors.push('additional metric not allowed: ' + k);
-            }
-
-            // Validate source object
-            const srcRequired = schema.properties.source.required;
-            for (const f of srcRequired) {
-              if (!(f in example.source) || typeof example.source[f] !== 'string' || example.source[f].length < 1) {
-                errors.push('source.' + f + ' must be a non-empty string');
-              }
-            }
-
-            if (errors.length > 0) {
-              console.error(errors.join('\n'));
-              process.exit(1);
-            }
-            console.log('Canonical example schema validation passed');
-          "
+          for f in examples/minimal-valid.json examples/complete-valid.json examples/unsupported-cache.json examples/signed-envelope.json examples/canonical-reference.json; do
+            echo "Validating $f..."
+            node conformance/otep-validate.mjs "$f" --report text
+          done
+          echo "Validating invalid payload (expected to fail)..."
+          node conformance/otep-validate.mjs examples/invalid-payload.json --report text && exit 1 || echo "Correctly rejected invalid payload"
       - name: Run Python conformance runner
         run: |
-          # Install the local package in editable mode so the conformance runner
-          # can be invoked via `python -m sigrank_standard`. This catches
-          # regressions in the published Python conformance runner, not just the
-          # standalone example.
           pip install -e python/ --quiet
           python -m sigrank_standard
       - name: Run Python conformance self-test
         run: |
-          # Meta-test: verifies the Python runner catches non-conforming
-          # implementations (wrong metrics, missing required_fields, wrong
-          # version, alias leaks). Mirrors the JS self-test.
           python3 conformance/tests/runner-self-test.py
-      - name: Verify integration examples run
+      - name: Verify integration examples produce schema-valid envelopes
         run: |
-          python3 integrations/python/example.py > /dev/null
-          node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769 > /dev/null
+          # TypeScript integration
+          node -e "
+            import { buildRecord } from './integrations/typescript/example.ts';
+            const record = buildRecord(
+              { input: 1251211, output: 11296121, cache_write: 128196310, cache_read: 2555179769 },
+              { provider: 'anthropic', model: 'claude-sonnet-4', tool: 'claude-code' }
+            );
+            const fs = await import('fs');
+            fs.writeFileSync('/tmp/ts-record.json', JSON.stringify(record, null, 2));
+            console.log('TS record written');
+          " --input-type=module
+          node conformance/otep-validate.mjs /tmp/ts-record.json --report text
+
+          # Python integration
+          python3 integrations/python/example.py > /tmp/py-record.json
+          node conformance/otep-validate.mjs /tmp/py-record.json --report text
+
+          # CLI integration
+          node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769 > /tmp/cli-record.json
+          node conformance/otep-validate.mjs /tmp/cli-record.json --report text

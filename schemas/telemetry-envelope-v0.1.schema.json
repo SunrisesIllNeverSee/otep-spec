@@ -133,9 +133,11 @@
       }
     },
     "raw_provider_fields": {
-      "description": "Provider-native fields for debugging. MUST NOT be used for metric computation.",
+      "description": "Provider-native fields for debugging. MUST NOT be used for metric computation. Values MUST be scalar (string, number, boolean, null) — no nested objects or arrays.",
       "type": "object",
-      "additionalProperties": true
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "null"]
+      }
     },
     "validity": {
       "type": "object",
@@ -175,7 +177,7 @@
           "enum": ["self-reported", "collector-attested", "platform-verified", "signed"]
         },
         "signature_status": {
-          "enum": ["unsigned", "valid", "invalid", "not-applicable"]
+          "enum": ["unsigned", "valid", "invalid", "not-applicable", "signature-present-unverified"]
         }
       }
     },

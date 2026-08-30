@@ -1,12 +1,14 @@
-# SigRank Standard
+# OTEP — Operator Token Efficiency Protocol
 
-**Open measurement specification for AI operator token-processing efficiency.**
+**An open, vendor-neutral interoperability standard for measuring AI-operator token efficiency.**
 
-The SigRank Standard defines a common measurement vocabulary for observable token-processing patterns in human operation of generative AI systems. It measures how efficiently an operator processes tokens — not cognition, work quality, employee productivity, or business outcomes.
+OTEP defines a minimal common language that any AI tool, IDE, observability platform, enterprise analytics system, or independent implementation can produce and consume consistently. It measures how efficiently an operator processes tokens — not cognition, work quality, employee productivity, or business outcomes.
 
 ## Current version
 
-**`sigrank/0.1-draft`** — proposed open measurement specification.
+**`otep/0.1-draft`** — experimental public draft.
+
+The legacy alias `sigrank/0.1-draft` is accepted for backward compatibility.
 
 ## Portable core
 
@@ -16,7 +18,7 @@ Four non-negative integer telemetry primitives:
 |-----------|--------|-------------|
 | Input | `I` | Fresh input-token quantity |
 | Output | `O` | Output-token quantity |
-| Cache Write | `W` | Token quantity written to a cache |
+| Cache Write | `W` | Token quantity written to a cache (alias: `cache_creation`) |
 | Cache Read | `R` | Token quantity read from a cache |
 
 Five derived metrics:
@@ -26,78 +28,124 @@ Five derived metrics:
 | Yield (Υ) | `(R × O) / I²` | `I = 0` or `R` unavailable |
 | Leverage | `R / I` | `I = 0` or `R` unavailable |
 | Velocity | `O / I` | `I = 0` |
-| SNR | `O / (I + O)` | `I + O = 0` |
-| 10xDEV | `log10(R / I)` | Any pillar `= 0` or unavailable |
+| output_fraction | `O / (I + O)` | `I + O = 0` |
+| log_leverage | `log10(R / I)` | Any pillar `= 0` or unavailable |
 
-**Construction, Build Archetypes, and RS05 are NOT part of the portable core.** They are optional SignalAF reference extensions.
+**Yield is experimental** — it is quadratically sensitive to input scale. Four normalization profiles are defined in `metrics/normalization-profiles.md`.
+
+**10xDEV and SNR are NOT part of the normative core.** They are legacy aliases:
+- `10xDEV` → `log_leverage` (application profile in `profiles/application/dev10x.md`)
+- `SNR` → `output_fraction`
+
+## Canonical artifacts
+
+| Artifact | Path | Authority |
+|----------|------|-----------|
+| Normative specification | `SPEC.md` | Authoritative |
+| Telemetry envelope schema | `schemas/telemetry-envelope-v0.1.schema.json` | Authoritative |
+| Conformance report schema | `schemas/conformance-report-v0.1.schema.json` | Authoritative |
+| Metric registry | `metrics/registry.json` | Authoritative |
+| Reference implementation | `reference/otep.mjs` | Reference |
+| Conformance runner | `conformance/otep-runner.mjs` | Executable |
+| Validator | `conformance/otep-validate.mjs` | Executable |
+| Python implementation | `python/sigrank_standard/` | Reference |
+| Provider adapters | `adapters/` | Informative |
+| Privacy modes | `profiles/` | Normative |
+| Test vectors | `test-vectors/` | Normative |
+
+**Legacy artifacts** (`docs/`, `schema/`, `examples/fixtures/`) are superseded. See individual `README.md` files in each.
 
 ## Repository structure
 
 ```text
-sigrank-standard/
-├── README.md                 — this file
-├── docs/
-│   ├── SPEC.md               — normative specification
-│   ├── GLOSSARY.md           — terminology
-│   ├── PRIVACY.md            — content-independence requirements
-│   ├── CONFORMANCE.md        — compatibility and conformance rules
-│   ├── LIMITATIONS.md        — measurement boundaries
-│   ├── GOVERNANCE.md         — change control and RFC process
-│   ├── CHANGELOG.md          — version history
-│   ├── CANON_RECONCILIATION.md
-│   ├── PRODUCT_ARCHITECTURE.md
-│   ├── ARCHETYPE_STATUS.md   — extension boundary
-│   └── RS05_STATUS.md        — extension boundary
-├── schema/
-│   └── sigrank-operator-record-v0.1.schema.json
-├── examples/
-│   ├── canonical-reference.json
-│   └── fixtures/             — conformance test vectors
-├── reference/
-│   └── IMPLEMENTATION_MAP.md
-├── rfc/
-│   └── RFC-0001.md           — RFC template
-├── conformance/
-│   ├── runner.mjs            — executable conformance suite
-│   └── tests/                — test implementations
-├── integrations/
-│   ├── typescript/           — TypeScript example
-│   ├── python/               — Python example
-│   ├── cli/                  — CLI example
-│   └── mcp/                  — MCP tool example
-└── .github/workflows/
-    └── conformance.yml       — CI gate
+otep-spec/
+├── README.md                          — this file
+├── SPEC.md                            — normative protocol specification (authoritative)
+├── ARCHITECTURE-DECISION-MEMO.md      — design rationale and decision log
+├── REPOSITORY-ARCHITECTURE.md         — repository tree and path authority
+├── TERMINOLOGY.md                     — canonical terminology
+├── PRIVACY.md                         — privacy modes and content-independence
+├── SECURITY.md                        — security considerations
+├── GOVERNANCE.md                      — maintainer roles, OEP process, change control
+├── CONTRIBUTING.md                    — how to contribute
+├── CODE_OF_CONDUCT.md                 — community code of conduct
+├── TRADEMARKS.md                      — trademark usage rules
+├── CHANGELOG.md                       — version history
+├── IMPLEMENTATION-EXPERIENCE.md       — known implementations registry
+├── LICENSING-DECISION-MATRIX.md       — licensing analysis
+├── OPEN-COMMERCIAL-BOUNDARY.md        — open/closed boundary matrix
+├── ADOPTION-ROADMAP.md                — v0.1 → v1.0 roadmap
+├── BUSINESS-MODEL.md                  — sustainable commercial model
+├── RISK-REGISTER.md                   — risk register with controls
+├── BACKLOG-30-60-90.md                — implementation backlog
+├── UNRESOLVED-DECISIONS.md            — decisions requiring approval
+├── LICENSE                             — code license (Apache 2.0)
+├── NOTICE                              — attribution notice
+│
+├── schemas/                           — canonical JSON schemas
+├── metrics/                           — metric registry and definitions
+├── profiles/                          — privacy modes + application profiles
+├── examples/                          — example payloads
+├── test-vectors/                      — conformance test vectors
+├── conformance/                       — conformance runner + validator + classes
+├── reference/                         — reference implementation
+├── adapters/                          — provider adapter mappings
+├── oeps/                              — OTEP Extension Proposals
+├── python/                            — Python reference implementation
+└── integrations/                      — integration examples (TS, Python, MCP, CLI)
 ```
 
-## Compatibility labels
+## Quick start
 
-- **`SigRank Compatible — v0.1-draft`** — a system may use this label when it emits a versioned compatible record, preserves I/O/W/R semantics, and matches the published metric definitions and null policy.
-- **`SigRank Conformant`** — reserved until the executable conformance suite exists and a third-party implementation passes it independently.
+```bash
+# Run the conformance suite
+node conformance/otep-runner.mjs
 
-## Provenance
+# Validate a payload
+node conformance/otep-validate.mjs examples/complete-valid.json --report text
 
-The normative documents in `docs/` were extracted from the `sigrank-app` repository (`standard/` directory, Phase 0 branch `feat/sigrank-phase-0-bridge`) with preserved content. Git history attribution is documented in `reference/EXTRACTION_LOG.md`.
+# Compute metrics
+node reference/otep.mjs compute-inline 1251211 11296121 128196310 2555179769
+```
+
+## Conformance
+
+Six conformance classes are defined in `conformance/classes.md`:
+
+1. **Producer** — emits schema-valid envelopes
+2. **Consumer** — ingests and computes metrics identically
+3. **Adapter** — maps provider fields correctly
+4. **Metric-engine** — computes all 5 metrics correctly
+5. **Privacy-profile** — enforces privacy mode rules
+6. **Full-platform** — all of the above
+
+**No implementation has been certified as OTEP Conformant yet.** SignalAF is a reference candidate, not a certified implementation.
+
+## Privacy
+
+OTEP is metadata-only. The protocol MUST NOT collect:
+- Prompt text or completion text
+- Source code, diffs, or file content
+- Keystrokes, screen contents, or repository content
+
+Three privacy modes: `public-pseudonymous`, `private-managed-cohort`, `enterprise-isolated`.
+
+## Non-inferences
+
+OTEP metrics do NOT prove: code quality, task correctness, productivity, professional skill, employee performance, business impact, or causal improvement from AI tooling.
 
 ## License
 
-- **Specification documents** (`docs/`, `schema/`, `examples/`): Creative Commons Attribution 4.0 International (CC BY 4.0)
-- **Executable code** (`conformance/`, `integrations/`): Apache License 2.0
+- **Specification documents** (`SPEC.md`, `schemas/`, `metrics/`, `profiles/`, `adapters/`, `oeps/`, `examples/`, `test-vectors/`): Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Executable code** (`reference/`, `conformance/`, `integrations/`, `python/`): Apache License 2.0
 
 See `LICENSE` and `NOTICE` for details.
 
-## Governance status
+## Governance
 
-This repository is a **candidate authority**, not a designated authority. It was created under a now-superseded handoff and is awaiting owner designation per the Course of Ship Gate C process.
-
-- Technical verification: 12/12 conformance fixtures pass, Python reference reproduces canonical Yield 18436.98
-- Alignment: wording narrowed to token-processing/efficiency construct per Course of Ship invariants
-- Process: initial implementation was pushed directly to `main`; this alignment change is a reviewable PR
-- Designation: pending owner approval at Gate C
-
-No merge, publication, or deployment is authorized by this candidate's existence.
+This is an experimental v0.1-draft. Governance is currently maintainer-led with a planned transition to a neutral steering committee. See `GOVERNANCE.md`.
 
 ## Related
 
-- [SignalAF](https://signalaf.com) — public leaderboard, reference implementation, and human-readable Standard distribution URL
-- [sigrank-mcp](https://github.com/SunrisesIllNeverSee/sigrank-mcp) — CLI and MCP instrument
-- [@sigrank/cascade](https://github.com/SunrisesIllNeverSee/sigrank-cascade) — canonical math package
+- [SignalAF](https://signalaf.com) — public leaderboard and reference implementation
+- [sigrank-standard](https://github.com/SunrisesIllNeverSee/sigrank-standard) — legacy repository (superseded by this repo)

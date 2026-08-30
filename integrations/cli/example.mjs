@@ -2,14 +2,14 @@
 /**
  * integrations/cli/example.mjs
  *
- * Minimal CLI that computes an OTEP v0.1-draft record from
- * command-line arguments. No dependencies.
+ * Minimal CLI that computes an OTEP v0.1-draft schema-conforming envelope
+ * from command-line arguments. No dependencies.
  *
  * Usage:
  *   node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769
  */
 
-import { computeMetrics } from "../typescript/example.ts";
+import { buildEnvelope } from "../typescript/example.ts";
 
 const args = process.argv.slice(2);
 function getArg(name) {
@@ -29,14 +29,9 @@ if (input === undefined || output === undefined) {
   process.exit(1);
 }
 
-const { metrics, warnings } = computeMetrics({ input, output, cache_write: cacheWrite, cache_read: cacheRead });
-const record = {
-  spec: "otep/0.1-draft",
-  timestamp: new Date().toISOString(),
-  source: { provider: "cli", model: "cli", tool: "sigrank-standard-cli" },
-  telemetry: { input, output, cache_write: cacheWrite, cache_read: cacheRead },
-  metrics,
-  warnings,
-};
+const envelope = buildEnvelope(
+  { input, output, cache_write: cacheWrite, cache_read: cacheRead },
+  { tool: "cli", provider: null, model: null }
+);
 
-console.log(JSON.stringify(record, null, 2));
+console.log(JSON.stringify(envelope, null, 2));

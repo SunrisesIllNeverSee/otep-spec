@@ -2,10 +2,11 @@
  * integrations/typescript/example.ts
  *
  * Minimal TypeScript implementation of the OTEP v0.1-draft
- * five-metric portable core. No dependencies.
+ * five-metric portable core + schema-conforming envelope builder.
+ * No dependencies.
  *
- * A conforming implementation MUST produce the same results as the
- * conformance suite test vectors for the same inputs.
+ * A conforming implementation MUST produce envelopes that validate
+ * against schemas/telemetry-envelope-v0.1.schema.json.
  */
 
 export interface Telemetry {
@@ -23,19 +24,35 @@ export interface Metrics {
   log_leverage: number | null;
 }
 
-export interface OtepRecord {
-  spec: "otep/0.1-draft";
-  timestamp: string;
+export interface OtepEnvelope {
+  protocol_version: "otep/0.1-draft";
+  metric_spec_version: string;
+  observation: {
+    timestamp: string;
+    window_start: string | null;
+    window_end: string | null;
+    window_duration_seconds: number | null;
+  };
   source: {
-    provider: string;
-    model: string;
     tool: string;
+    platform: string | null;
+    provider: string | null;
+    model: string | null;
+    adapter_id: string | null;
+    adapter_version: string | null;
   };
   telemetry: {
     input: number;
     output: number;
     cache_write: number | null;
     cache_read: number | null;
+  };
+  provenance: {
+    level: "self-reported" | "collector-attested" | "platform-verified" | "signed";
+    signature_status: "unsigned" | "valid" | "invalid" | "not-applicable";
+  };
+  privacy: {
+    mode: "public-pseudonymous" | "private-managed-cohort" | "enterprise-isolated";
   };
   metrics: Metrics;
   warnings: string[];
@@ -79,12 +96,9 @@ export function computeMetrics(t: Telemetry): { metrics: Metrics; warnings: stri
     warnings.push("yield_undefined: requires input>0 and cache_read available");
   }
 
-  // Cache-unavailable warnings (emitted before metric-specific undefined warnings
-  // per SRP-METRIC-006 ordering: cache-unavailable before metric-undefined)
   if (cacheWrite === null) cacheWarnings.push("cache_write is unavailable; log_leverage is undefined.");
   if (cacheRead === null) cacheWarnings.push("cache_read is unavailable; Yield, Leverage, and log_leverage are undefined.");
 
-  // log_leverage = log10(cache_read / input) — requires all four pillars > 0
   const allFourPositive =
     input > 0 && output > 0 && cacheWrite !== null && cacheWrite > 0 &&
     cacheRead !== null && cacheRead > 0;
@@ -95,7 +109,6 @@ export function computeMetrics(t: Telemetry): { metrics: Metrics; warnings: stri
     logLev = Math.log10(cacheRead / input);
   }
 
-  // Reorder: cache-unavailable first, then metric-undefined (SRP-METRIC-006)
   const orderedWarnings = [...cacheWarnings, ...warnings];
 
   return {
@@ -110,19 +123,67 @@ export function computeMetrics(t: Telemetry): { metrics: Metrics; warnings: stri
   };
 }
 
-export function buildRecord(t: Telemetry, source: { provider: string; model: string; tool: string }): OtepRecord {
+export interface BuildEnvelopeOptions {
+  tool?: string;
+  platform?: string | null;
+  provider?: string | null;
+  model?: string | null;
+  adapter_id?: string | null;
+  adapter_version?: string | null;
+  operator_key?: string | null;
+  cohort_id?: string | null;
+  privacy_mode?: "public-pseudonymous" | "private-managed-cohort" | "enterprise-isolated";
+  provenance_level?: "self-reported" | "collector-attested" | "platform-verified" | "signed";
+  window_start?: string | null;
+  window_end?: string | null;
+  window_duration_seconds?: number | null;
+}
+
+export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): OtepEnvelope {
   const { metrics, warnings } = computeMetrics(t);
+  const now = new Date().toISOString();
   return {
-    spec: "otep/0.1-draft",
-    timestamp: new Date().toISOString(),
-    source,
+    protocol_version: "otep/0.1-draft",
+    metric_spec_version: "otep-metrics/0.1-draft",
+    observation: {
+      timestamp: now,
+      window_start: opts.window_start ?? null,
+      window_end: opts.window_end ?? null,
+      window_duration_seconds: opts.window_duration_seconds ?? null,
+    },
+    source: {
+      tool: opts.tool ?? "unknown",
+      platform: opts.platform ?? null,
+      provider: opts.provider ?? null,
+      model: opts.model ?? null,
+      adapter_id: opts.adapter_id ?? null,
+      adapter_version: opts.adapter_version ?? null,
+    },
     telemetry: {
       input: t.input,
       output: t.output,
       cache_write: t.cache_write ?? null,
       cache_read: t.cache_read ?? null,
     },
+    provenance: {
+      level: opts.provenance_level ?? "self-reported",
+      signature_status: "unsigned",
+    },
+    privacy: {
+      mode: opts.privacy_mode ?? "public-pseudonymous",
+    },
     metrics,
     warnings,
   };
+}
+
+// Backward-compatible alias
+export const buildRecord = buildEnvelope;
+
+if (typeof require !== "undefined" && require.main === module) {
+  const envelope = buildEnvelope(
+    { input: 1251211, output: 11296121, cache_write: 128196310, cache_read: 2555179769 },
+    { tool: "claude-code", provider: "anthropic", model: "claude-sonnet-4" }
+  );
+  console.log(JSON.stringify(envelope, null, 2));
 }
