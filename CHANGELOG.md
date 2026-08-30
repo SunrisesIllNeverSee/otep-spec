@@ -97,6 +97,37 @@ This release upgrades the `sigrank/0.1-draft` minimal specification to a complet
 
 ---
 
+## [0.1.5-draft] — 2026-08-30
+
+### Fixed — Builder runtime validation (CodeRabbit + review findings)
+
+Three builder defects found in post-release review of `0.1.4-draft` (all in `lib/envelope-builder.mjs`):
+
+- **Signed provenance rejection (SRP-SIG-001).** `buildEnvelope` accepted `provenance_level: "signed"` but silently produced an unsigned envelope with no signature object in extensions. Per SRP-SIG-001, a signed envelope MUST include a `signature` object (algorithm, key_fingerprint, value, signed_fields). The builder has no signature input parameter, so it cannot produce a conforming signed envelope. Now throws at construction time with a clear error. CI was green because the test loop deliberately skipped `"signed"` — the untested path was the bug.
+- **Privacy mode + provenance level validation (CodeRabbit major).** `buildEnvelope` accepted arbitrary runtime strings (e.g. `{ privacy_mode: "anything" }`) and emitted envelopes that fail the protocol schema, contradicting the builder's guarantee. Now imports `PRIVACY_MODES` and `PROVENANCE_LEVELS` from `envelope-validator.mjs` (single source of truth) and rejects unknown non-nullish values before construction. The separate `"signed"` rejection runs after the set check — `"signed"` gets its specific signature error, while `"SIGNED"`/`"anything"` get the set-check error listing valid options. Nullish values still fall back to defaults via `??` (correct, not a gap).
+- **Flaky alias test.** `builder-api-test.mjs` compared `JSON.stringify` of two envelopes with timestamps — flaky across millisecond boundaries. Replaced with `buildRecord === buildEnvelope` reference equality (`buildRecord` is `export const buildRecord = buildEnvelope`).
+
+### Added — Table-driven builder tests
+- 3 valid privacy modes (each: valid + conforming)
+- 6 invalid privacy values: `"anything"`, `"public"`, `"private"`, `""`, `"PUBLIC-PSEUDONYMOUS"`, `"anonymous"`
+- 3 valid provenance levels (each: valid + conforming)
+- 6 invalid provenance values: `"anything"`, `"verified"`, `"attested"`, `""`, `"SIGNED"`, `"platform"`
+- 1 signed-specific error (SRP-SIG-001)
+- Builder API test count: 41 → 59 assertions
+
+### Added — GitHub–Zenodo integration
+- `.zenodo.json` added at repo root — metadata template the GitHub–Zenodo integration reads when auto-archiving future releases (upload_type: software, creators, license, keywords, related identifiers).
+- GitHub–Zenodo integration enabled by owner on zenodo.org for `SunrisesIllNeverSee/otep-spec`. Future releases auto-archive with versioned DOIs under a new concept DOI.
+
+### Changed
+- Version bump `0.1.4-draft` → `0.1.5-draft` (builder validation fixes — no new API surface, no breaking changes).
+- `bin/tteop.mjs` VERSION string updated to `tteop/0.1.5-draft`.
+
+### Deprecated
+- `tteop-spec@0.1.4-draft` deprecated on npm: "Use 0.1.5-draft; builder validation corrected."
+
+---
+
 ## [0.1.4-draft] — 2026-08-30
 
 ### Added — Zenodo DOI for v0.1.3-draft release
