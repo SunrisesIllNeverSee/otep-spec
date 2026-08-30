@@ -1,0 +1,39 @@
+{
+  "title": "TTEOP — Token Telemetry Evaluation Operator Protocol: Specification and Reference Implementation",
+  "description": "TTEOP (Token Telemetry Evaluation Operator Protocol) is an open, vendor-neutral interoperability standard for measuring AI-operator token efficiency. It defines four telemetry primitives (input, output, cache_write, cache_read), five derived metrics (Yield, Leverage, Velocity, output_fraction, log_leverage), three privacy modes, four provenance levels, a JSON Schema for telemetry envelopes, a conformance suite with frozen test vectors, and a governance process for protocol evolution. The reference implementation is written in JavaScript (Node.js >= 18) and published as the npm package tteop-spec.",
+  "upload_type": "software",
+  "license": "Apache-2.0",
+  "creators": [
+    {
+      "name": "McHenry, Deric J",
+      "affiliation": "SignalAF",
+      "email": "hello@signalaf.com"
+    }
+  ],
+  "keywords": [
+    "token-efficiency",
+    "ai-operators",
+    "telemetry",
+    "protocol",
+    "open-standard",
+    "yield",
+    "leverage",
+    "cache",
+    "mcp",
+    "conformance"
+  ],
+  "related_identifiers": [
+    {
+      "scheme": "url",
+      "identifier": "https://github.com/SunrisesIllNeverSee/otep-spec",
+      "relation": "isSourceOf"
+    },
+    {
+      "scheme": "url",
+      "identifier": "https://www.npmjs.com/package/tteop-spec",
+      "relation": "isPartOf"
+    }
+  ],
+  "access_right": "open",
+  "communities": []
+}
