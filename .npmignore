@@ -1,0 +1,26 @@
+# CI workflows — internal to the repo, not needed in the npm package
+.github/
+
+# Internal review reports
+reports/
+
+# Node-specific dev artifacts
+node_modules/
+*.tgz
+
+# Python build artifacts
+**/__pycache__/
+*.pyc
+python/dist/
+python/*.egg-info/
+**/*.egg-info/
+
+# Git
+.git/
+.gitignore
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
