@@ -8,6 +8,8 @@
 **Spec version string:** `tteop/0.1-draft`
 **Maturity:** Experimental — see §3
 
+**Permanent citation:** DOI [10.5281/zenodo.22179383](https://doi.org/10.5281/zenodo.22179383) — Zenodo record [22179383](https://zenodo.org/record/22179383). Identifies the complete v0.1.3-draft release (specification, schemas, metrics, conformance suite, governance, reference implementation) as one citable software object.
+
 ---
 
 ## Table of Contents
