@@ -23,7 +23,7 @@ TTEOP is an **open measurement specification**, not a product. The roadmap is wr
 
 In 1963 the American Standard Code for Information Interchange made text portable across machines that had no other reason to agree. ASCII did not solve every encoding problem, but it gave every system a common 7-bit floor to stand on. Interoperability followed not from a grand bargain but from a small, well-defined contract that anyone could implement.
 
-TTEOP aims for the analogous floor in AI operator measurement. Four non-negative integer primitives — input, output, cache write, cache read — and five derived metrics are small enough that every major provider already exposes them in some form, yet specific enough that two independent implementations producing the same envelope for the same session will compute the same Yield, Leverage, Velocity, SNR, and 10xDEV.
+TTEOP aims for the analogous floor in AI operator measurement. Four non-negative integer primitives — input, output, cache write, cache read — and five derived metrics are small enough that every major provider already exposes them in some form, yet specific enough that two independent implementations producing the same envelope for the same session will compute the same Yield, Leverage, Velocity, output_fraction, and log_leverage.
 
 The v0.1 launch is deliberately narrow: one envelope, one schema, five example payloads, a conformance runner, and a governance draft. The goal is not to ship a finished standard. The goal is to ship the smallest contract that makes cross-tool measurement *possible*, then let the field tell us what is missing.
 

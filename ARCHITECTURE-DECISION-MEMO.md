@@ -14,7 +14,7 @@
 The SigRank ecosystem currently has a working v0.1-draft measurement specification with:
 
 - Four token-telemetry pillars: `input` (I), `output` (O), `cache_write` (W), `cache_read` (R)
-- Five derived metrics: Yield (Υ), Leverage, Velocity, SNR, 10xDEV
+- Five derived metrics: Yield (Υ), Leverage, Velocity, output_fraction, log_leverage
 - A JSON Schema for portable interchange records
 - An executable conformance runner (JavaScript + Python) with 13 fixtures
 - A reference math package (`@sigrank/cascade`)

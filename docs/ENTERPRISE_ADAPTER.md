@@ -100,7 +100,7 @@ interface OutcomeEntry {
 ## Correlation Contract
 
 Enterprise systems MAY correlate operator telemetry (Yield, Leverage,
-Velocity, SNR, 10xDEV) with outcome measurements via lineage chains.
+Velocity, output_fraction, log_leverage) with outcome measurements via lineage chains.
 
 **All correlations are ASSOCIATION, never CAUSATION.**
 

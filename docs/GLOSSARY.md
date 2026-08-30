@@ -36,11 +36,11 @@ Token quantity read from a cache when exposed by the source.
 ## Velocity (`V`)
 `O / I`
 
-## SNR (`S`)
-`O / (I + O)`
+## Output Fraction (`output_fraction`)
+`O / (I + O)`. Null when `I + O = 0`. (Legacy alias: `SNR` / `S` — see README.)
 
-## 10xDEV
-Reference SigRank logarithmic amplification metric: `log10(R / I)`, subject to reference implementation null policy.
+## Log Leverage (`log_leverage`)
+`log10(R / I)`, subject to reference implementation null policy. Requires all four pillars > 0. (Legacy alias: `10xDEV` — see README.)
 
 ## Construction
 Reference signature component: `W / O` when output is positive. Informative in v0.1-draft.
