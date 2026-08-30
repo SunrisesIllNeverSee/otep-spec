@@ -57,12 +57,7 @@ jobs:
       # Gate 7: Validate output from the installed Python package's public builder
       - name: 7. Validate Python package build_envelope output
         run: |
-          python3 -c "
-from sigrank_standard import build_record
-import json
-r = build_record(1251211, 11296121, 128196310, 2555179769, provider='anthropic', model='claude-sonnet-4', tool='claude-code')
-print(json.dumps(r, indent=2))
-" > /tmp/pkg-record.json
+          python3 -c "from sigrank_standard import build_record; import json; r = build_record(1251211, 11296121, 128196310, 2555179769, provider='anthropic', model='claude-sonnet-4', tool='claude-code'); print(json.dumps(r, indent=2))" > /tmp/pkg-record.json
           node conformance/tteop-validate.mjs /tmp/pkg-record.json --report text
 
       # Gate 7b: Run Python package tests
@@ -96,32 +91,14 @@ print(json.dumps(r, indent=2))
           # Send a real tools/call JSON-RPC request to the MCP server
           echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_tteop_record","arguments":{"input":1251211,"output":11296121,"cache_write":128196310,"cache_read":2555179769,"tool":"claude-code","provider":"anthropic","model":"claude-sonnet-4"}}}' | node integrations/mcp/example.mjs > /tmp/mcp-response.json
           # Extract the envelope from the JSON-RPC response
-          python3 -c "
-import json
-with open('/tmp/mcp-response.json') as f:
-    resp = json.load(f)
-assert resp['jsonrpc'] == '2.0', 'Not a JSON-RPC response'
-assert resp['id'] == 1, 'Response id mismatch'
-envelope = json.loads(resp['result']['content'][0]['text'])
-with open('/tmp/mcp-record.json', 'w') as f:
-    json.dump(envelope, f, indent=2)
-print('MCP envelope extracted')
-"
+          python3 -c "import json; f=open('/tmp/mcp-response.json'); resp=json.load(f); f.close(); assert resp['jsonrpc']=='2.0','Not JSON-RPC'; assert resp['id']==1,'id mismatch'; env=json.loads(resp['result']['content'][0]['text']); f=open('/tmp/mcp-record.json','w'); json.dump(env,f,indent=2); f.close(); print('MCP envelope extracted')"
           node conformance/tteop-validate.mjs /tmp/mcp-record.json --report text
 
       # Gate 10b: Validate MCP tools/list
       - name: 10b. Validate MCP tools/list
         run: |
           echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | node integrations/mcp/example.mjs > /tmp/mcp-tools.json
-          python3 -c "
-import json
-with open('/tmp/mcp-tools.json') as f:
-    resp = json.load(f)
-assert resp['jsonrpc'] == '2.0', 'Not a JSON-RPC response'
-assert len(resp['result']['tools']) == 1, 'Expected 1 tool'
-assert resp['result']['tools'][0]['name'] == 'get_tteop_record', 'Wrong tool name'
-print('MCP tools/list verified')
-"
+          python3 -c "import json; f=open('/tmp/mcp-tools.json'); resp=json.load(f); f.close(); assert resp['jsonrpc']=='2.0','Not JSON-RPC'; assert len(resp['result']['tools'])==1,'Expected 1 tool'; assert resp['result']['tools'][0]['name']=='get_tteop_record','Wrong tool name'; print('MCP tools/list verified')"
 
       # Gate 11: Exercise half-even tie vectors across implementations
       - name: 11. Run cross-implementation tie tests
