@@ -276,6 +276,14 @@ Three contribution models were considered for TTEOP:
 
 ---
 
+## 15. Reopening and Maintenance Charter
+
+The TTEOP Reopening and Maintenance Charter (`MAINTENANCE-CHARTER.md`) governs when and how the specification may be reopened after operational closure. It defines valid reopening triggers (correctness defects, security/privacy vulnerabilities, interoperability failures, provider telemetry changes, normative ambiguity, deliberate new versions, external implementation proposals), invalid reopening reasons, the required implementation process, review stopping rules, and release integrity constraints.
+
+The charter carries requirement IDs `SRP-GOV-057` through `SRP-GOV-076`, continuing the sequence from this document. See `MAINTENANCE-CHARTER.md` for the full text.
+
+---
+
 ## Normative References
 
 | Reference | Document |
@@ -346,3 +354,23 @@ Three contribution models were considered for TTEOP:
 | SRP-GOV-054 | TEP template reference |
 | SRP-GOV-055 | TEP template required sections |
 | SRP-GOV-056 | Incomplete TEP returned to draft |
+| SRP-GOV-057 | Primary goals (8 SHALL clauses) — see `MAINTENANCE-CHARTER.md` §2 |
+| SRP-GOV-058 | Reopening requires a valid trigger — see `MAINTENANCE-CHARTER.md` §4 |
+| SRP-GOV-059 | Security/privacy issues receive immediate priority — see `MAINTENANCE-CHARTER.md` §4.B |
+| SRP-GOV-060 | Provider differences handled in adapters first — see `MAINTENANCE-CHARTER.md` §4.D |
+| SRP-GOV-061 | New version is a governance decision — see `MAINTENANCE-CHARTER.md` §4.F |
+| SRP-GOV-062 | Invalid reopening reasons — see `MAINTENANCE-CHARTER.md` §5 |
+| SRP-GOV-063 | Reopening record required — see `MAINTENANCE-CHARTER.md` §6 |
+| SRP-GOV-064 | Out-of-scope work requires separate authorization — see `MAINTENANCE-CHARTER.md` §6 |
+| SRP-GOV-065 | Normative minor/major changes require a TEP — see `MAINTENANCE-CHARTER.md` §7 |
+| SRP-GOV-066 | Required implementation process (13 steps) — see `MAINTENANCE-CHARTER.md` §8 |
+| SRP-GOV-067 | Review must not become an infinite loop — see `MAINTENANCE-CHARTER.md` §9 |
+| SRP-GOV-068 | Minor stylistic findings do not block closure — see `MAINTENANCE-CHARTER.md` §9 |
+| SRP-GOV-069 | Review tools do not expand project scope — see `MAINTENANCE-CHARTER.md` §9 |
+| SRP-GOV-070 | Published releases are immutable — see `MAINTENANCE-CHARTER.md` §10 |
+| SRP-GOV-071 | Corrections require a new version — see `MAINTENANCE-CHARTER.md` §10 |
+| SRP-GOV-072 | Release chain integrity — see `MAINTENANCE-CHARTER.md` §10 |
+| SRP-GOV-073 | Commercial requirements do not become protocol requirements — see `MAINTENANCE-CHARTER.md` §11 |
+| SRP-GOV-074 | Closure declaration criteria — see `MAINTENANCE-CHARTER.md` §12 |
+| SRP-GOV-075 | No action required until valid trigger — see `MAINTENANCE-CHARTER.md` §12 |
+| SRP-GOV-076 | Roadmap is not an obligation — see `MAINTENANCE-CHARTER.md` §12 |

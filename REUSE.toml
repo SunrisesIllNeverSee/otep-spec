@@ -111,6 +111,12 @@ SPDX-License-Identifier = "CC-BY-4.0"
 SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
 
 [[annotations]]
+path = "MAINTENANCE-CHARTER.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
 path = "CONTRIBUTING.md"
 precedence = "aggregate"
 SPDX-License-Identifier = "CC-BY-4.0"

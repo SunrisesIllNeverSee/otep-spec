@@ -71,6 +71,7 @@ tteop-spec/
 ├── PRIVACY.md                         — privacy modes and content-independence
 ├── SECURITY.md                        — security considerations
 ├── GOVERNANCE.md                      — maintainer roles, TEP process, change control
+├── MAINTENANCE-CHARTER.md             — reopening and maintenance charter (SRP-GOV-057..076)
 ├── MAINTAINERS.md                     — maintainer roster (lead + reviewers)
 ├── DISCLOSURES.md                     — conflict-of-interest disclosures (SRP-GOV-014)
 ├── CONTRIBUTING.md                    — how to contribute
@@ -167,7 +168,7 @@ See `CITATION.cff` for the full citation metadata.
 
 - **Specification documents** (`SPEC.md`, `schemas/`, `metrics/`, `profiles/`, `adapters/`, `teps/`, `examples/`, `test-vectors/`): Creative Commons Attribution 4.0 International (CC BY 4.0)
 - **Executable code** (`reference/`, `conformance/`, `integrations/`, `python/`, `scripts/`): Apache License 2.0
-- **Governance documents** (`GOVERNANCE.md`, `CONTRIBUTING.md`, `MAINTAINERS.md`, etc.): Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Governance documents** (`GOVERNANCE.md`, `MAINTENANCE-CHARTER.md`, `CONTRIBUTING.md`, `MAINTAINERS.md`, etc.): Creative Commons Attribution 4.0 International (CC BY 4.0)
 
 Full license texts are in `LICENSES/`. SPDX identifiers are declared in `REUSE.toml`. See `LICENSE` and `NOTICE` for details.
 

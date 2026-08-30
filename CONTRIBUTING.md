@@ -49,6 +49,10 @@ To sign off, use `git commit -s` or add `Signed-off-by: Your Name <your.email@ex
 - **Non-normative changes:** minimum 7 days
 - **Security fixes:** expedited, minimum 72 hours (per `GOVERNANCE.md` SRP-GOV-035)
 
+### When may the project be reopened?
+
+The project is operationally closed between releases. It may only be reopened when a valid trigger exists (correctness defect, security/privacy vulnerability, interoperability failure, provider telemetry change, normative ambiguity, deliberate new version, or external implementation proposal). See `MAINTENANCE-CHARTER.md` for the full reopening ruleset (SRP-GOV-057 through SRP-GOV-076). Polish, stylistic suggestions, and unfinished roadmap items are not valid reopening triggers.
+
 ---
 
 ## Code Style
