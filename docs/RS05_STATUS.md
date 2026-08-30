@@ -1,4 +1,4 @@
-# RS05 / Class Tier Status — SigRank Standard v0.1-draft
+# RS05 / Class Tier Status — TTEOP v0.1-draft
 
 ## Decision
 

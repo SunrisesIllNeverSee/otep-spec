@@ -114,6 +114,10 @@ jobs:
       - name: 13. Builder regression tests (TS, CLI, MCP missingness)
         run: node conformance/tests/builder-regression-test.mjs
 
+      # Gate 13b: Legacy alias acceptance (C6 — otep/0.1-draft + sigrank/0.1-draft)
+      - name: 13b. Legacy alias acceptance tests
+        run: node conformance/tests/alias-acceptance-test.mjs
+
       # Gate 14: Exercise the installed 'tteop' executable
       - name: 14. Exercise installed tteop executable
         run: |

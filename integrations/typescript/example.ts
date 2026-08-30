@@ -25,7 +25,7 @@ export interface Metrics {
 }
 
 export interface TteopEnvelope {
-  protocol_version: "tteop/0.1-draft";
+  protocol_version: "tteop/0.1-draft" | "otep/0.1-draft" | "sigrank/0.1-draft";
   metric_spec_version: string;
   observation: {
     timestamp: string;
@@ -56,7 +56,19 @@ export interface TteopEnvelope {
   };
   metrics: Metrics;
   warnings: string[];
+  validity?: {
+    status: "valid" | "invalid" | "partial";
+    missingness_flags?: string[];
+    anomaly_flags?: string[];
+  };
 }
+
+/**
+ * Backward-compatible alias for the pre-rename "OTEP" type name.
+ * Kept so existing TS consumers importing `OtepEnvelope` continue to compile
+ * after the OTEP → TTEOP rename (see UNRESOLVED-DECISIONS.md UD-1).
+ */
+export type OtepEnvelope = TteopEnvelope;
 
 // ─── Banker's rounding (round-half-to-even) ─────────────────────────────────
 // SPEC.md SRP-METRIC-002 requires round-half-to-even, NOT toFixed (round-half-up).
@@ -202,7 +214,7 @@ export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): Tt
 
   // Attach validity only when there are missingness flags (keeps minimal envelope clean)
   if (missingnessFlags.length > 0) {
-    (envelope as any).validity = {
+    envelope.validity = {
       status: "partial",
       missingness_flags: missingnessFlags,
     };

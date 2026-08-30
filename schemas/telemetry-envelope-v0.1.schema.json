@@ -15,9 +15,9 @@
   ],
   "properties": {
     "protocol_version": {
-      "description": "TTEOP protocol version string. Legacy alias 'sigrank/0.1-draft' accepted.",
+      "description": "TTEOP protocol version string. Legacy aliases 'otep/0.1-draft' (pre-rename) and 'sigrank/0.1-draft' (legacy distribution) accepted. See UNRESOLVED-DECISIONS.md UD-1.",
       "type": "string",
-      "enum": ["tteop/0.1-draft", "sigrank/0.1-draft"]
+      "enum": ["tteop/0.1-draft", "otep/0.1-draft", "sigrank/0.1-draft"]
     },
     "metric_spec_version": {
       "description": "Metric specification version. SHOULD be present.",

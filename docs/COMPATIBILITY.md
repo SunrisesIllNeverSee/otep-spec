@@ -2,7 +2,7 @@
 
 ## Version scheme
 
-The SigRank Standard uses a `MAJOR.MINOR-draft` version string (e.g. `sigrank/0.1-draft`).
+TTEOP (Token Telemetry Evaluation Operator Protocol) uses a `MAJOR.MINOR-draft` version string (e.g. `tteop/0.1-draft`). The protocol was renamed from "OTEP" to "TTEOP" on 2026-08-30 (see `UNRESOLVED-DECISIONS.md` UD-1); the pre-rename wire identifier `otep/0.1-draft` and the legacy distribution alias `sigrank/0.1-draft` are accepted as legacy aliases by the schema and validator for backward compatibility.
 
 - **MAJOR** — incremented when the wire format or required fields change in a way that breaks existing consumers.
 - **MINOR** — incremented when new optional fields or clarifications are added without breaking existing consumers.
@@ -45,7 +45,7 @@ versioned release
 
 ## Prohibited changes during draft phase
 
-- Renaming the wire identifier (`sigrank/0.1-draft`).
+- Removing a published wire identifier from the accepted set (the canonical `tteop/0.1-draft` plus the legacy aliases `otep/0.1-draft` and `sigrank/0.1-draft` MUST remain accepted throughout the 0.x series).
 - Changing the four telemetry primitives (I/O/W/R).
 - Changing the five metric formulas.
 - Adding Construction, Build Archetypes, or RS05 to the portable core.

@@ -1,10 +1,10 @@
-# Archetype Status — SigRank Standard v0.1-draft
+# Archetype Status — TTEOP v0.1-draft
 
 ## Decision
 
-**Build Archetype is a reference-implementation classification, not a normative core requirement of SigRank Standard v0.1.**
+**Build Archetype is a reference-implementation classification, not a normative core requirement of TTEOP v0.1.**
 
-The concept is defined because it is useful and already part of SignalAF, but third-party SigRank compatibility does not require implementation of the SignalAF archetype classifier.
+The concept is defined because it is useful and already part of SignalAF, but third-party TTEOP compatibility does not require implementation of the SignalAF archetype classifier.
 
 ## Canonical SignalAF reference taxonomy
 

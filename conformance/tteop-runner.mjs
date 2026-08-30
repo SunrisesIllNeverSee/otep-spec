@@ -56,6 +56,7 @@ const METRICS_REGISTRY_PATH = join(ROOT, "metrics", "registry.json");
 const ADAPTERS_REGISTRY_PATH = join(ROOT, "adapters", "registry.json");
 
 const SPEC_VERSION = "tteop/0.1-draft";
+const LEGACY_ALIASES = ["otep/0.1-draft", "sigrank/0.1-draft"];
 const LEGACY_ALIAS = "sigrank/0.1-draft";
 
 // ─── Test framework ─────────────────────────────────────────────────────────
@@ -499,10 +500,15 @@ function testVersionNegotiation(schema) {
   // SRP-VER-003: metric spec version declared
   assert(complete.metric_spec_version !== undefined, "VER-003", "metric_spec_version declared");
 
-  // SRP-VER-005: legacy alias accepted
+  // SRP-VER-005: legacy aliases accepted
   const legacy = { ...complete, protocol_version: LEGACY_ALIAS };
   const lr = validateEnvelope(legacy, schema);
   assert(lr.valid, "VER-005", "legacy alias sigrank/0.1-draft accepted");
+
+  // SRP-VER-005b: pre-rename OTEP alias accepted (C6 backward compatibility)
+  const otepAlias = { ...complete, protocol_version: "otep/0.1-draft" };
+  const or = validateEnvelope(otepAlias, schema);
+  assert(or.valid, "VER-005b", "pre-rename legacy alias otep/0.1-draft accepted");
 }
 
 /**
