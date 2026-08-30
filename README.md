@@ -67,6 +67,7 @@ tteop-spec/
 ├── PRIVACY.md                         — privacy modes and content-independence
 ├── SECURITY.md                        — security considerations
 ├── GOVERNANCE.md                      — maintainer roles, TEP process, change control
+├── MAINTAINERS.md                     — maintainer roster (lead + reviewers)
 ├── DISCLOSURES.md                     — conflict-of-interest disclosures (SRP-GOV-014)
 ├── CONTRIBUTING.md                    — how to contribute
 ├── CODE_OF_CONDUCT.md                 — community code of conduct
@@ -81,7 +82,9 @@ tteop-spec/
 ├── BACKLOG-30-60-90.md                — implementation backlog
 ├── UNRESOLVED-DECISIONS.md            — decisions requiring approval
 ├── LICENSE                             — code license (Apache 2.0)
+├── LICENSES/                           — full license texts (Apache-2.0, CC-BY-4.0)
 ├── NOTICE                              — attribution notice
+├── REUSE.toml                         — SPDX license identifiers (REUSE spec)
 │
 ├── schemas/                           — canonical JSON schemas
 ├── metrics/                           — metric registry and definitions
@@ -93,7 +96,8 @@ tteop-spec/
 ├── adapters/                          — provider adapter mappings
 ├── teps/                              — TTEOP Extension Proposals
 ├── python/                            — Python reference implementation
-└── integrations/                      — integration examples (TS, Python, MCP, CLI)
+├── integrations/                      — integration examples (TS, Python, MCP, CLI)
+└── scripts/                           — utility scripts (DCO check, etc.)
 ```
 
 ## Quick start
@@ -138,9 +142,10 @@ TTEOP metrics do NOT prove: code quality, task correctness, productivity, profes
 ## License
 
 - **Specification documents** (`SPEC.md`, `schemas/`, `metrics/`, `profiles/`, `adapters/`, `teps/`, `examples/`, `test-vectors/`): Creative Commons Attribution 4.0 International (CC BY 4.0)
-- **Executable code** (`reference/`, `conformance/`, `integrations/`, `python/`): Apache License 2.0
+- **Executable code** (`reference/`, `conformance/`, `integrations/`, `python/`, `scripts/`): Apache License 2.0
+- **Governance documents** (`GOVERNANCE.md`, `CONTRIBUTING.md`, `MAINTAINERS.md`, etc.): Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-See `LICENSE` and `NOTICE` for details.
+Full license texts are in `LICENSES/`. SPDX identifiers are declared in `REUSE.toml`. See `LICENSE` and `NOTICE` for details.
 
 ## Governance
 

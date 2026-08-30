@@ -43,9 +43,25 @@ const SPEC_VERSION = "sigrank/0.1-draft";
 // These functions implement the sigrank/0.1-draft metric definitions.
 // A conforming implementation MUST produce the same results for the same inputs.
 
+// ─── Banker's rounding (round-half-to-even) ─────────────────────────────────
+// SPEC.md SRP-METRIC-002 requires round-half-to-even, NOT toFixed (round-half-up).
+
 function round(n, d) {
   if (n === null || !Number.isFinite(n)) return null;
-  return Number(n.toFixed(d));
+  const factor = Math.pow(10, d);
+  const scaled = n * factor;
+  const floor = Math.floor(scaled);
+  const frac = scaled - floor;
+  let result;
+  if (frac < 0.5) {
+    result = floor;
+  } else if (frac > 0.5) {
+    result = floor + 1;
+  } else {
+    // Exactly 0.5: round to even
+    result = (floor % 2 === 0) ? floor : floor + 1;
+  }
+  return result / factor;
 }
 
 /**

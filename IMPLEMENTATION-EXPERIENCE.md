@@ -1,7 +1,7 @@
 # Implementation Experience
 
 **Document status:** Informative — maintained as implementations are completed
-**Last updated:** 2026-08-28
+**Last updated:** 2026-08-30
 
 ---
 
@@ -63,12 +63,13 @@ An implementation is **independent** if:
 - Public leaderboard (commercial layer)
 
 **Conformance results:**
+- 151/151 conformance assertions pass (JS runner — `conformance/tteop-runner.mjs`)
 - 13/13 conformance fixtures pass (JS runner)
 - 13/13 conformance fixtures pass (Python runner)
 - Canonical MOSES seed vector: Υ=18436.98 ✓
 - Cross-repository conformance: sigrank-app + sigrank-mcp both pass same fixtures
 
-**Known deviations:** None at v0.1-draft
+**Known deviations:** None claimed at v0.1-draft; however, this is a self-test by the reference implementation, not independent validation. See "Known Deviations and Gaps" table below for deferred items.
 
 **Lessons learned:**
 - The four-pillar model is sufficient for initial interoperability

@@ -3,10 +3,17 @@
   "version": "0.1.0-draft",
   "description": "TTEOP — Token Telemetry Evaluation Operator Protocol: an open, vendor-neutral interoperability standard for measuring AI-operator token efficiency.",
   "type": "module",
+  "bin": {
+    "tteop": "bin/tteop.mjs"
+  },
   "scripts": {
     "conformance": "node conformance/tteop-runner.mjs",
     "validate": "node conformance/tteop-validate.mjs",
-    "legacy-conformance": "node conformance/runner.mjs"
+    "legacy-conformance": "node conformance/runner.mjs",
+    "test:tie": "node conformance/tests/tie-tests.mjs",
+    "test:negative": "node conformance/tests/negative-fixtures.mjs",
+    "test:report": "node conformance/tests/report-schema-test.mjs",
+    "test:python": "python3 -m pytest python/tests/test_build_envelope.py -v"
   },
   "license": "SEE LICENSE",
   "repository": {

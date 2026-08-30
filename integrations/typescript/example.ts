@@ -49,7 +49,7 @@ export interface OtepEnvelope {
   };
   provenance: {
     level: "self-reported" | "collector-attested" | "platform-verified" | "signed";
-    signature_status: "unsigned" | "valid" | "invalid" | "not-applicable";
+    signature_status: "unsigned" | "valid" | "invalid" | "not-applicable" | "signature-present-unverified";
   };
   privacy: {
     mode: "public-pseudonymous" | "private-managed-cohort" | "enterprise-isolated";
@@ -58,9 +58,25 @@ export interface OtepEnvelope {
   warnings: string[];
 }
 
-function round(n: number | null, d: number): number | null {
-  if (n === null || !Number.isFinite(n)) return null;
-  return Number(n.toFixed(d));
+// ─── Banker's rounding (round-half-to-even) ─────────────────────────────────
+// SPEC.md SRP-METRIC-002 requires round-half-to-even, NOT toFixed (round-half-up).
+
+function roundHalfToEven(value: number | null, decimals: number): number | null {
+  if (value === null || !Number.isFinite(value)) return null;
+  const factor = Math.pow(10, decimals);
+  const scaled = value * factor;
+  const floor = Math.floor(scaled);
+  const frac = scaled - floor;
+  let result: number;
+  if (frac < 0.5) {
+    result = floor;
+  } else if (frac > 0.5) {
+    result = floor + 1;
+  } else {
+    // Exactly 0.5: round to even
+    result = (floor % 2 === 0) ? floor : floor + 1;
+  }
+  return result / factor;
 }
 
 export function computeMetrics(t: Telemetry): { metrics: Metrics; warnings: string[] } {
@@ -113,11 +129,11 @@ export function computeMetrics(t: Telemetry): { metrics: Metrics; warnings: stri
 
   return {
     metrics: {
-      yield: round(y, 2),
-      leverage: round(leverage, 1),
-      velocity: round(velocity, 3),
-      output_fraction: round(ofRaw, 4),
-      log_leverage: round(logLev, 2),
+      yield: roundHalfToEven(y, 2),
+      leverage: roundHalfToEven(leverage, 1),
+      velocity: roundHalfToEven(velocity, 3),
+      output_fraction: roundHalfToEven(ofRaw, 4),
+      log_leverage: roundHalfToEven(logLev, 2),
     },
     warnings: orderedWarnings,
   };

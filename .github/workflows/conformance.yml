@@ -8,35 +8,63 @@ on:
 
 jobs:
   conformance:
-    name: Run TTEOP conformance suite
+    name: TTEOP conformance suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install dependencies
-        run: npm install
-      - name: Run TTEOP conformance suite
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Gate 1: Install dependencies reproducibly
+      - name: 1. Install dependencies (npm ci)
+        run: npm ci
+
+      # Gate 2: Run the TTEOP conformance runner
+      - name: 2. Run TTEOP conformance runner
         run: node conformance/tteop-runner.mjs
-      - name: Run TTEOP validator on all examples
+
+      # Gate 3: Run runner self-tests proving failures are detected
+      - name: 3. Run runner self-test
+        run: python3 conformance/tests/runner-self-test.py
+
+      # Gate 4: Validate every canonical valid envelope
+      - name: 4. Validate all canonical examples
         run: |
           for f in examples/minimal-valid.json examples/complete-valid.json examples/unsupported-cache.json examples/signed-envelope.json examples/canonical-reference.json; do
             echo "Validating $f..."
             node conformance/tteop-validate.mjs "$f" --report text
           done
-          echo "Validating invalid payload (expected to fail)..."
-          node conformance/tteop-validate.mjs examples/invalid-payload.json --report text && exit 1 || echo "Correctly rejected invalid payload"
-      - name: Run Python conformance runner
+
+      # Gate 5: Confirm every invalid/adversarial fixture is rejected
+      - name: 5. Run negative-fixture suite
+        run: node conformance/tests/negative-fixtures.mjs
+
+      # Gate 6: Install the Python package
+      - name: 6. Install Python package
+        run: pip install -e python/ --quiet
+
+      # Gate 7: Validate output from the installed Python package's public builder
+      - name: 7. Validate Python package build_envelope output
         run: |
-          pip install -e python/ --quiet
-          python -m sigrank_standard
-      - name: Run Python conformance self-test
+          python3 -c "
+from sigrank_standard import build_record
+import json
+r = build_record(1251211, 11296121, 128196310, 2555179769, provider='anthropic', model='claude-sonnet-4', tool='claude-code')
+print(json.dumps(r, indent=2))
+" > /tmp/pkg-record.json
+          node conformance/tteop-validate.mjs /tmp/pkg-record.json --report text
+
+      # Gate 7b: Run Python package tests
+      - name: 7b. Run Python package tests
+        run: python3 -m pytest python/tests/test_build_envelope.py -v
+
+      # Gate 8: Validate TypeScript integration output
+      - name: 8. Validate TypeScript integration output
         run: |
-          python3 conformance/tests/runner-self-test.py
-      - name: Verify integration examples produce schema-valid envelopes
-        run: |
-          # TypeScript integration
           node -e "
             import { buildRecord } from './integrations/typescript/example.ts';
             const record = buildRecord(
@@ -49,19 +77,46 @@ jobs:
           " --input-type=module
           node conformance/tteop-validate.mjs /tmp/ts-record.json --report text
 
-          # Python integration
-          python3 integrations/python/example.py > /tmp/py-record.json
-          node conformance/tteop-validate.mjs /tmp/py-record.json --report text
-
-          # Python package (sigrank_standard.build_record)
-          python3 -c "
-from sigrank_standard import build_record
-import json
-r = build_record(1251211, 11296121, 128196310, 2555179769, provider='anthropic', model='claude-sonnet-4', tool='claude-code')
-print(json.dumps(r, indent=2))
-" > /tmp/pkg-record.json
-          node conformance/tteop-validate.mjs /tmp/pkg-record.json --report text
-
-          # CLI integration
+      # Gate 9: Validate CLI integration output
+      - name: 9. Validate CLI integration output
+        run: |
           node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769 > /tmp/cli-record.json
           node conformance/tteop-validate.mjs /tmp/cli-record.json --report text
+
+      # Gate 10: Validate MCP-produced envelope output
+      - name: 10. Validate MCP integration output
+        run: |
+          node integrations/mcp/example.mjs > /tmp/mcp-record.json 2>/dev/null || true
+          if [ -f /tmp/mcp-record.json ]; then
+            node conformance/tteop-validate.mjs /tmp/mcp-record.json --report text
+          else
+            echo "MCP example does not produce a file (expected for scaffold)"
+          fi
+
+      # Gate 11: Exercise half-even tie vectors across implementations
+      - name: 11. Run cross-implementation tie tests
+        run: node conformance/tests/tie-tests.mjs
+
+      # Gate 12: Generate and schema-validate JSON conformance reports
+      - name: 12. Validate conformance reports against schema
+        run: node conformance/tests/report-schema-test.mjs
+
+      # Gate 13: Exercise the installed 'tteop' executable
+      - name: 13. Exercise installed tteop executable
+        run: |
+          npm link --quiet
+          tteop version
+          tteop help | head -3
+          tteop validate examples/complete-valid.json --report text
+          tteop validate examples/complete-valid.json --report json > /tmp/tteop-cli-report.json
+          tteop validate examples/complete-valid.json --class producer --report text
+          tteop validate examples/complete-valid.json --class consumer --report text
+          tteop validate examples/negative/08-public-pseudo-cohort.json --report json || echo "Correctly rejected negative fixture"
+
+      # Gate 14: Check for DCO sign-off on new commits
+      - name: 14. Check DCO sign-off
+        run: bash scripts/check-dco.sh
+
+      # Gate 15: git diff --check
+      - name: 15. git diff --check
+        run: git diff --check

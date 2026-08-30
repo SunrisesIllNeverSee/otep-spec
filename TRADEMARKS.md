@@ -9,7 +9,7 @@
 
 "TTEOP" and "Token Telemetry Evaluation Operator Protocol" are the proposed names for this specification.
 
-**[REQUIRES LEGAL REVIEW]** — Trademark availability and registration status have not been formally cleared. See `UNRESOLVED-DECISIONS.md` §9.
+**[REQUIRES LEGAL REVIEW (UD-9 deferred)]** — Trademark availability and registration status have not been formally cleared. See `UNRESOLVED-DECISIONS.md` §9.
 
 Until trademark registration is completed:
 - "TTEOP" is used as a descriptive name, not as a claimed trademark
@@ -42,7 +42,7 @@ Until trademark registration is completed:
 
 ## 3. Certification Marks
 
-**[REQUIRES LEGAL REVIEW + FOUNDER APPROVAL]**
+**[REQUIRES LEGAL REVIEW (UD-9 deferred) + FOUNDER APPROVAL]**
 
 If a certification program is established:
 - "TTEOP Conformant" would be registered as a certification mark
