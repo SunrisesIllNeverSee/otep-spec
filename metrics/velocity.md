@@ -1,6 +1,6 @@
 # Velocity
 
-**Metric ID:** `otep.velocity`
+**Metric ID:** `tteop.velocity`
 **Maturity:** Experimental
 **Spec section:** SPEC.md §26.3
 

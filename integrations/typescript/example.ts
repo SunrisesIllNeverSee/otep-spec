@@ -1,7 +1,7 @@
 /**
  * integrations/typescript/example.ts
  *
- * Minimal TypeScript implementation of the OTEP v0.1-draft
+ * Minimal TypeScript implementation of the TTEOP v0.1-draft
  * five-metric portable core + schema-conforming envelope builder.
  * No dependencies.
  *
@@ -25,7 +25,7 @@ export interface Metrics {
 }
 
 export interface OtepEnvelope {
-  protocol_version: "otep/0.1-draft";
+  protocol_version: "tteop/0.1-draft";
   metric_spec_version: string;
   observation: {
     timestamp: string;
@@ -143,8 +143,8 @@ export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): Ot
   const { metrics, warnings } = computeMetrics(t);
   const now = new Date().toISOString();
   return {
-    protocol_version: "otep/0.1-draft",
-    metric_spec_version: "otep-metrics/0.1-draft",
+    protocol_version: "tteop/0.1-draft",
+    metric_spec_version: "tteop-metrics/0.1-draft",
     observation: {
       timestamp: now,
       window_start: opts.window_start ?? null,

@@ -1,7 +1,7 @@
 # Security Considerations
 
 **Document status:** Normative
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 ---
 
@@ -39,7 +39,7 @@ Do NOT open public GitHub issues for security vulnerabilities.
 
 ## 3. Employee-Surveillance Misuse
 
-**`SRP-SEC-003`** OTEP metrics MUST NOT be used as the sole basis for employment decisions (hiring, firing, promotion, compensation, performance review).
+**`SRP-SEC-003`** TTEOP metrics MUST NOT be used as the sole basis for employment decisions (hiring, firing, promotion, compensation, performance review).
 
 **`SRP-SEC-004`** Enterprise deployments MUST provide operators with:
 - **Access:** Operators can view their own telemetry
@@ -51,7 +51,7 @@ Do NOT open public GitHub issues for security vulnerabilities.
 
 ## 4. Content Independence
 
-**`SRP-SEC-005`** The OTEP protocol MUST NOT require collection of prompt text, completion text, source code, diffs, keystrokes, or screen contents.
+**`SRP-SEC-005`** The TTEOP protocol MUST NOT require collection of prompt text, completion text, source code, diffs, keystrokes, or screen contents.
 
 **`SRP-SEC-006`** Implementations MUST validate that no forbidden field names (per SRP-VAL-006) are present in any envelope.
 

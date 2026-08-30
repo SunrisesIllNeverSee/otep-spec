@@ -15,9 +15,9 @@
 
 ## Commercial Affiliations
 
-**Disclosure:** The interim Lead Maintainer is the founder of SignalAF / SigRank, which is a reference implementation of OTEP (see `IMPLEMENTATION-EXPERIENCE.md`). This is a material commercial affiliation relevant to OTEP governance.
+**Disclosure:** The interim Lead Maintainer is the founder of SignalAF / SigRank, which is a reference implementation of TTEOP (see `IMPLEMENTATION-EXPERIENCE.md`). This is a material commercial affiliation relevant to TTEOP governance.
 
-**Recusal commitment:** Per SRP-GOV-015, the Lead Maintainer MUST recuse from voting or final-approval decisions on OEPs where the SignalAF/SigRank relationship is directly relevant. Recusal MUST be recorded in the decision log for the affected OEP.
+**Recusal commitment:** Per SRP-GOV-015, the Lead Maintainer MUST recuse from voting or final-approval decisions on TEPs where the SignalAF/SigRank relationship is directly relevant. Recusal MUST be recorded in the decision log for the affected TEP.
 
 ## Bootstrap Contributions
 
@@ -25,15 +25,15 @@ The following initial commits established the repository prior to DCO adoption (
 
 | Commit | Date | Description | Author |
 |--------|------|-------------|--------|
-| `6ebc457` | 2026-08-28 | OTEP v0.1-draft — initial public specification package | Deric <burnmydays@proton.me> |
+| `6ebc457` | 2026-08-28 | TTEOP v0.1-draft — initial public specification package | Deric <burnmydays@proton.me> |
 | `dbfb774` | 2026-08-30 | Conformance-and-canonicalization sprint — resolve all 8 reviewer findings | Deric <burnmydays@proton.me> |
 
 ## Pending Disclosures
 
 - **No additional maintainers or reviewers** have been appointed at v0.1-draft. When appointments occur, their disclosures will be added here.
 - **No Advisory Board** has been established at v0.1-draft.
-- **Trademark status:** No trademark clearance has been performed for "OTEP." The name is used as a provisional draft name pending founder decision (UD-1) and legal review (UD-9). See `UNRESOLVED-DECISIONS.md`.
-- **MO§ES™ trademark:** The Lead Maintainer's related project, MO§ES™, carries an existing trademark claim. This is noted for transparency; MO§ES™ and OTEP are separate projects with separate naming. No trademark cross-claim is made.
+- **Trademark status:** No trademark clearance has been performed for "TTEOP." The name is used as a provisional draft name pending founder decision (UD-1) and legal review (UD-9). See `UNRESOLVED-DECISIONS.md`.
+- **MO§ES™ trademark:** The Lead Maintainer's related project, MO§ES™, carries an existing trademark claim. This is noted for transparency; MO§ES™ and TTEOP are separate projects with separate naming. No trademark cross-claim is made.
 
 ## Update Schedule
 

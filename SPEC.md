@@ -1,11 +1,11 @@
-# OTEP — Operator Token Efficiency Protocol
+# TTEOP — Token Telemetry Evaluation Operator Protocol
 
 ## Specification v0.1-draft
 
 **Status:** Draft — not a formal standard
-**Protocol name:** OTEP (Operator Token Efficiency Protocol)
+**Protocol name:** TTEOP (Token Telemetry Evaluation Operator Protocol)
 **Legacy alias:** `sigrank/0.1-draft` (backward-compatible)
-**Spec version string:** `otep/0.1-draft`
+**Spec version string:** `tteop/0.1-draft`
 **Maturity:** Experimental — see §3
 
 ---
@@ -44,7 +44,7 @@
 
 ## 1. Status and Maturity
 
-This document is a **draft** of an open measurement specification. It is not a claim that OTEP has achieved formal industry-standard adoption, ISO/IEC recognition, or universal interoperability.
+This document is a **draft** of an open measurement specification. It is not a claim that TTEOP has achieved formal industry-standard adoption, ISO/IEC recognition, or universal interoperability.
 
 **Maturity levels used in this specification:**
 
@@ -57,7 +57,7 @@ This document is a **draft** of an open measurement specification. It is not a c
 
 **Overall specification maturity:** `experimental`
 
-**Protocol name note:** "OTEP" is the proposed neutral name. The legacy name "SigRank Standard" remains valid as a product alias. The spec version string `sigrank/0.1-draft` is accepted as a backward-compatible alias for `otep/0.1-draft`. See `ARCHITECTURE-DECISION-MEMO.md` §10 and `UNRESOLVED-DECISIONS.md` §1.
+**Protocol name note:** "TTEOP" is the proposed neutral name. The legacy name "SigRank Standard" remains valid as a product alias. The spec version string `sigrank/0.1-draft` is accepted as a backward-compatible alias for `tteop/0.1-draft`. See `ARCHITECTURE-DECISION-MEMO.md` §10 and `UNRESOLVED-DECISIONS.md` §1.
 
 ---
 
@@ -76,7 +76,7 @@ The v0.1-draft protocol defines:
 7. Three privacy modes
 8. Validation rules and error taxonomy
 9. Provenance levels and optional integrity model
-10. Extension mechanism via OEPs (OTEP Extension Proposals)
+10. Extension mechanism via TEPs (TTEOP Extension Proposals)
 11. Version negotiation and backward-compatibility policy
 12. Six conformance classes
 13. Explicit non-inferences and prohibited interpretations
@@ -136,13 +136,13 @@ See `TERMINOLOGY.md` for the complete canonical glossary. Key terms used in this
 | **Provider** | An organization that serves AI model inference (Anthropic, OpenAI, Google, etc.). |
 | **Model** | A specific AI model variant (claude-sonnet-4, gpt-4o, gemini-2.0-flash, etc.). |
 | **Collector** | Software that gathers token telemetry from an AI tool or provider API. |
-| **Consumer** | Software that ingests OTEP-conformant telemetry and computes metrics or analytics. |
+| **Consumer** | Software that ingests TTEOP-conformant telemetry and computes metrics or analytics. |
 | **Telemetry envelope** | The canonical data structure carrying token counts and metadata. |
 | **Observation window** | A time-bounded period over which token counts are aggregated. |
 | **Primitive** | One of the four canonical token-count fields: input, output, cache_write, cache_read. |
 | **Metric** | A derived value computed from primitives using a defined formula. |
 | **Privacy mode** | A declared policy governing what fields may be present and how identity is handled. |
-| **Adapter** | A mapping from provider-native telemetry fields to OTEP canonical primitives. |
+| **Adapter** | A mapping from provider-native telemetry fields to TTEOP canonical primitives. |
 | **Provenance** | The declared origin and trust level of a telemetry record. |
 | **Missing** | A field whose value is not available from the source (represented as `null`). |
 | **Unsupported** | A field that the source provider/tool does not expose (represented as `null` with a flag). |
@@ -163,14 +163,14 @@ See `TERMINOLOGY.md` for the complete canonical glossary. Key terms used in this
 ┌─────────────────────────────────────────────────────────────┐
 │                   ADAPTER LAYER                              │
 │  Provider Adapter (Anthropic / OpenAI / Google / custom)    │
-│  Maps provider-native fields → OTEP canonical primitives    │
+│  Maps provider-native fields → TTEOP canonical primitives    │
 │  Handles double-counting, missing fields, cache semantics   │
 └──────────────────────┬──────────────────────────────────────┘
                        │
                        ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                  TELEMETRY ENVELOPE                          │
-│  Canonical OTEP record: I/O/W/R + metadata + provenance     │
+│  Canonical TTEOP record: I/O/W/R + metadata + provenance     │
 │  Schema: schemas/telemetry-envelope-v0.1.schema.json        │
 └──────────────────────┬──────────────────────────────────────┘
                        │
@@ -199,13 +199,13 @@ See `TERMINOLOGY.md` for the complete canonical glossary. Key terms used in this
 
 **Failure condition:** The consumer produces different metric values for the same envelope when the producer identity changes.
 
-**`SRP-ARCH-003`** A conforming adapter MUST map provider-native fields to OTEP canonical primitives without altering the semantic meaning of the primitives.
+**`SRP-ARCH-003`** A conforming adapter MUST map provider-native fields to TTEOP canonical primitives without altering the semantic meaning of the primitives.
 
-**Failure condition:** The adapter maps a provider field to the wrong OTEP primitive (e.g., mapping cached tokens to `input` instead of `cache_read`).
+**Failure condition:** The adapter maps a provider field to the wrong TTEOP primitive (e.g., mapping cached tokens to `input` instead of `cache_read`).
 
 **`SRP-ARCH-004`** This specification is authoritative. No proprietary application, platform, or implementation is authoritative over the specification. Where a proprietary implementation and this specification disagree, the specification prevails.
 
-**Failure condition:** A proprietary implementation's behavior is treated as authoritative over the specification, or the specification is silently modified to match a proprietary implementation without going through the OEP process.
+**Failure condition:** A proprietary implementation's behavior is treated as authoritative over the specification, or the specification is silently modified to match a proprietary implementation without going through the TEP process.
 
 ---
 
@@ -217,8 +217,8 @@ The telemetry envelope is the canonical data structure for carrying token-proces
 
 ```json
 {
-  "protocol_version": "otep/0.1-draft",
-  "metric_spec_version": "otep-metrics/0.1-draft",
+  "protocol_version": "tteop/0.1-draft",
+  "metric_spec_version": "tteop-metrics/0.1-draft",
   "collector_version": "string",
   "operator": {
     "pseudonymous_key": "string",
@@ -263,7 +263,7 @@ The telemetry envelope is the canonical data structure for carrying token-proces
 
 ### 7.2 Required fields
 
-**`SRP-DATA-001`** The envelope MUST include `protocol_version` set to `otep/0.1-draft` or the legacy alias `sigrank/0.1-draft`.
+**`SRP-DATA-001`** The envelope MUST include `protocol_version` set to `tteop/0.1-draft` or the legacy alias `sigrank/0.1-draft`.
 
 **Failure condition:** `protocol_version` is absent or set to an unrecognized value.
 
@@ -319,8 +319,8 @@ The telemetry envelope is the canonical data structure for carrying token-proces
 
 | Field | Required? | Type | Constraint |
 |-------|-----------|------|------------|
-| `protocol_version` | MUST | string | `otep/0.1-draft` or `sigrank/0.1-draft` |
-| `metric_spec_version` | SHOULD | string | `otep-metrics/0.1-draft` |
+| `protocol_version` | MUST | string | `tteop/0.1-draft` or `sigrank/0.1-draft` |
+| `metric_spec_version` | SHOULD | string | `tteop-metrics/0.1-draft` |
 | `collector_version` | SHOULD | string | non-empty |
 | `operator.pseudonymous_key` | SHOULD | string | non-empty, no real identity |
 | `operator.cohort_id` | MAY | string or null | |
@@ -405,11 +405,11 @@ The telemetry envelope is the canonical data structure for carrying token-proces
 
 ### 10.1 Adapter model
 
-Providers expose token telemetry in different formats. An **adapter** maps provider-native fields to OTEP canonical primitives. Adapters are defined in `adapters/` and registered in `adapters/registry.json`.
+Providers expose token telemetry in different formats. An **adapter** maps provider-native fields to TTEOP canonical primitives. Adapters are defined in `adapters/` and registered in `adapters/registry.json`.
 
-**`SRP-ADAPT-001`** An adapter MUST map each provider-native token-count field to exactly one OTEP primitive (`input`, `output`, `cache_write`, `cache_read`) or declare it unmapped.
+**`SRP-ADAPT-001`** An adapter MUST map each provider-native token-count field to exactly one TTEOP primitive (`input`, `output`, `cache_write`, `cache_read`) or declare it unmapped.
 
-**Failure condition:** A provider-native field is mapped to multiple OTEP primitives, or an OTEP primitive receives contributions from incompatible provider fields.
+**Failure condition:** A provider-native field is mapped to multiple TTEOP primitives, or an TTEOP primitive receives contributions from incompatible provider fields.
 
 **`SRP-ADAPT-002`** An adapter MUST document how it handles providers that report cached tokens inside total input.
 
@@ -427,7 +427,7 @@ Some providers (e.g., OpenAI) report `cached_tokens` inside `prompt_tokens` (tot
 
 **Failure condition:** The adapter silently includes cached tokens in `input` without documentation or anomaly flag.
 
-**Recommendation:** Option (a) is preferred because it makes `input` represent fresh (uncached) tokens, which is the semantic intent of the OTEP `input` primitive.
+**Recommendation:** Option (a) is preferred because it makes `input` represent fresh (uncached) tokens, which is the semantic intent of the TTEOP `input` primitive.
 
 ### 10.3 Providers that expose cache reads but not cache creation
 
@@ -457,7 +457,7 @@ The v0.1-draft includes adapter definitions for:
 
 **Failure condition:** A custom adapter is not registered in `adapters/registry.json`, or its `adapter_id` is not unique.
 
-**`SRP-ADAPT-007`** Custom adapters MUST NOT map non-token-count fields (e.g., cost, latency, character counts) to OTEP primitives.
+**`SRP-ADAPT-007`** Custom adapters MUST NOT map non-token-count fields (e.g., cost, latency, character counts) to TTEOP primitives.
 
 **Failure condition:** A custom adapter maps a cost or latency field to a token-count primitive.
 
@@ -467,7 +467,7 @@ The v0.1-draft includes adapter definitions for:
 
 **Failure condition: The adapter includes tokens from failed retry attempts without documentation or anomaly flag.**
 
-**`SRP-ADAPT-009`** Streaming: For streaming responses, the adapter MUST aggregate all chunks into a single `output` count for the observation window. Per-chunk counts are not valid OTEP telemetry.
+**`SRP-ADAPT-009`** Streaming: For streaming responses, the adapter MUST aggregate all chunks into a single `output` count for the observation window. Per-chunk counts are not valid TTEOP telemetry.
 
 **Failure condition: The adapter emits per-chunk output counts instead of aggregating all chunks into a single output value.**
 
@@ -525,7 +525,7 @@ The protocol does not mandate a specific window granularity. Common granularitie
 | Per-day | 24 hours | Daily aggregation |
 | Per-week | 7 days | Weekly benchmarking |
 
-**`SRP-WIN-006`** Comparative claims using OTEP metrics MUST disclose the observation window granularity.
+**`SRP-WIN-006`** Comparative claims using TTEOP metrics MUST disclose the observation window granularity.
 
 **Failure condition:** A comparative claim does not disclose the window granularity.
 
@@ -590,7 +590,7 @@ The `validity.missingness_flags` array documents which fields are missing and wh
 
 **`SRP-MISS-003`** An implementation MUST NOT replace a null/missing value with zero, a computed estimate, or any other fabricated value.
 
-**Failure condition:** A null cache field is replaced with a non-null value without an explicit, documented normalization rule from an accepted OEP.
+**Failure condition:** A null cache field is replaced with a non-null value without an explicit, documented normalization rule from an accepted TEP.
 
 ### 13.3 Metric behavior with missing fields
 
@@ -667,7 +667,7 @@ Provenance levels declare the trust level of a telemetry record:
 
 **Failure condition: A consumer rejects an envelope solely because its provenance level is lower than the consumer prefers.**
 
-**`SRP-PROV-004`** Comparative claims using OTEP metrics SHOULD disclose the provenance level of the compared records.
+**`SRP-PROV-004`** Comparative claims using TTEOP metrics SHOULD disclose the provenance level of the compared records.
 
 **Failure condition: A comparative claim does not disclose the provenance level of the compared records.**
 
@@ -745,11 +745,11 @@ See `PRIVACY.md` for full definitions. Summary:
 
 ### 17.2 Content independence
 
-**`SRP-PRIV-007`** The core OTEP metrics MUST be computable from token counts alone, without any semantic content.
+**`SRP-PRIV-007`** The core TTEOP metrics MUST be computable from token counts alone, without any semantic content.
 
 **Failure condition:** An implementation cannot compute metrics without prompt or completion text.
 
-**`SRP-PRIV-008`** Optional enrichment (model, provider, tool, timestamps, workflow stage, task result, PR data, cost, incidents, business KPIs) MAY be combined with OTEP metrics but MUST be distinguishable from the core metric layer.
+**`SRP-PRIV-008`** Optional enrichment (model, provider, tool, timestamps, workflow stage, task result, PR data, cost, incidents, business KPIs) MAY be combined with TTEOP metrics but MUST be distinguishable from the core metric layer.
 
 **Failure condition: Optional enrichment data is not distinguishable from the core metric layer (e.g., enrichment fields appear in the telemetry object).**
 
@@ -780,9 +780,9 @@ See `PRIVACY.md` for full definitions. Summary:
 
 ### 18.3 Employee-surveillance misuse
 
-**`SRP-SEC-003`** The specification explicitly prohibits using OTEP metrics as the sole basis for employment decisions (hiring, firing, promotion, compensation).
+**`SRP-SEC-003`** The specification explicitly prohibits using TTEOP metrics as the sole basis for employment decisions (hiring, firing, promotion, compensation).
 
-**Failure condition: OTEP metrics are used as the sole basis for an employment decision (hiring, firing, promotion, compensation).**
+**Failure condition: TTEOP metrics are used as the sole basis for an employment decision (hiring, firing, promotion, compensation).**
 
 **`SRP-SEC-004`** Enterprise deployments MUST provide operators with:
 - Access to their own telemetry
@@ -795,13 +795,13 @@ See `PRIVACY.md` for full definitions. Summary:
 
 ## 19. Extension Mechanism
 
-### 19.1 OEP process
+### 19.1 TEP process
 
-Extensions to the protocol are proposed through **OEPs** (OTEP Extension Proposals). See `GOVERNANCE.md` for the full OEP lifecycle.
+Extensions to the protocol are proposed through **TEPs** (TTEOP Extension Proposals). See `GOVERNANCE.md` for the full TEP lifecycle.
 
-**`SRP-EXT-001`** Any addition, modification, or deprecation of a normative requirement MUST go through the OEP process.
+**`SRP-EXT-001`** Any addition, modification, or deprecation of a normative requirement MUST go through the TEP process.
 
-**Failure condition:** A normative requirement is changed without an accepted OEP.
+**Failure condition:** A normative requirement is changed without an accepted TEP.
 
 **`SRP-EXT-002`** Extensions (new metrics, new adapters, new privacy modes) MUST be registered in the appropriate registry before claiming conformance.
 
@@ -833,10 +833,10 @@ Adapters are registered in `adapters/registry.json`.
 
 ### 20.1 Version string format
 
-Protocol versions use the format `otep/<major>.<minor>-<status>`:
-- `otep/0.1-draft` — v0.1 draft
-- `otep/0.5-draft` — v0.5 draft
-- `otep/1.0` — v1.0 stable
+Protocol versions use the format `tteop/<major>.<minor>-<status>`:
+- `tteop/0.1-draft` — v0.1 draft
+- `tteop/0.5-draft` — v0.5 draft
+- `tteop/1.0` — v1.0 stable
 
 **`SRP-VER-001`** Every envelope MUST declare its protocol version in `protocol_version`.
 
@@ -848,7 +848,7 @@ Protocol versions use the format `otep/<major>.<minor>-<status>`:
 
 ### 20.2 Metric spec versioning
 
-Metric definitions are versioned separately: `otep-metrics/0.1-draft`.
+Metric definitions are versioned separately: `tteop-metrics/0.1-draft`.
 
 **`SRP-VER-003`** Every envelope SHOULD declare its metric spec version in `metric_spec_version`.
 
@@ -860,7 +860,7 @@ Metric definitions are versioned separately: `otep-metrics/0.1-draft`.
 
 ### 20.3 Legacy alias
 
-**`SRP-VER-005`** The version string `sigrank/0.1-draft` MUST be accepted as a backward-compatible alias for `otep/0.1-draft`. Consumers MUST NOT reject envelopes solely because they use the legacy version string.
+**`SRP-VER-005`** The version string `sigrank/0.1-draft` MUST be accepted as a backward-compatible alias for `tteop/0.1-draft`. Consumers MUST NOT reject envelopes solely because they use the legacy version string.
 
 **Failure condition: A consumer rejects an envelope solely because it uses the legacy version string sigrank/0.1-draft.**
 
@@ -938,7 +938,7 @@ See `conformance/classes.md` for full definitions. Summary:
 |-------|-------------|-----------------|
 | **Producer** | Emits valid telemetry envelopes | Schema, primitives, null semantics, privacy, content independence |
 | **Consumer** | Ingests and processes envelopes | Schema validation, metric computation, aggregation, error handling |
-| **Adapter** | Maps provider-native fields to OTEP primitives | Field mapping, double-counting, missing fields, anomaly flags |
+| **Adapter** | Maps provider-native fields to TTEOP primitives | Field mapping, double-counting, missing fields, anomaly flags |
 | **Metric-engine** | Computes registered metrics | All 5 metrics, null semantics, boundary cases, rounding |
 | **Privacy-profile** | Enforces privacy mode rules | Field restrictions, identity handling, small-cell suppression, deletion |
 | **Full-platform** | Producer + Consumer + Metric-engine + Privacy-profile | All mandatory tests from all classes |
@@ -955,9 +955,9 @@ See `conformance/classes.md` for full definitions. Summary:
 
 **Failure condition: A conformance claim does not identify the protocol version, metric spec version, or conformance runner version.**
 
-**`SRP-CONF-004`** `SigRank Conformant` / `OTEP Conformant` is reserved until a third-party implementation passes the conformance suite independently.
+**`SRP-CONF-004`** `SigRank Conformant` / `TTEOP Conformant` is reserved until a third-party implementation passes the conformance suite independently.
 
-**Failure condition: A system claims "OTEP Conformant" without third-party independent validation.**
+**Failure condition: A system claims "TTEOP Conformant" without third-party independent validation.**
 
 **`SRP-CONF-005`** Payment MUST NOT be a prerequisite for conformance testing. Conformance tests are open and freely runnable.
 
@@ -981,9 +981,9 @@ The metric registry is maintained in `metrics/registry.json` within this reposit
 **`SRP-REG-002`** Each metric entry MUST include all fields specified in §19.2.
 
 **Failure condition: A metric entry in the registry is missing one or more required fields.**
-**`SRP-REG-003`** Registry changes MUST go through the OEP process.
+**`SRP-REG-003`** Registry changes MUST go through the TEP process.
 
-**Failure condition: A registry change is made without going through the OEP process.**
+**Failure condition: A registry change is made without going through the TEP process.**
 
 ### 24.2 Adapter registry
 
@@ -1006,9 +1006,9 @@ This is a future consideration, not a v0.1 requirement.
 
 ## 25. Explicit Non-Inferences and Prohibited Interpretations
 
-### 25.1 What OTEP metrics do NOT measure
+### 25.1 What TTEOP metrics do NOT measure
 
-**`SRP-NON-001`** OTEP metrics MUST NOT be presented as proof of:
+**`SRP-NON-001`** TTEOP metrics MUST NOT be presented as proof of:
 - Code quality
 - Task correctness
 - Task success
@@ -1020,17 +1020,17 @@ This is a future consideration, not a v0.1 requirement.
 - Human intelligence
 - Creativity
 
-**Failure condition: An OTEP metric is presented as proof of code quality, productivity, task success, professional skill, employee performance, business impact, or causal improvement.**
+**Failure condition: An TTEOP metric is presented as proof of code quality, productivity, task success, professional skill, employee performance, business impact, or causal improvement.**
 
-**`SRP-NON-002`** Any claim that OTEP metrics prove any of the above is a **prohibited interpretation** and a conformance violation.
+**`SRP-NON-002`** Any claim that TTEOP metrics prove any of the above is a **prohibited interpretation** and a conformance violation.
 
-**Failure condition: A claim states that OTEP metrics prove any of the prohibited interpretations listed in SRP-NON-001.**
+**Failure condition: A claim states that TTEOP metrics prove any of the prohibited interpretations listed in SRP-NON-001.**
 
 ### 25.2 Claim levels
 
-**`SRP-NON-003`** Claims using OTEP metrics MUST be classified as one of:
+**`SRP-NON-003`** Claims using TTEOP metrics MUST be classified as one of:
 
-**Failure condition: A claim using OTEP metrics is not classified as descriptive, comparative, associational, or causal.**
+**Failure condition: A claim using TTEOP metrics is not classified as descriptive, comparative, associational, or causal.**
 
 | Level | Definition | Example |
 |-------|------------|---------|
@@ -1072,7 +1072,7 @@ All metrics are defined in detail in `metrics/` and registered in `metrics/regis
 - **What it measures:** A composite signal combining cache reuse (Leverage) and output generation (Velocity)
 - **What it does NOT measure:** Code quality, productivity, or task success
 - **Known limitation:** Quadratically sensitive to input scale due to `input²` in denominator. See `metrics/yield.md` for full analysis.
-- **Normalization profiles:** Proposed alternatives (window-normalized Υ_w, linear-input Υ_lin, sqrt-input Υ_sqrt, log-yield log_Υ) documented in `metrics/normalization-profiles.md`. All experimental, deferred to v0.2 via OEP.
+- **Normalization profiles:** Proposed alternatives (window-normalized Υ_w, linear-input Υ_lin, sqrt-input Υ_sqrt, log-yield log_Υ) documented in `metrics/normalization-profiles.md`. All experimental, deferred to v0.2 via TEP.
 - **Test vector:** MOSES canonical seed → Υ = 18436.98
 
 ### 26.2 Leverage
@@ -1163,7 +1163,7 @@ Standard warning strings:
 
 | Version | Date | Changes |
 |---------|------|---------|
-| `otep/0.1-draft` | 2026-08-28 | Initial public draft. Upgrades `sigrank/0.1-draft` with stable requirement IDs, provider adapters, observation windows, privacy modes, provenance levels, conformance classes, and explicit non-inferences. |
+| `tteop/0.1-draft` | 2026-08-28 | Initial public draft. Upgrades `sigrank/0.1-draft` with stable requirement IDs, provider adapters, observation windows, privacy modes, provenance levels, conformance classes, and explicit non-inferences. |
 | `sigrank/0.1-draft` | 2026-08-27 | Initial draft extracted from sigrank-app. Primitives, 5 metrics, null semantics, schema, conformance runner. |
 
 ---
@@ -1246,7 +1246,7 @@ Standard warning strings:
 | SRP-SEC-002 | §18.2 | Security report timelines |
 | SRP-SEC-003 | §18.3 | No sole-basis employment decisions |
 | SRP-SEC-004 | §18.3 | Enterprise operator rights |
-| SRP-EXT-001 | §19.1 | Normative changes via OEP |
+| SRP-EXT-001 | §19.1 | Normative changes via TEP |
 | SRP-EXT-002 | §19.1 | Extensions registered |
 | SRP-EXT-003 | §19.1 | Extension namespace prefixes |
 | SRP-EXT-004 | §19.2 | Metric registry fields |
@@ -1272,7 +1272,7 @@ Standard warning strings:
 | SRP-CONF-006 | §23 | Certification based on published rules |
 | SRP-REG-001 | §24.1 | Registry is machine-readable |
 | SRP-REG-002 | §24.1 | Registry entries complete |
-| SRP-REG-003 | §24.1 | Registry changes via OEP |
+| SRP-REG-003 | §24.1 | Registry changes via TEP |
 | SRP-REG-004 | §24.2 | Adapter registry fields |
 | SRP-NON-001 | §25.1 | No proof of quality/productivity/etc. |
 | SRP-NON-002 | §25.1 | Prohibited interpretations |

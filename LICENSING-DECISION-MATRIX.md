@@ -1,13 +1,13 @@
-# OTEP Licensing Decision Matrix
+# TTEOP Licensing Decision Matrix
 
 **Status:** Draft — for legal review
 **Last updated:** 2025
-**Owner:** OTEP Steering Group
+**Owner:** TTEOP Steering Group
 
 ## Purpose
 
 This document records the recommended licensing approach for each class of
-artifact produced by the OTEP (Operator Token Efficiency Protocol) project.
+artifact produced by the TTEOP (Token Telemetry Evaluation Operator Protocol) project.
 Licensing decisions for a standards effort are not one-size-fits-all: a
 specification, a schema, a conformance test suite, and a reference
 implementation serve different purposes and are consumed differently by
@@ -34,21 +34,21 @@ project treats them as final.
 4. **Do not confuse copyright with trademark.** A certification mark is
    governed by trademark law, not by a copyright license. The two regimes
    must be handled separately.
-5. **Respect standards-body conventions where applicable.** If OTEP ever
+5. **Respect standards-body conventions where applicable.** If TTEOP ever
    aligns with or submits to an external standards body (W3C, IETF, ISO),
    that body may mandate a specific document license. The recommendations
-   here assume OTEP remains an independent community specification.
+   here assume TTEOP remains an independent community specification.
 
 ## Decision matrix
 
 | Artifact | Recommended License | Rationale | Alternative | Legal Review Required? |
 |---|---|---|---|---|
-| Specification text (SPEC.md, TERMINOLOGY.md, OTEPS, RFCs) | CC BY 4.0 | Permits adoption, excerpting, and derivative specifications with attribution and without copyleft. Widely used for open specifications (e.g., W3C Community Group drafts, Khronos). | W3C Document License or IETF Trust license if OTEP is submitted to those bodies; CC BY-SA 4.0 if copyleft-on-derivatives is desired. | Yes — confirm compatibility with any target standards body. |
+| Specification text (SPEC.md, TERMINOLOGY.md, TTEOPS, RFCs) | CC BY 4.0 | Permits adoption, excerpting, and derivative specifications with attribution and without copyleft. Widely used for open specifications (e.g., W3C Community Group drafts, Khronos). | W3C Document License or IETF Trust license if TTEOP is submitted to those bodies; CC BY-SA 4.0 if copyleft-on-derivatives is desired. | Yes — confirm compatibility with any target standards body. |
 | Schemas (JSON Schema files, YAML data definitions) | CC BY 4.0 | Schemas describe structure and are documentation-like: their value is in being copied and reused. CC BY permits embedding in downstream products with attribution. | Apache 2.0 is also acceptable and preferred if the schema files are treated as code by downstream tooling (some build systems expect a code license). | Yes — confirm that schema files are not considered "code" by adopters' compliance teams. |
 | Reference code (conformance runner, provider adapters, integrations) | Apache 2.0 | Industry-standard permissive license with an explicit patent grant and a contribution clause (CLA-equivalent via inbound=outbound). Compatible with most ecosystems and corporate policies. | MIT is simpler and shorter but lacks an explicit patent grant, which matters for code implementers are expected to run. | Yes — confirm inbound=outbound contribution terms and CLA needs. |
 | Conformance tests (test vectors, harness, assertions) | Apache 2.0 | Tests are executable code and are run by implementers to verify compliance. An explicit patent grant is important so that running the tests cannot trigger patent assertions. | MIT acceptable only if patent risk is deemed negligible; not recommended. | Yes — confirm that test distribution does not create patent exposure for adopters. |
 | Documentation (README, guides, tutorials, diagrams) | CC BY 4.0 | Documentation should be freely redistributable and adaptable. CC BY allows vendors to embed docs in product manuals with attribution. | CC BY-SA 4.0 if derivative docs must share-alike (discouraged; creates friction). | No (low risk), but confirm attribution requirements are practical. |
-| Certification marks (e.g., "OTEP Conformant") | Trademark law, not copyright | Marks are governed by trademark law. A copyright license does not confer the right to use a mark. Registration establishes the project's control over conformance claims. | Rely on unregistered common-law rights (weaker, jurisdiction-dependent). | Yes — requires trademark counsel. |
+| Certification marks (e.g., "TTEOP Conformant") | Trademark law, not copyright | Marks are governed by trademark law. A copyright license does not confer the right to use a mark. Registration establishes the project's control over conformance claims. | Rely on unregistered common-law rights (weaker, jurisdiction-dependent). | Yes — requires trademark counsel. |
 
 ## Detailed notes by artifact class
 
@@ -61,7 +61,7 @@ International (CC BY 4.0) achieves this: it permits any use, commercial or
 non-commercial, including derivative works, provided attribution is given and
 changes are indicated.
 
-Some standards bodies require their own document licenses. If OTEP is ever
+Some standards bodies require their own document licenses. If TTEOP is ever
 submitted to the W3C, the W3C Document License applies to W3C-published
 versions; if submitted as an IETF Internet-Draft, the IETF Trust's legal
 provisions (BCP 78 and BCP 79) apply. These are compatible in spirit with
@@ -107,15 +107,15 @@ tests, and the contribution terms keep the suite maintainable.
 READMEs, guides, tutorials, and diagrams are prose. CC BY 4.0 permits
 vendors to excerpt and adapt documentation for their own products with
 attribution, which supports adoption. Share-alike (CC BY-SA) is discouraged
-because it would prevent vendors from incorporating OTEP documentation into
+because it would prevent vendors from incorporating TTEOP documentation into
 proprietary manuals.
 
 ### Certification marks
 
 A certification mark is a legal instrument distinct from copyright. It
 allows the mark owner to certify that products or services meet defined
-standards. If OTEP establishes a formal certification program, the project
-should register "OTEP Conformant" (or a similar mark) in relevant
+standards. If TTEOP establishes a formal certification program, the project
+should register "TTEOP Conformant" (or a similar mark) in relevant
 jurisdictions. Until a certification program exists, registration is
 premature. This item requires trademark counsel and is out of scope for a
 copyright licensing decision.
@@ -144,17 +144,17 @@ treated as final:
    confirm its terms are compatible with the recommended licenses.
 
 5. **Certification mark registration.** If a certification program is
-   established, engage trademark counsel to register "OTEP Conformant" in
+   established, engage trademark counsel to register "TTEOP Conformant" in
    target jurisdictions and to draft a certification mark usage policy
    defining how the mark may be used and how conformance is verified.
 
-6. **Trademark protection for "OTEP" itself.** Confirm whether the project
+6. **Trademark protection for "TTEOP" itself.** Confirm whether the project
    name and logo should be registered as trademarks to prevent misuse,
    independent of any certification mark.
 
 7. **Jurisdictional considerations.** Confirm that the recommended licenses
    are enforceable and interpreted as expected in the jurisdictions where
-   OTEP is expected to be adopted. CC BY 4.0 and Apache 2.0 are
+   TTEOP is expected to be adopted. CC BY 4.0 and Apache 2.0 are
    internationally oriented but have not been litigated in all jurisdictions.
 
 8. **Interaction with commercial product licensing.** Confirm that the open

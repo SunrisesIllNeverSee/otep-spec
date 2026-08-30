@@ -1,6 +1,6 @@
 {
   "protocol_version": "sigrank/0.1-draft",
-  "metric_spec_version": "otep-metrics/0.1-draft",
+  "metric_spec_version": "tteop-metrics/0.1-draft",
   "observation": {
     "timestamp": "2026-08-27T00:00:00Z",
     "window_start": null,

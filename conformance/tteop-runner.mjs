@@ -1,9 +1,9 @@
 /**
- * conformance/otep-runner.mjs — OTEP v0.1-draft executable conformance suite.
+ * conformance/tteop-runner.mjs — TTEOP v0.1-draft executable conformance suite.
  *
- * This runner tests the OTEP specification (otep/0.1-draft), NOT the legacy
+ * This runner tests the TTEOP specification (tteop/0.1-draft), NOT the legacy
  * sigrank/0.1-draft spec. It validates against
- * schemas/telemetry-envelope-v0.1.schema.json and tests the OTEP-specific
+ * schemas/telemetry-envelope-v0.1.schema.json and tests the TTEOP-specific
  * normative requirements (SRP-* IDs).
  *
  * It is self-contained — it does not depend on @sigrank/cascade or any
@@ -33,7 +33,7 @@
  * 20. Metrics (SRP-METRIC-001 through SRP-METRIC-006)
  *
  * Usage:
- *   node conformance/otep-runner.mjs
+ *   node conformance/tteop-runner.mjs
  *
  * Exit code 0 = all tests pass. Exit code 1 = one or more failures.
  */
@@ -45,7 +45,7 @@ import {
   computeMetrics,
   validateEnvelope,
   roundHalfToEven,
-} from "../reference/otep.mjs";
+} from "../reference/tteop.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -55,7 +55,7 @@ const TEST_VECTORS_DIR = join(ROOT, "test-vectors");
 const METRICS_REGISTRY_PATH = join(ROOT, "metrics", "registry.json");
 const ADAPTERS_REGISTRY_PATH = join(ROOT, "adapters", "registry.json");
 
-const SPEC_VERSION = "otep/0.1-draft";
+const SPEC_VERSION = "tteop/0.1-draft";
 const LEGACY_ALIAS = "sigrank/0.1-draft";
 
 // ─── Test framework ─────────────────────────────────────────────────────────
@@ -452,8 +452,8 @@ function testPrivacyRequirements(schema) {
 function testExtensionMechanism() {
   console.log("\n── SRP-EXT: Extension mechanism ──");
 
-  // SRP-EXT-001: normative changes via OEP
-  assert(existsSync(join(ROOT, "oeps", "OEP-0000.md")), "EXT-001", "OEP template exists");
+  // SRP-EXT-001: normative changes via TEP
+  assert(existsSync(join(ROOT, "teps", "TEP-0000.md")), "EXT-001", "TEP template exists");
 
   // SRP-EXT-002: extensions registered
   assert(existsSync(METRICS_REGISTRY_PATH), "EXT-002a", "metrics registry exists");
@@ -492,7 +492,7 @@ function testVersionNegotiation(schema) {
   assert(complete.protocol_version !== undefined, "VER-001", "protocol_version declared");
 
   // SRP-VER-002: unsupported version rejected
-  const badVersion = { ...complete, protocol_version: "otep/9.9" };
+  const badVersion = { ...complete, protocol_version: "tteop/9.9" };
   const br = validateEnvelope(badVersion, schema);
   assert(!br.valid, "VER-002", "unsupported version rejected");
 
@@ -513,7 +513,7 @@ function testBackwardCompatibility() {
 
   // SRP-COMP-001: semantic versioning (verified by version string format)
   const complete = loadJson(join(EXAMPLES_DIR, "complete-valid.json"));
-  assert(/^otep\/\d+\.\d+(-draft)?$/.test(complete.protocol_version),
+  assert(/^tteop\/\d+\.\d+(-draft)?$/.test(complete.protocol_version),
     "COMP-001", "protocol version follows semver format");
 
   // SRP-COMP-003: unknown optional fields ignored
@@ -555,7 +555,7 @@ function testConformanceClasses() {
   assert(existsSync(join(ROOT, "conformance", "classes.md")), "CONF-001", "conformance classes document exists");
 
   // SRP-CONF-005: no pay-to-play (verified by open conformance runner)
-  assert(existsSync(join(__dirname, "otep-runner.mjs")), "CONF-005", "conformance runner is open and runnable");
+  assert(existsSync(join(__dirname, "tteop-runner.mjs")), "CONF-005", "conformance runner is open and runnable");
 }
 
 /**
@@ -574,8 +574,8 @@ function testRegistry() {
       `REG-002-${m.metric_id}`, `${m.metric_id} has required fields`);
   }
 
-  // SRP-REG-003: registry changes via OEP (documentation requirement)
-  assert(existsSync(join(ROOT, "oeps", "OEP-0000.md")), "REG-003", "OEP process documented");
+  // SRP-REG-003: registry changes via TEP (documentation requirement)
+  assert(existsSync(join(ROOT, "teps", "TEP-0000.md")), "REG-003", "TEP process documented");
 
   // SRP-REG-004: adapter registry fields
   const adapters = loadJson(ADAPTERS_REGISTRY_PATH);
@@ -698,7 +698,7 @@ function testArchitecture(schema) {
   // any implementation claiming authority over the spec would fail the conformance tests.
   // We verify that the spec version string is defined and that the reference implementation
   // produces spec-conformant output (not implementation-defined output).
-  assert(SPEC_VERSION === "otep/0.1-draft", "ARCH-004", "spec version is defined by spec, not by implementation");
+  assert(SPEC_VERSION === "tteop/0.1-draft", "ARCH-004", "spec version is defined by spec, not by implementation");
   const canonicalResult = computeMetrics({ input: 1251211, output: 11296121, cache_write: 128196310, cache_read: 2555179769 });
   assert(canonicalResult.metrics.yield === 18436.98, "ARCH-004", "reference impl produces spec-defined metrics (Yield)");
   assert(canonicalResult.metrics.log_leverage === 3.31, "ARCH-004", "reference impl produces spec-defined metrics (log_leverage)");
@@ -707,7 +707,7 @@ function testArchitecture(schema) {
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 function main() {
-  console.log("OTEP v0.1-draft Conformance Suite");
+  console.log("TTEOP v0.1-draft Conformance Suite");
   console.log(`Schema: ${SCHEMA_PATH}`);
   console.log("");
 

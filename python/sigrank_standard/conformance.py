@@ -1,15 +1,15 @@
 """
-Conformance runner for OTEP v0.1-draft (Operator Token Efficiency Protocol).
+Conformance runner for TTEOP v0.1-draft (Token Telemetry Evaluation Operator Protocol).
 
 Loads JSON test vectors from the test-vectors/ directory, computes metrics
 using ``compute_metrics``, and validates the output against expected values.
 
-This runner mirrors the authoritative JS runner (``conformance/otep-runner.mjs``)
+This runner mirrors the authoritative JS runner (``conformance/tteop-runner.mjs``)
 validation surface:
   - metric comparison (with tolerance)
   - warning semantics (ordered arrays)
   - null/zero/missing distinction
-  - spec version declaration (otep/0.1-draft)
+  - spec version declaration (tteop/0.1-draft)
 
 Usage:
     from sigrank_standard import run_conformance
@@ -26,7 +26,7 @@ from typing import Any, List, Optional
 from .metrics import compute_metrics
 
 
-SPEC_VERSION = "otep/0.1-draft"
+SPEC_VERSION = "tteop/0.1-draft"
 
 
 @dataclass
@@ -81,14 +81,14 @@ def _find_test_vectors_dir() -> Path:
 # ─── Test vector validation ──────────────────────────────────────────────────
 
 def _validate_vector(vector: dict) -> List[str]:
-    """Validate a single OTEP test vector. Returns list of error strings (empty = pass)."""
+    """Validate a single TTEOP test vector. Returns list of error strings (empty = pass)."""
     errors: List[str] = []
     vector_id = vector.get("id", "unknown")
 
     telemetry = vector.get("input", {}).get("telemetry", {})
     expected = vector.get("expected", {})
 
-    # Compute metrics using the OTEP Python implementation
+    # Compute metrics using the TTEOP Python implementation
     result = compute_metrics(
         input_tokens=telemetry.get("input", 0),
         output_tokens=telemetry.get("output", 0),
@@ -115,7 +115,7 @@ def _validate_vector(vector: dict) -> List[str]:
                 f"        actual:   {result['warnings']}"
             )
 
-    # 3. Spec version — must be otep/0.1-draft
+    # 3. Spec version — must be tteop/0.1-draft
     expected_spec = expected.get("spec")
     if expected_spec is not None:
         if expected_spec != SPEC_VERSION:
@@ -124,7 +124,7 @@ def _validate_vector(vector: dict) -> List[str]:
                 f"got \"{SPEC_VERSION}\""
             )
 
-    # 4. Required metrics — all five OTEP metrics must be present
+    # 4. Required metrics — all five TTEOP metrics must be present
     required_metrics = ["yield", "leverage", "velocity", "output_fraction", "log_leverage"]
     for req in required_metrics:
         if req not in result["metrics"]:
@@ -135,7 +135,7 @@ def _validate_vector(vector: dict) -> List[str]:
 
 def run_conformance(test_vectors_dir: Optional[Path] = None) -> ConformanceResult:
     """
-    Run the full conformance suite against all OTEP test vectors.
+    Run the full conformance suite against all TTEOP test vectors.
 
     Args:
         test_vectors_dir: Path to the test-vectors directory. If None, auto-discovers.
@@ -166,7 +166,7 @@ def run_conformance(test_vectors_dir: Optional[Path] = None) -> ConformanceResul
 def main() -> int:
     """CLI entry point for the conformance runner."""
     result = run_conformance()
-    print("OTEP v0.1-draft Conformance Suite (Python)")
+    print("TTEOP v0.1-draft Conformance Suite (Python)")
     print(f"{result.total} test vectors loaded")
     print()
     if result.all_passed:

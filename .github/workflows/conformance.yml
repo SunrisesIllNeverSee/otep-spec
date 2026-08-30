@@ -8,7 +8,7 @@ on:
 
 jobs:
   conformance:
-    name: Run OTEP conformance suite
+    name: Run TTEOP conformance suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,16 +17,16 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm install
-      - name: Run OTEP conformance suite
-        run: node conformance/otep-runner.mjs
-      - name: Run OTEP validator on all examples
+      - name: Run TTEOP conformance suite
+        run: node conformance/tteop-runner.mjs
+      - name: Run TTEOP validator on all examples
         run: |
           for f in examples/minimal-valid.json examples/complete-valid.json examples/unsupported-cache.json examples/signed-envelope.json examples/canonical-reference.json; do
             echo "Validating $f..."
-            node conformance/otep-validate.mjs "$f" --report text
+            node conformance/tteop-validate.mjs "$f" --report text
           done
           echo "Validating invalid payload (expected to fail)..."
-          node conformance/otep-validate.mjs examples/invalid-payload.json --report text && exit 1 || echo "Correctly rejected invalid payload"
+          node conformance/tteop-validate.mjs examples/invalid-payload.json --report text && exit 1 || echo "Correctly rejected invalid payload"
       - name: Run Python conformance runner
         run: |
           pip install -e python/ --quiet
@@ -47,11 +47,11 @@ jobs:
             fs.writeFileSync('/tmp/ts-record.json', JSON.stringify(record, null, 2));
             console.log('TS record written');
           " --input-type=module
-          node conformance/otep-validate.mjs /tmp/ts-record.json --report text
+          node conformance/tteop-validate.mjs /tmp/ts-record.json --report text
 
           # Python integration
           python3 integrations/python/example.py > /tmp/py-record.json
-          node conformance/otep-validate.mjs /tmp/py-record.json --report text
+          node conformance/tteop-validate.mjs /tmp/py-record.json --report text
 
           # Python package (sigrank_standard.build_record)
           python3 -c "
@@ -60,8 +60,8 @@ import json
 r = build_record(1251211, 11296121, 128196310, 2555179769, provider='anthropic', model='claude-sonnet-4', tool='claude-code')
 print(json.dumps(r, indent=2))
 " > /tmp/pkg-record.json
-          node conformance/otep-validate.mjs /tmp/pkg-record.json --report text
+          node conformance/tteop-validate.mjs /tmp/pkg-record.json --report text
 
           # CLI integration
           node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769 > /tmp/cli-record.json
-          node conformance/otep-validate.mjs /tmp/cli-record.json --report text
+          node conformance/tteop-validate.mjs /tmp/cli-record.json --report text

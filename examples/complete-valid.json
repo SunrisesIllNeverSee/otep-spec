@@ -1,6 +1,6 @@
 {
-  "protocol_version": "otep/0.1-draft",
-  "metric_spec_version": "otep-metrics/0.1-draft",
+  "protocol_version": "tteop/0.1-draft",
+  "metric_spec_version": "tteop-metrics/0.1-draft",
   "collector_version": "my-collector/1.2.3",
   "operator": {
     "pseudonymous_key": "op_a7f3e2b1c9d4",

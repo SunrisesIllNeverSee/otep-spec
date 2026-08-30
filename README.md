@@ -1,12 +1,12 @@
-# OTEP — Operator Token Efficiency Protocol
+# TTEOP — Token Telemetry Evaluation Operator Protocol
 
 **An open, vendor-neutral interoperability standard for measuring AI-operator token efficiency.**
 
-OTEP defines a minimal common language that any AI tool, IDE, observability platform, enterprise analytics system, or independent implementation can produce and consume consistently. It measures how efficiently an operator processes tokens — not cognition, work quality, employee productivity, or business outcomes.
+TTEOP defines a minimal common language that any AI tool, IDE, observability platform, enterprise analytics system, or independent implementation can produce and consume consistently. It measures how efficiently an operator processes tokens — not cognition, work quality, employee productivity, or business outcomes.
 
 ## Current version
 
-**`otep/0.1-draft`** — experimental public draft. The name "OTEP" is provisional pending founder ratification (UD-1) and trademark clearance (UD-9). See `oeps/OEP-0001.md` and `DISCLOSURES.md`.
+**`tteop/0.1-draft`** — experimental public draft. The name "TTEOP" (Token Telemetry Evaluation Operator Protocol) was ratified by founder decision (UD-1, 2026-08-30). No trademark clearance has been performed (UD-9 deferred). See `teps/TEP-0001.md` and `DISCLOSURES.md`.
 
 The legacy alias `sigrank/0.1-draft` is accepted for backward compatibility.
 
@@ -45,9 +45,9 @@ Five derived metrics:
 | Telemetry envelope schema | `schemas/telemetry-envelope-v0.1.schema.json` | Authoritative |
 | Conformance report schema | `schemas/conformance-report-v0.1.schema.json` | Authoritative |
 | Metric registry | `metrics/registry.json` | Authoritative |
-| Reference implementation | `reference/otep.mjs` | Reference |
-| Conformance runner | `conformance/otep-runner.mjs` | Executable |
-| Validator | `conformance/otep-validate.mjs` | Executable |
+| Reference implementation | `reference/tteop.mjs` | Reference |
+| Conformance runner | `conformance/tteop-runner.mjs` | Executable |
+| Validator | `conformance/tteop-validate.mjs` | Executable |
 | Python implementation | `python/sigrank_standard/` | Reference |
 | Provider adapters | `adapters/` | Informative |
 | Privacy modes | `profiles/` | Normative |
@@ -58,7 +58,7 @@ Five derived metrics:
 ## Repository structure
 
 ```text
-otep-spec/
+tteop-spec/
 ├── README.md                          — this file
 ├── SPEC.md                            — normative protocol specification (authoritative)
 ├── ARCHITECTURE-DECISION-MEMO.md      — design rationale and decision log
@@ -66,7 +66,7 @@ otep-spec/
 ├── TERMINOLOGY.md                     — canonical terminology
 ├── PRIVACY.md                         — privacy modes and content-independence
 ├── SECURITY.md                        — security considerations
-├── GOVERNANCE.md                      — maintainer roles, OEP process, change control
+├── GOVERNANCE.md                      — maintainer roles, TEP process, change control
 ├── DISCLOSURES.md                     — conflict-of-interest disclosures (SRP-GOV-014)
 ├── CONTRIBUTING.md                    — how to contribute
 ├── CODE_OF_CONDUCT.md                 — community code of conduct
@@ -91,7 +91,7 @@ otep-spec/
 ├── conformance/                       — conformance runner + validator + classes
 ├── reference/                         — reference implementation
 ├── adapters/                          — provider adapter mappings
-├── oeps/                              — OTEP Extension Proposals
+├── teps/                              — TTEOP Extension Proposals
 ├── python/                            — Python reference implementation
 └── integrations/                      — integration examples (TS, Python, MCP, CLI)
 ```
@@ -100,13 +100,13 @@ otep-spec/
 
 ```bash
 # Run the conformance suite
-node conformance/otep-runner.mjs
+node conformance/tteop-runner.mjs
 
 # Validate a payload
-node conformance/otep-validate.mjs examples/complete-valid.json --report text
+node conformance/tteop-validate.mjs examples/complete-valid.json --report text
 
 # Compute metrics
-node reference/otep.mjs compute-inline 1251211 11296121 128196310 2555179769
+node reference/tteop.mjs compute-inline 1251211 11296121 128196310 2555179769
 ```
 
 ## Conformance
@@ -120,11 +120,11 @@ Six conformance classes are defined in `conformance/classes.md`:
 5. **Privacy-profile** — enforces privacy mode rules
 6. **Full-platform** — all of the above
 
-**No implementation has been certified as OTEP Conformant yet.** SignalAF is a reference candidate, not a certified implementation.
+**No implementation has been certified as TTEOP Conformant yet.** SignalAF is a reference candidate, not a certified implementation.
 
 ## Privacy
 
-OTEP is metadata-only. The protocol MUST NOT collect:
+TTEOP is metadata-only. The protocol MUST NOT collect:
 - Prompt text or completion text
 - Source code, diffs, or file content
 - Keystrokes, screen contents, or repository content
@@ -133,11 +133,11 @@ Three privacy modes: `public-pseudonymous`, `private-managed-cohort`, `enterpris
 
 ## Non-inferences
 
-OTEP metrics do NOT prove: code quality, task correctness, productivity, professional skill, employee performance, business impact, or causal improvement from AI tooling.
+TTEOP metrics do NOT prove: code quality, task correctness, productivity, professional skill, employee performance, business impact, or causal improvement from AI tooling.
 
 ## License
 
-- **Specification documents** (`SPEC.md`, `schemas/`, `metrics/`, `profiles/`, `adapters/`, `oeps/`, `examples/`, `test-vectors/`): Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Specification documents** (`SPEC.md`, `schemas/`, `metrics/`, `profiles/`, `adapters/`, `teps/`, `examples/`, `test-vectors/`): Creative Commons Attribution 4.0 International (CC BY 4.0)
 - **Executable code** (`reference/`, `conformance/`, `integrations/`, `python/`): Apache License 2.0
 
 See `LICENSE` and `NOTICE` for details.

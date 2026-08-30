@@ -1,8 +1,8 @@
 """
-sigrank-standard — Python implementation of the OTEP v0.1-draft specification.
+sigrank-standard — Python implementation of the TTEOP v0.1-draft specification.
 
 The portable five-metric core for AI operator token-processing efficiency.
-No dependencies. Conforms to the otep/0.1-draft specification.
+No dependencies. Conforms to the tteop/0.1-draft specification.
 
 Metrics:
     Yield           = (cache_read * output) / input^2
@@ -25,7 +25,7 @@ from .metrics import compute_metrics, build_record, build_envelope
 from .conformance import run_conformance, ConformanceResult
 
 __version__ = "0.1.0"
-__spec__ = "otep/0.1-draft"
+__spec__ = "tteop/0.1-draft"
 __all__ = [
     "compute_metrics",
     "build_record",

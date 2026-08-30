@@ -126,7 +126,7 @@ The "ASCII moment" ambition is achievable but requires treating this as a protoc
 
 **Issue:** The standard is maintained inside the SigRank ecosystem. Changes go through a private process. This is acceptable for v0.x but must have a transition path.
 
-**Correction:** Define a lightweight governance model with maintainer roles, COI disclosure, OEP process, and foundation-readiness criteria.
+**Correction:** Define a lightweight governance model with maintainer roles, COI disclosure, TEP process, and foundation-readiness criteria.
 
 ### 2.10 No provenance or integrity model
 
@@ -250,7 +250,7 @@ These MUST NOT alter the open metric definitions. They MAY define eligibility cr
 
 ## 10. Recommended Neutral Protocol Name and Abbreviation
 
-**Recommended name:** **OTEP** — Operator Token Efficiency Protocol
+**Recommended name:** **TTEOP** — Token Telemetry Evaluation Operator Protocol
 
 **Rationale:**
 - "Operator" centers the human, not the tool or model
@@ -261,7 +261,7 @@ These MUST NOT alter the open metric definitions. They MAY define eligibility cr
 
 **Alternative considered:** AOMS (AI Operator Measurement Standard) — rejected because "AI Operator" is ambiguous (could mean an human operating AI or an AI agent operating autonomously).
 
-**Migration path:** The spec version string transitions from `sigrank/0.1-draft` to `otep/0.1-draft` at v0.1 stable release. The `sigrank/0.1-draft` string remains valid as a legacy alias for backward compatibility.
+**Migration path:** The spec version string transitions from `sigrank/0.1-draft` to `tteop/0.1-draft` at v0.1 stable release. The `sigrank/0.1-draft` string remains valid as a legacy alias for backward compatibility.
 
 **[REQUIRES FOUNDER APPROVAL]** — See UNRESOLVED-DECISIONS.md §1.
 
@@ -276,13 +276,13 @@ It should NOT be the protocol name because:
 - Using it as a protocol name creates trademark confusion
 - The analogy is aspirational, not literal (ASCII defines character encoding; this defines measurement telemetry)
 
-**Recommendation:** Use "the ASCII moment for AI measurement" in marketing and documentation. Use OTEP as the protocol name in normative documents.
+**Recommendation:** Use "the ASCII moment for AI measurement" in marketing and documentation. Use TTEOP as the protocol name in normative documents.
 
 ---
 
 ## 12. Major Unresolved Technical Decisions
 
-1. **Protocol name** — OTEP proposed, requires founder approval and trademark clearance
+1. **Protocol name** — TTEOP proposed, requires founder approval and trademark clearance
 2. **Υ normalization** — whether to define a window-normalized variant as a separate registered metric
 3. **Provider double-counting** — how to handle providers that report cached tokens inside total input (subtract or accept?)
 4. **Streaming semantics** — how to count tokens in streaming responses (per-chunk or per-completion)
@@ -309,7 +309,7 @@ The v0.1 developer preview includes:
 - JSON Schema for telemetry envelope
 - 5 example payloads + boundary test vectors
 - Conformance runner with 6 conformance classes
-- Governance document with OEP process
+- Governance document with TEP process
 - Licensing (CC BY 4.0 for spec, Apache 2.0 for code)
 - Open/commercial boundary matrix
 - Risk register
@@ -338,7 +338,7 @@ See `REPOSITORY-ARCHITECTURE.md` for the complete proposed tree.
 | 2026-08-28 | Retain Υ formula, document scale dependency | Accepted |
 | 2026-08-28 | Move 10xDEV to application profile, rename to log_leverage in core | Proposed — requires founder approval |
 | 2026-08-28 | Rename SNR to output_fraction in core | Proposed — requires founder approval |
-| 2026-08-28 | Propose OTEP as neutral protocol name | Proposed — requires founder approval + trademark clearance |
+| 2026-08-28 | Propose TTEOP as neutral protocol name | Proposed — requires founder approval + trademark clearance |
 | 2026-08-28 | Define 6 conformance classes | Accepted |
 | 2026-08-28 | Define 3 privacy modes | Accepted |
 | 2026-08-28 | Define provider-adapter mapping model | Accepted |

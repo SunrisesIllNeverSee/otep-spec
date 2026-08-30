@@ -3,13 +3,13 @@
 **Adapter ID:** `openai-v1`
 **Provider:** OpenAI
 **Supported API versions:** `2024-08-01`, `2024-10-01`
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 ---
 
 ## 1. Field mappings
 
-| OTEP primitive | Native field | Notes |
+| TTEOP primitive | Native field | Notes |
 |----------------|--------------|-------|
 | `input` | `usage.prompt_tokens - usage.prompt_tokens_details.cached_tokens` | Fresh input = total prompt tokens minus cached tokens (see §2). |
 | `output` | `usage.completion_tokens` | Completion tokens. |
@@ -21,7 +21,7 @@
 **Policy:** `subtract_cached_from_input` (SRP-ADAPT-003 option a)
 
 OpenAI reports `cached_tokens` inside `prompt_tokens` (total input). To make
-`input` represent fresh (uncached) tokens — the semantic intent of the OTEP
+`input` represent fresh (uncached) tokens — the semantic intent of the TTEOP
 `input` primitive — the adapter subtracts cached tokens from total prompt
 tokens:
 

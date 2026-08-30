@@ -1,6 +1,6 @@
 # output_fraction (F)
 
-**Metric ID:** `otep.output_fraction`
+**Metric ID:** `tteop.output_fraction`
 **Maturity:** Experimental
 **Spec section:** SPEC.md §26.4
 **Legacy alias:** `snr` (deprecated — see §Naming note)

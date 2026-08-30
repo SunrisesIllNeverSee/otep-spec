@@ -1,14 +1,14 @@
-# OTEP Risk Register
+# TTEOP Risk Register
 
-**Status:** Draft — companion document to the OTEP specification
-**Scope:** Risks to the OTEP protocol, its ecosystem, and the SignalAF commercial product built on it
+**Status:** Draft — companion document to the TTEOP specification
+**Scope:** Risks to the TTEOP protocol, its ecosystem, and the SignalAF commercial product built on it
 **Relationship to spec:** Non-normative. This document supports but does not define protocol requirements. Where it references normative requirements, those requirements are authoritative.
 
 ---
 
 ## 1. Purpose
 
-This register identifies the risks that could compromise the OTEP protocol's validity, neutrality, adoption, or safety. For each risk: what it is, how to detect it, how to prevent it, how to respond when it materializes, who owns it, and whether it can halt a release (stop/go gate).
+This register identifies the risks that could compromise the TTEOP protocol's validity, neutrality, adoption, or safety. For each risk: what it is, how to detect it, how to prevent it, how to respond when it materializes, who owns it, and whether it can halt a release (stop/go gate).
 
 **Stop/Go gate** means: if this risk is realized and unmitigated at a release checkpoint, does it block the release?
 
@@ -22,21 +22,21 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 | Risk ID | Risk | Warning Indicators | Prevention | Detection | Response | Owner | Stop/Go Gate |
 |---------|------|--------------------|------------|-----------|----------|-------|--------------|
-| R-01 | Metric invalidity | Public claims associating metrics with productivity without study design | `SRP-NON-001`–`SRP-NON-007`; limitations docs; training | Periodic claim audit; community reports; conformance prohibited-interpretation tests | Issue violation; require correction; suspend certificate if needed; OEP for spec-level fixes | Spec editor | Stop |
-| R-02 | Provider incompatibility | Conformance failures across providers; conflicting adapter policies | `SRP-ADAPT-001`–`SRP-ADAPT-012`; adapter registry; null semantics | Conformance suite Adapter class tests; cross-provider comparison tests | OEP to clarify mapping; fix adapter; document null for incompatible providers | Adapter registry maintainer | Stop (conditional) |
+| R-01 | Metric invalidity | Public claims associating metrics with productivity without study design | `SRP-NON-001`–`SRP-NON-007`; limitations docs; training | Periodic claim audit; community reports; conformance prohibited-interpretation tests | Issue violation; require correction; suspend certificate if needed; TEP for spec-level fixes | Spec editor | Stop |
+| R-02 | Provider incompatibility | Conformance failures across providers; conflicting adapter policies | `SRP-ADAPT-001`–`SRP-ADAPT-012`; adapter registry; null semantics | Conformance suite Adapter class tests; cross-provider comparison tests | TEP to clarify mapping; fix adapter; document null for incompatible providers | Adapter registry maintainer | Stop (conditional) |
 | R-03 | Metric gaming | Anomalous input clustering; implausible cache_read ratios; sudden metric jumps | Provenance levels; anomaly flags; signed envelopes; anti-abuse ops | Anomaly flags; statistical monitoring; community reports | Downgrade provenance; remove leaderboard entries; publish abuse category; document gaming vectors | Anti-abuse operations lead | Go |
-| R-04 | Privacy leakage | `identity_leak` errors; re-identification reports; suppression threshold gaps | `SRP-PRIV-001`–`SRP-PRIV-008`; `SRP-DATA-011`; `SRP-VAL-005`/`006`; conformance privacy tests | Automated validation; periodic re-identification audit; penetration testing | Reject envelope; purge records within 30 days; notify operators; emergency OEP for spec gaps | Privacy officer | Stop |
+| R-04 | Privacy leakage | `identity_leak` errors; re-identification reports; suppression threshold gaps | `SRP-PRIV-001`–`SRP-PRIV-008`; `SRP-DATA-011`; `SRP-VAL-005`/`006`; conformance privacy tests | Automated validation; periodic re-identification audit; penetration testing | Reject envelope; purge records within 30 days; notify operators; emergency TEP for spec gaps | Privacy officer | Stop |
 | R-05 | Employee-surveillance misuse | Per-employee dashboards without opt-out; disabled operator rights; performance-review use | `SRP-SEC-003`/`SRP-SEC-004`; contractual terms in enterprise agreements | Annual enterprise audit; operator feedback channel; contractual audit rights | Breach notice; require remediation; terminate agreement if unremedied; publish anonymized case study | Enterprise compliance lead | Stop (conditional) |
 | R-06 | False productivity claims | Marketing saying "higher Yield = productivity"; case studies as productivity proof | `SRP-NON-001`–`SRP-NON-004`; claim-level classification; training | Audit of public-facing claims; community monitoring of press coverage | Correction notice; require reclassification or removal; public correction if SignalAF; conformance violation if certified system | Spec editor / Marketing review | Go |
 | R-07 | Certification capture | Pass rates correlated with customer status; fees exceeding cost; hidden criteria; opaque appeals | `SRP-CONF-005`/`SRP-CONF-006`; published tests; appealable rules; annual neutrality audit | Annual audit of certification outcomes; community reports; hosted vs. local result comparison | Publish findings; restructure certification independence; refund improper denials; transfer to neutral party if systemic | Certification authority / Governance body | Stop |
 | R-08 | Trademark abuse | Marks on non-conformant products; marks after version break; filings by other parties | Published trademark policy; `SRP-CONF-002`/`SRP-CONF-003`/`SRP-CONF-004` | Periodic market scan; community reporting; trademark monitoring service | Cease-and-desist; require conformance or removal; oppose trademark filings | Legal / Trademark holder | Go |
-| R-09 | Governance capture | OEP acceptance correlated with affiliation; one party always prevails; no external OEPs accepted | Open OEP process; no payment/partnership requirement; documented decision criteria; separation of duties | Annual governance audit; community survey; periodic external review | Restructure governance body; term limits; transfer to neutral body if unremediable; publish audit and remediation | Governance body / Spec editor | Stop (conditional) |
-| R-10 | Reference implementation dominance | Bug reports against alternatives for unspecified behavior; tests tracing to ref-impl not spec; "see reference" for normative behavior | Spec is authority; conformance tests trace to normative requirements; ref-impl choices are one option | Audit conformance tests for spec coverage; review "match the reference" bug reports | Remove/rewrite invalid tests; OEP to specify gaps; don't let ref-impl silently fill gaps | Spec editor / Conformance maintainer | Stop |
-| R-11 | Proprietary extensions fragmenting | Unqualified extension names; proprietary metrics as OTEP metrics; core semantic redefinition; divergent forks | `SRP-EXT-001`–`SRP-EXT-005`; OEP process; namespace prefixes; registry requirements | Scan implementations for unregistered/unqualified extensions; community reports; namespace compliance tests | Conformance violation for unqualified names; require registration or remove claim; OEP to standardize shared behavior; engage fork maintainers | Spec editor / Registry maintainer | Go |
+| R-09 | Governance capture | TEP acceptance correlated with affiliation; one party always prevails; no external TEPs accepted | Open TEP process; no payment/partnership requirement; documented decision criteria; separation of duties | Annual governance audit; community survey; periodic external review | Restructure governance body; term limits; transfer to neutral body if unremediable; publish audit and remediation | Governance body / Spec editor | Stop (conditional) |
+| R-10 | Reference implementation dominance | Bug reports against alternatives for unspecified behavior; tests tracing to ref-impl not spec; "see reference" for normative behavior | Spec is authority; conformance tests trace to normative requirements; ref-impl choices are one option | Audit conformance tests for spec coverage; review "match the reference" bug reports | Remove/rewrite invalid tests; TEP to specify gaps; don't let ref-impl silently fill gaps | Spec editor / Conformance maintainer | Stop |
+| R-11 | Proprietary extensions fragmenting | Unqualified extension names; proprietary metrics as TTEOP metrics; core semantic redefinition; divergent forks | `SRP-EXT-001`–`SRP-EXT-005`; TEP process; namespace prefixes; registry requirements | Scan implementations for unregistered/unqualified extensions; community reports; namespace compliance tests | Conformance violation for unqualified names; require registration or remove claim; TEP to standardize shared behavior; engage fork maintainers | Spec editor / Registry maintainer | Go |
 | R-12 | Premature formal-standard claims | "Standard" without "draft" qualifier; ISO/IEC claims; spec referencing completed standardization | `SPEC.md` §1 draft status; §2.2 defers formal standardization; `README.md` "proposed" label | Audit marketing/docs/press for premature claims; community reports | Correction; remove claim; clarify draft status; document as governance violation if knowing | Spec editor / Marketing review | Go |
-| R-13 | Lack of a second implementation | Zero third-party implementations; all testing on SignalAF's impl; no external OEPs; spec too SignalAF-specific | `SRP-CONF-004` reserves Conformant for third-party; implementation guides; integration examples; self-contained spec | Track independent implementations in registry; survey non-SignalAF developers on difficulty | Prioritize spec clarity; offer implementation grants/bounties; hackathon; OEPs to fix spec blockers; no Conformant claim until second impl passes | Spec editor / Ecosystem lead | Stop (conditional) |
-| R-14 | Competitors forking or embracing | Competitor OTEP-compatible product with unregistered extensions; extensions gaining share; "real OTEP" marketing; divergent forks | Open core under perpetual license; OEP for standardizing extensions; trademark policy; namespace requirements; `SRP-CONF-004` | Monitor competitive landscape; track fork divergence; community reports of fragmentation | Engage competitor to submit OEP; standardize beneficial extensions; publish compatibility advisory for incompatible forks; trademark enforcement for core-semantic divergence | Spec editor / Ecosystem lead / Legal | Go |
-| R-15 | Υ scale-dependency confusion | Cross-operator Υ comparisons without input-scale control; leaderboard dominated by low-input operators; "nothing changed" Υ jumps | `SPEC.md` §26.1 documents input²; `metrics/yield.md` full analysis; `docs/LIMITATIONS.md`; training includes input² topic | Monitor leaderboard for scale artifacts; track support tickets on Υ interpretation; survey user understanding | Publish clarification; add leaderboard warning for large input-scale ratios; OEP for scale-normalized variant; ensure training/exam coverage | Spec editor / Metrics maintainer | Go |
+| R-13 | Lack of a second implementation | Zero third-party implementations; all testing on SignalAF's impl; no external TEPs; spec too SignalAF-specific | `SRP-CONF-004` reserves Conformant for third-party; implementation guides; integration examples; self-contained spec | Track independent implementations in registry; survey non-SignalAF developers on difficulty | Prioritize spec clarity; offer implementation grants/bounties; hackathon; TEPs to fix spec blockers; no Conformant claim until second impl passes | Spec editor / Ecosystem lead | Stop (conditional) |
+| R-14 | Competitors forking or embracing | Competitor TTEOP-compatible product with unregistered extensions; extensions gaining share; "real TTEOP" marketing; divergent forks | Open core under perpetual license; TEP for standardizing extensions; trademark policy; namespace requirements; `SRP-CONF-004` | Monitor competitive landscape; track fork divergence; community reports of fragmentation | Engage competitor to submit TEP; standardize beneficial extensions; publish compatibility advisory for incompatible forks; trademark enforcement for core-semantic divergence | Spec editor / Ecosystem lead / Legal | Go |
+| R-15 | Υ scale-dependency confusion | Cross-operator Υ comparisons without input-scale control; leaderboard dominated by low-input operators; "nothing changed" Υ jumps | `SPEC.md` §26.1 documents input²; `metrics/yield.md` full analysis; `docs/LIMITATIONS.md`; training includes input² topic | Monitor leaderboard for scale artifacts; track support tickets on Υ interpretation; survey user understanding | Publish clarification; add leaderboard warning for large input-scale ratios; TEP for scale-normalized variant; ensure training/exam coverage | Spec editor / Metrics maintainer | Go |
 
 ---
 
@@ -46,13 +46,13 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 **Description.** Metrics don't measure what they claim. Yield, Leverage, Velocity, output_fraction, or log_leverage are presented as measuring something they do not — productivity, code quality, task success, professional skill, or business impact. This is the most fundamental risk: if the metrics are invalid or misused, the entire protocol loses credibility.
 
-**Warning indicators.** Public claims associating OTEP metrics with productivity, code quality, or business outcomes without study design. Marketing copy implying causal claims. Users treating Υ as a skill score. Leaderboard rankings interpreted as skill rankings.
+**Warning indicators.** Public claims associating TTEOP metrics with productivity, code quality, or business outcomes without study design. Marketing copy implying causal claims. Users treating Υ as a skill score. Leaderboard rankings interpreted as skill rankings.
 
 **Prevention.** `SRP-NON-001` through `SRP-NON-007` prohibit false claims and require claim-level classification (descriptive, comparative, associational, causal). `docs/LIMITATIONS.md` documents measurement boundaries. Training materials (see `BUSINESS-MODEL.md` §2.9) must teach non-inferences with equal prominence to definitions.
 
 **Detection.** Periodic audit of public claims (leaderboard, marketing, blog posts, customer communications) for prohibited interpretations. Community reports of misuse via issues. Conformance suite includes a prohibited-interpretation test class that flags systems presenting metrics as productivity proof.
 
-**Response.** Issue conformance violation notice. Require removal or correction of the false claim. Publish a clarification. If a conformance-certified system makes prohibited claims, suspend the certificate until corrected. For spec-level invalidity (the formula itself doesn't measure what the spec defines), open an OEP to revise the metric and increment the version.
+**Response.** Issue conformance violation notice. Require removal or correction of the false claim. Publish a clarification. If a conformance-certified system makes prohibited claims, suspend the certificate until corrected. For spec-level invalidity (the formula itself doesn't measure what the spec defines), open an TEP to revise the metric and increment the version.
 
 **Owner.** Spec editor.
 
@@ -70,7 +70,7 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 **Detection.** Run the conformance suite's Adapter class tests against every registered adapter before each release. Cross-provider comparison tests: run the same canonical workflow through two adapters and flag metric divergence beyond a documented threshold.
 
-**Response.** If divergence is a spec ambiguity, open an OEP to clarify the mapping rule. If divergence is an adapter bug, fix the adapter and re-register. If a provider's API is fundamentally incompatible (no cache telemetry), document the limitation in the adapter registry and mark affected metrics as null for that provider — do not fabricate values.
+**Response.** If divergence is a spec ambiguity, open an TEP to clarify the mapping rule. If divergence is an adapter bug, fix the adapter and re-register. If a provider's API is fundamentally incompatible (no cache telemetry), document the limitation in the adapter registry and mark affected metrics as null for that provider — do not fabricate values.
 
 **Owner.** Adapter registry maintainer.
 
@@ -88,7 +88,7 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 **Detection.** Anomaly flags in submitted telemetry. Statistical monitoring of leaderboard entries for gaming patterns. Community reports. Cross-checking telemetry against provider-side API logs where available (enterprise mode).
 
-**Response.** Downgrade provenance level for suspicious envelopes. Remove confirmed gaming entries from the leaderboard. Publish the abuse category (not the operator's identity) as a deterrent. For spec-level gaming resistance, document known gaming vectors in `docs/LIMITATIONS.md` and consider OEPs for gaming-resistant metric variants in future versions.
+**Response.** Downgrade provenance level for suspicious envelopes. Remove confirmed gaming entries from the leaderboard. Publish the abuse category (not the operator's identity) as a deterrent. For spec-level gaming resistance, document known gaming vectors in `docs/LIMITATIONS.md` and consider TEPs for gaming-resistant metric variants in future versions.
 
 **Owner.** Anti-abuse operations lead.
 
@@ -106,7 +106,7 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 **Detection.** Automated validation of every envelope for identity leakage and forbidden fields. Periodic privacy audit of the leaderboard dataset for re-identification risk. Penetration testing of the hosted platform.
 
-**Response.** Reject the envelope (`identity_leak` error). If leakage has already occurred, purge the affected records within 30 days (`SRP-PRIV-006`). Notify affected operators. If the leakage is a spec gap (a field that should be forbidden isn't), open an emergency OEP to add it to the forbidden list.
+**Response.** Reject the envelope (`identity_leak` error). If leakage has already occurred, purge the affected records within 30 days (`SRP-PRIV-006`). Notify affected operators. If the leakage is a spec gap (a field that should be forbidden isn't), open an emergency TEP to add it to the forbidden list.
 
 **Owner.** Privacy officer.
 
@@ -116,11 +116,11 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 ### R-05: Employee-surveillance misuse
 
-**Description.** Employers use OTEP metrics for surveillance. An enterprise deployment uses Yield or Velocity to monitor individual employees, rank them, or make employment decisions without operator consent or opt-out. This is both a spec violation (`SRP-SEC-003`, `SRP-SEC-004`) and a real-world harm.
+**Description.** Employers use TTEOP metrics for surveillance. An enterprise deployment uses Yield or Velocity to monitor individual employees, rank them, or make employment decisions without operator consent or opt-out. This is both a spec violation (`SRP-SEC-003`, `SRP-SEC-004`) and a real-world harm.
 
 **Warning indicators.** Enterprise customer requests for per-employee metric dashboards without operator access. Deployment configurations that disable operator opt-out. Customer support tickets asking how to use metrics for performance reviews.
 
-**Prevention.** `SRP-SEC-003` prohibits using OTEP metrics as the sole basis for employment decisions. `SRP-SEC-004` requires enterprise deployments to provide operators with access to their own telemetry, opt-out rights, and transparency about collection and use. Enterprise deployment agreements include these requirements as contractual terms.
+**Prevention.** `SRP-SEC-003` prohibits using TTEOP metrics as the sole basis for employment decisions. `SRP-SEC-004` requires enterprise deployments to provide operators with access to their own telemetry, opt-out rights, and transparency about collection and use. Enterprise deployment agreements include these requirements as contractual terms.
 
 **Detection.** Annual audit of enterprise deployments for compliance with `SRP-SEC-003`/`SRP-SEC-004`. Operator feedback channel (anonymous reporting of surveillance misuse). Contractual right to audit enterprise customers.
 
@@ -134,7 +134,7 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 ### R-06: False productivity claims
 
-**Description.** Metrics presented as productivity proof. A vendor, enterprise, or SignalAF itself presents OTEP metrics as proof that an operator, tool, or workflow is "more productive" — a prohibited causal claim without study design. This is closely related to R-01 but focuses on external claims rather than metric validity itself.
+**Description.** Metrics presented as productivity proof. A vendor, enterprise, or SignalAF itself presents TTEOP metrics as proof that an operator, tool, or workflow is "more productive" — a prohibited causal claim without study design. This is closely related to R-01 but focuses on external claims rather than metric validity itself.
 
 **Warning indicators.** Marketing materials saying "higher Yield = higher productivity." Customer case studies presenting metric improvements as productivity gains. Press coverage interpreting leaderboard rankings as skill rankings.
 
@@ -170,7 +170,7 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 ### R-08: Trademark abuse
 
-**Description.** OTEP name misused by non-conformant products. A vendor uses the "OTEP Conformant" or "SigRank Compatible" mark on a product that has not passed the conformance suite, or on a product that fails it. This dilutes the mark's value and misleads users.
+**Description.** TTEOP name misused by non-conformant products. A vendor uses the "TTEOP Conformant" or "SigRank Compatible" mark on a product that has not passed the conformance suite, or on a product that fails it. This dilutes the mark's value and misleads users.
 
 **Warning indicators.** Products displaying conformance marks without a published conformance claim. Products using the marks after a spec version change that breaks their compatibility. Trademark filings by parties other than the designated holder.
 
@@ -188,13 +188,13 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 ### R-09: Governance capture
 
-**Description.** Governance process dominated by one party. A single entity (SignalAF, a large enterprise customer, or a consortium) controls the OEP process such that proposals favorable to that entity pass and proposals unfavorable to it are blocked.
+**Description.** Governance process dominated by one party. A single entity (SignalAF, a large enterprise customer, or a consortium) controls the TEP process such that proposals favorable to that entity pass and proposals unfavorable to it are blocked.
 
-**Warning indicators.** OEP acceptance rates correlated with proposer's affiliation. OEP discussions where a single party's position always prevails. Governance meetings dominated by one organization's employees. Long periods with no accepted external OEPs.
+**Warning indicators.** TEP acceptance rates correlated with proposer's affiliation. TEP discussions where a single party's position always prevails. Governance meetings dominated by one organization's employees. Long periods with no accepted external TEPs.
 
-**Prevention.** Open OEP process (`docs/GOVERNANCE.md`) with public submission and discussion. No payment or partnership requirement for OEP submission. Documented decision criteria. Separation of duties between spec and revenue teams (`BUSINESS-MODEL.md` §4.8).
+**Prevention.** Open TEP process (`docs/GOVERNANCE.md`) with public submission and discussion. No payment or partnership requirement for TEP submission. Documented decision criteria. Separation of duties between spec and revenue teams (`BUSINESS-MODEL.md` §4.8).
 
-**Detection.** Annual governance audit: OEP submission/acceptance rates by affiliation. Community survey on governance fairness. External review of the OEP process by an independent party on a periodic basis.
+**Detection.** Annual governance audit: TEP submission/acceptance rates by affiliation. Community survey on governance fairness. External review of the TEP process by an independent party on a periodic basis.
 
 **Response.** If governance capture is detected: restructure the governance body to ensure diverse representation. Introduce term limits for governance roles. Transfer governance to a neutral body (foundation, working group) if capture is unremediable. Publish the audit and remediation plan.
 
@@ -214,7 +214,7 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 **Detection.** Audit conformance tests for spec-coverage: every test must trace to a normative requirement, not to reference-impl behavior. Review bug reports for "match the reference" complaints that indicate spec gaps.
 
-**Response.** If a conformance test tests behavior not in the spec, remove or rewrite it to test spec-defined behavior. If the spec is silent on a behavior that multiple implementers need, open an OEP to specify it — don't let the reference impl silently fill the gap.
+**Response.** If a conformance test tests behavior not in the spec, remove or rewrite it to test spec-defined behavior. If the spec is silent on a behavior that multiple implementers need, open an TEP to specify it — don't let the reference impl silently fill the gap.
 
 **Owner.** Spec editor / Conformance suite maintainer.
 
@@ -224,33 +224,33 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 ### R-11: Proprietary extensions fragmenting the protocol
 
-**Description.** Incompatible extensions. SignalAF or a competitor introduces proprietary extensions (new metrics, new fields, new privacy modes) that are not registered through the OEP process and are incompatible with other implementations.
+**Description.** Incompatible extensions. SignalAF or a competitor introduces proprietary extensions (new metrics, new fields, new privacy modes) that are not registered through the TEP process and are incompatible with other implementations.
 
-**Warning indicators.** Extensions in the `extensions` object that use unqualified names (violating `SRP-EXT-003`). Proprietary metrics presented as OTEP metrics. Extensions that redefine core metric semantics. Forks of the spec that diverge without an OEP.
+**Warning indicators.** Extensions in the `extensions` object that use unqualified names (violating `SRP-EXT-003`). Proprietary metrics presented as TTEOP metrics. Extensions that redefine core metric semantics. Forks of the spec that diverge without an TEP.
 
-**Prevention.** `SRP-EXT-001` requires normative changes to go through the OEP process. `SRP-EXT-002` requires extensions to be registered. `SRP-EXT-003` requires namespace prefixes for custom extensions. `SRP-EXT-004`/`SRP-EXT-005` define registry requirements for metrics and adapters.
+**Prevention.** `SRP-EXT-001` requires normative changes to go through the TEP process. `SRP-EXT-002` requires extensions to be registered. `SRP-EXT-003` requires namespace prefixes for custom extensions. `SRP-EXT-004`/`SRP-EXT-005` define registry requirements for metrics and adapters.
 
 **Detection.** Periodic scan of published implementations for unregistered or unqualified extensions. Community reports of incompatibility. Conformance suite tests for namespace compliance.
 
-**Response.** If an extension violates `SRP-EXT-003` (unqualified names), issue a conformance violation. If an extension is unregistered, require registration or removal of the conformance claim. If extensions are incompatible, facilitate an OEP to standardize the shared behavior. If a fork diverges, engage the fork maintainers to reconcile via OEP or document the divergence as a separate profile.
+**Response.** If an extension violates `SRP-EXT-003` (unqualified names), issue a conformance violation. If an extension is unregistered, require registration or removal of the conformance claim. If extensions are incompatible, facilitate an TEP to standardize the shared behavior. If a fork diverges, engage the fork maintainers to reconcile via TEP or document the divergence as a separate profile.
 
 **Owner.** Spec editor / Registry maintainer.
 
-**Stop/Go gate.** **Go** — extensions are expected and permitted within the rules. Blocks release only if a core metric or field is altered without an OEP (which is a normative violation, escalating to Stop).
+**Stop/Go gate.** **Go** — extensions are expected and permitted within the rules. Blocks release only if a core metric or field is altered without an TEP (which is a normative violation, escalating to Stop).
 
 ---
 
 ### R-12: Premature formal-standard claims
 
-**Description.** Claiming ISO/IEC status prematurely. Marketing, documentation, or public statements claim OTEP is an "ISO standard," "IEC standard," "industry standard," or "formally standardized" before any such recognition exists.
+**Description.** Claiming ISO/IEC status prematurely. Marketing, documentation, or public statements claim TTEOP is an "ISO standard," "IEC standard," "industry standard," or "formally standardized" before any such recognition exists.
 
 **Warning indicators.** Use of "standard" without the "draft" or "specification" qualifier in formal contexts. Press releases claiming standardization. Spec documents referencing ISO/IEC processes as completed rather than deferred.
 
-**Prevention.** `SPEC.md` §1 explicitly states OTEP is a draft, not a formal standard. `SPEC.md` §2.2 defers formal standardization to post-v1.0. `README.md` labels the spec as "proposed." Review of all public communications for standardization claims.
+**Prevention.** `SPEC.md` §1 explicitly states TTEOP is a draft, not a formal standard. `SPEC.md` §2.2 defers formal standardization to post-v1.0. `README.md` labels the spec as "proposed." Review of all public communications for standardization claims.
 
 **Detection.** Audit of marketing, documentation, and press coverage for premature claims. Community reports.
 
-**Response.** Issue a correction. Remove the premature claim. Clarify that OTEP is a draft specification, not a formal standard. If the claim was made knowingly, document it as a governance violation.
+**Response.** Issue a correction. Remove the premature claim. Clarify that TTEOP is a draft specification, not a formal standard. If the claim was made knowingly, document it as a governance violation.
 
 **Owner.** Spec editor / Marketing review.
 
@@ -260,37 +260,37 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 ### R-13: Lack of a second implementation
 
-**Description.** Only SignalAF implements OTEP. No third-party implementation exists or has passed the conformance suite, so "OTEP Conformant" cannot be claimed (`SRP-CONF-004`) and the protocol's interoperability is untested across independent implementations.
+**Description.** Only SignalAF implements TTEOP. No third-party implementation exists or has passed the conformance suite, so "TTEOP Conformant" cannot be claimed (`SRP-CONF-004`) and the protocol's interoperability is untested across independent implementations.
 
-**Warning indicators.** Zero third-party implementations in the conformance registry. All conformance testing done on SignalAF's own implementation. No external OEP submissions. Community reports that the spec is too SignalAF-specific to implement independently.
+**Warning indicators.** Zero third-party implementations in the conformance registry. All conformance testing done on SignalAF's own implementation. No external TEP submissions. Community reports that the spec is too SignalAF-specific to implement independently.
 
 **Prevention.** `SRP-CONF-004` reserves the "Conformant" mark for third-party-verified implementations, preventing self-certification as the sole path. Publish implementation guides (`reference/IMPLEMENTATION_MAP.md`). Provide integration examples (`integrations/`). Keep the spec self-contained (not dependent on SignalAF-specific behavior).
 
 **Detection.** Track the number of independent implementations in the conformance registry. Monitor for community attempts to implement and their blockers. Survey non-SignalAF developers on implementation difficulty.
 
-**Response.** If no second implementation exists by a target milestone (e.g., v0.5): prioritize spec clarity issues raised by would-be implementers. Offer implementation grants or bounties. Run an implementation hackathon. If the spec is the blocker (ambiguous, incomplete, or SignalAF-specific), open OEPs to fix it. Do not claim "Conformant" status until the second implementation passes.
+**Response.** If no second implementation exists by a target milestone (e.g., v0.5): prioritize spec clarity issues raised by would-be implementers. Offer implementation grants or bounties. Run an implementation hackathon. If the spec is the blocker (ambiguous, incomplete, or SignalAF-specific), open TEPs to fix it. Do not claim "Conformant" status until the second implementation passes.
 
 **Owner.** Spec editor / Ecosystem lead.
 
-**Stop/Go gate.** **Stop (conditional)** — blocks claiming "OTEP Conformant" status (per `SRP-CONF-004`). Does not block draft releases, but blocks any release that claims the Conformant mark without a second implementation.
+**Stop/Go gate.** **Stop (conditional)** — blocks claiming "TTEOP Conformant" status (per `SRP-CONF-004`). Does not block draft releases, but blocks any release that claims the Conformant mark without a second implementation.
 
 ---
 
 ### R-14: Competitors forking or embracing the protocol
 
-**Description.** Embrace-extend-extinguish. A large competitor embraces OTEP, extends it with proprietary features that become popular, and either extinguishes the open version by making the proprietary extension a de facto requirement or fragments the ecosystem into incompatible forks.
+**Description.** Embrace-extend-extinguish. A large competitor embraces TTEOP, extends it with proprietary features that become popular, and either extinguishes the open version by making the proprietary extension a de facto requirement or fragments the ecosystem into incompatible forks.
 
-**Warning indicators.** A competitor launches an OTEP-compatible product with proprietary extensions that are not OEP-registered. The competitor's extensions gain significant market share. The competitor's marketing positions its extensions as "the real OTEP." Forks that diverge on core metric semantics.
+**Warning indicators.** A competitor launches an TTEOP-compatible product with proprietary extensions that are not TEP-registered. The competitor's extensions gain significant market share. The competitor's marketing positions its extensions as "the real TTEOP." Forks that diverge on core metric semantics.
 
-**Prevention.** Open core under perpetual license (cannot be retracted). OEP process for standardizing popular extensions before they fragment. Trademark policy preventing "OTEP" misuse. Namespace requirements (`SRP-EXT-003`) preventing extension collisions. `SRP-CONF-004` requiring third-party verification.
+**Prevention.** Open core under perpetual license (cannot be retracted). TEP process for standardizing popular extensions before they fragment. Trademark policy preventing "TTEOP" misuse. Namespace requirements (`SRP-EXT-003`) preventing extension collisions. `SRP-CONF-004` requiring third-party verification.
 
-**Detection.** Monitor the competitive landscape for OTEP-compatible products and their extension strategies. Track fork activity and divergence. Community reports of fragmentation pressure.
+**Detection.** Monitor the competitive landscape for TTEOP-compatible products and their extension strategies. Track fork activity and divergence. Community reports of fragmentation pressure.
 
-**Response.** If a competitor's extension is gaining traction, engage the competitor to submit it as an OEP. If the extension is beneficial, standardize it. If the competitor refuses to participate and creates incompatible fragmentation, publish a compatibility advisory distinguishing OTEP-conformant products from the competitor's extended fork. Use the trademark to prevent the competitor from calling its fork "OTEP" if it diverges on core semantics.
+**Response.** If a competitor's extension is gaining traction, engage the competitor to submit it as an TEP. If the extension is beneficial, standardize it. If the competitor refuses to participate and creates incompatible fragmentation, publish a compatibility advisory distinguishing TTEOP-conformant products from the competitor's extended fork. Use the trademark to prevent the competitor from calling its fork "TTEOP" if it diverges on core semantics.
 
 **Owner.** Spec editor / Ecosystem lead / Legal.
 
-**Stop/Go gate.** **Go** — embrace-extend is a strategic risk, not a release blocker. Escalates to Stop if a fork's divergence is adopted into the open spec without due OEP process (which would be a governance violation).
+**Stop/Go gate.** **Go** — embrace-extend is a strategic risk, not a release blocker. Escalates to Stop if a fork's divergence is adopted into the open spec without due TEP process (which would be a governance violation).
 
 ---
 
@@ -304,7 +304,7 @@ This register identifies the risks that could compromise the OTEP protocol's val
 
 **Detection.** Monitor leaderboard for scale-dependent ranking artifacts. Track community questions and support tickets related to Υ interpretation. Survey users on their understanding of the input² limitation.
 
-**Response.** If confusion is widespread: publish a clarification on the input² sensitivity. Add a visual warning on the leaderboard when comparing Υ across operators with input-scale ratios exceeding a documented threshold. Consider an OEP for a scale-normalized Yield variant in a future version (without replacing the original Υ). Ensure training materials and the exam cover this limitation prominently.
+**Response.** If confusion is widespread: publish a clarification on the input² sensitivity. Add a visual warning on the leaderboard when comparing Υ across operators with input-scale ratios exceeding a documented threshold. Consider an TEP for a scale-normalized Yield variant in a future version (without replacing the original Υ). Ensure training materials and the exam cover this limitation prominently.
 
 **Owner.** Spec editor / Metrics maintainer.
 

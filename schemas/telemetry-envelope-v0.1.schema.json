@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://otep.dev/schemas/telemetry-envelope-v0.1.schema.json",
-  "title": "OTEP Telemetry Envelope v0.1-draft",
-  "description": "Canonical telemetry envelope for AI-operator token-processing data per OTEP v0.1-draft specification.",
+  "$id": "https://tteop.dev/schemas/telemetry-envelope-v0.1.schema.json",
+  "title": "TTEOP Telemetry Envelope v0.1-draft",
+  "description": "Canonical telemetry envelope for AI-operator token-processing data per TTEOP v0.1-draft specification.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -15,9 +15,9 @@
   ],
   "properties": {
     "protocol_version": {
-      "description": "OTEP protocol version string. Legacy alias 'sigrank/0.1-draft' accepted.",
+      "description": "TTEOP protocol version string. Legacy alias 'sigrank/0.1-draft' accepted.",
       "type": "string",
-      "enum": ["otep/0.1-draft", "sigrank/0.1-draft"]
+      "enum": ["tteop/0.1-draft", "sigrank/0.1-draft"]
     },
     "metric_spec_version": {
       "description": "Metric specification version. SHOULD be present.",

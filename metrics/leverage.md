@@ -1,6 +1,6 @@
 # Leverage
 
-**Metric ID:** `otep.leverage`
+**Metric ID:** `tteop.leverage`
 **Maturity:** Experimental
 **Spec section:** SPEC.md §26.2
 

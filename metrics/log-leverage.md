@@ -1,6 +1,6 @@
 # log_leverage (D)
 
-**Metric ID:** `otep.log_leverage`
+**Metric ID:** `tteop.log_leverage`
 **Maturity:** Experimental
 **Spec section:** SPEC.md §26.5
 **Legacy alias:** `dev10x` (deprecated — see §Naming note)

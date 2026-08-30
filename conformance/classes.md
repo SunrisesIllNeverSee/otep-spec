@@ -1,7 +1,7 @@
 # Conformance Architecture
 
 **Document status:** Normative
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 ---
 
@@ -9,7 +9,7 @@
 
 ### 1.1 Producer Conformance
 
-A **producer** is a system that emits OTEP-conformant telemetry envelopes.
+A **producer** is a system that emits TTEOP-conformant telemetry envelopes.
 
 **Mandatory tests:**
 
@@ -43,17 +43,17 @@ A **producer** is a system that emits OTEP-conformant telemetry envelopes.
 **Pass/fail rule:** All mandatory tests MUST pass. Optional tests do not affect pass/fail.
 
 **Allowed claims:**
-- "OTEP Producer Conformant — v0.1-draft" (when all mandatory tests pass)
+- "TTEOP Producer Conformant — v0.1-draft" (when all mandatory tests pass)
 
 **Prohibited claims:**
-- "OTEP Conformant" (reserved for full-platform conformance with third-party validation)
-- "OTEP Certified" (no certification program exists at v0.1)
+- "TTEOP Conformant" (reserved for full-platform conformance with third-party validation)
+- "TTEOP Certified" (no certification program exists at v0.1)
 
 ---
 
 ### 1.2 Consumer Conformance
 
-A **consumer** is a system that ingests OTEP envelopes and processes them.
+A **consumer** is a system that ingests TTEOP envelopes and processes them.
 
 **Mandatory tests:**
 
@@ -73,13 +73,13 @@ A **consumer** is a system that ingests OTEP envelopes and processes them.
 **Pass/fail rule:** All mandatory tests MUST pass.
 
 **Allowed claims:**
-- "OTEP Consumer Conformant — v0.1-draft"
+- "TTEOP Consumer Conformant — v0.1-draft"
 
 ---
 
 ### 1.3 Adapter Conformance
 
-An **adapter** maps provider-native fields to OTEP primitives.
+An **adapter** maps provider-native fields to TTEOP primitives.
 
 **Mandatory tests:**
 
@@ -103,8 +103,8 @@ An **adapter** maps provider-native fields to OTEP primitives.
 3. A case with double-counting (if applicable to the provider)
 
 **Allowed claims:**
-- "OTEP Adapter Conformant — v0.1-draft (provider: anthropic)"
-- "OTEP Adapter Conformant — v0.1-draft (provider: openai)"
+- "TTEOP Adapter Conformant — v0.1-draft (provider: anthropic)"
+- "TTEOP Adapter Conformant — v0.1-draft (provider: openai)"
 
 ---
 
@@ -132,7 +132,7 @@ A **metric-engine** computes registered metrics from telemetry primitives.
 **Pass/fail rule:** All mandatory tests MUST pass. The canonical MOSES seed vector (METR-008) is a frozen invariant.
 
 **Allowed claims:**
-- "OTEP Metric-Engine Conformant — v0.1-draft"
+- "TTEOP Metric-Engine Conformant — v0.1-draft"
 
 ---
 
@@ -154,8 +154,8 @@ A **privacy-profile** implementation enforces privacy mode rules.
 | PRIV-008 | SRP-SEC-004 | Enterprise operator rights provided |
 
 **Allowed claims:**
-- "OTEP Privacy-Profile Conformant — v0.1-draft (mode: public-pseudonymous)"
-- "OTEP Privacy-Profile Conformant — v0.1-draft (mode: enterprise-isolated)"
+- "TTEOP Privacy-Profile Conformant — v0.1-draft (mode: public-pseudonymous)"
+- "TTEOP Privacy-Profile Conformant — v0.1-draft (mode: enterprise-isolated)"
 
 ---
 
@@ -166,12 +166,12 @@ A **full-platform** implementation passes all mandatory tests from Producer, Con
 **Mandatory tests:** All mandatory tests from PROD-*, CONS-*, METR-*, and PRIV-* classes.
 
 **Allowed claims:**
-- "OTEP Full-Platform Conformant — v0.1-draft"
+- "TTEOP Full-Platform Conformant — v0.1-draft"
 
 **Prohibited claims (until third-party validation):**
-- "OTEP Conformant" (without independent validation)
-- "OTEP Certified" (no certification program exists)
-- "OTEP Standard" (not a formal standard)
+- "TTEOP Conformant" (without independent validation)
+- "TTEOP Certified" (no certification program exists)
+- "TTEOP Standard" (not a formal standard)
 
 ---
 
@@ -180,7 +180,7 @@ A **full-platform** implementation passes all mandatory tests from Producer, Con
 ### 2.1 Command structure
 
 ```
-otep validate <payload.json> [--profile <privacy-mode>] [--class <conformance-class>] [--report <format>]
+tteop validate <payload.json> [--profile <privacy-mode>] [--class <conformance-class>] [--report <format>]
 ```
 
 **Arguments:**
@@ -193,13 +193,13 @@ otep validate <payload.json> [--profile <privacy-mode>] [--class <conformance-cl
 
 ```bash
 # Validate a payload against all conformance classes
-otep validate payload.json --report json
+tteop validate payload.json --report json
 
 # Validate against a specific privacy profile
-otep validate payload.json --profile private-managed --report json
+tteop validate payload.json --profile private-managed --report json
 
 # Validate an adapter specifically
-otep validate payload.json --class adapter --report text
+tteop validate payload.json --class adapter --report text
 ```
 
 ### 2.3 Exit codes
@@ -223,11 +223,11 @@ See `conformance/example-report.json` for a machine-readable example.
 ## 4. Version Compatibility
 
 **`SRP-CONF-003`** Conformance claims MUST identify:
-- Protocol version (e.g., `otep/0.1-draft`)
-- Metric spec version (e.g., `otep-metrics/0.1-draft`)
-- Conformance runner version (e.g., `otep-conformance/0.1.0`)
+- Protocol version (e.g., `tteop/0.1-draft`)
+- Metric spec version (e.g., `tteop-metrics/0.1-draft`)
+- Conformance runner version (e.g., `tteop-conformance/0.1.0`)
 
-A conformance claim for `otep/0.1-draft` is NOT valid for `otep/0.2-draft` without retesting.
+A conformance claim for `tteop/0.1-draft` is NOT valid for `tteop/0.2-draft` without retesting.
 
 ---
 
@@ -236,7 +236,7 @@ A conformance claim for `otep/0.1-draft` is NOT valid for `otep/0.2-draft` witho
 Conformance reports are JSON documents conforming to `schemas/conformance-report-v0.1.schema.json`.
 
 Key fields:
-- `report_version` — always `otep-conformance/0.1-draft`
+- `report_version` — always `tteop-conformance/0.1-draft`
 - `conformance_class` — which class was tested
 - `overall_result` — `pass`, `fail`, or `partial`
 - `tests` — array of individual test results
@@ -248,10 +248,10 @@ Key fields:
 ## 6. Complete Requirement-to-Test Mapping
 
 This section maps every normative requirement ID (SRP-*) to at least one
-conformance test. Tests are implemented in `conformance/otep-runner.mjs`.
+conformance test. Tests are implemented in `conformance/tteop-runner.mjs`.
 
 **Test types:**
-- **E** — Executable test (runs in `otep-runner.mjs`)
+- **E** — Executable test (runs in `tteop-runner.mjs`)
 - **D** — Documentation test (verified by file existence or content check)
 - **S** — Schema test (verified by schema validation)
 
@@ -393,7 +393,7 @@ conformance test. Tests are implemented in `conformance/otep-runner.mjs`.
 
 | Requirement | Test ID | Type | Description |
 |-------------|---------|------|-------------|
-| SRP-EXT-001 | EXT-001 | E | OEP template exists |
+| SRP-EXT-001 | EXT-001 | E | TEP template exists |
 | SRP-EXT-002 | EXT-002a/b | E | Metrics and adapters registries exist |
 | SRP-EXT-003 | EXT-003 | E | Extension keys use namespace prefixes |
 | SRP-EXT-004 | EXT-004-* | E | Each metric has all required registry fields |
@@ -444,7 +444,7 @@ conformance test. Tests are implemented in `conformance/otep-runner.mjs`.
 |-------------|---------|------|-------------|
 | SRP-REG-001 | REG-001 | E | Registry is machine-readable JSON |
 | SRP-REG-002 | REG-002-* | E | Each metric entry has required fields |
-| SRP-REG-003 | REG-003 | E | OEP process documented |
+| SRP-REG-003 | REG-003 | E | TEP process documented |
 | SRP-REG-004 | REG-004-* | E | Each adapter entry has required fields |
 
 ### 6.19 Non-Inferences (SRP-NON)
@@ -472,7 +472,7 @@ conformance test. Tests are implemented in `conformance/otep-runner.mjs`.
 
 ### 6.21 Test Vector Coverage
 
-All test vectors in `test-vectors/` are executed by `otep-runner.mjs`:
+All test vectors in `test-vectors/` are executed by `tteop-runner.mjs`:
 
 | Vector | Metrics tested | Boundary |
 |--------|---------------|----------|

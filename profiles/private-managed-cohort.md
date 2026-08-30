@@ -17,7 +17,7 @@ This mode adds the `operator.cohort_id` field so that consumers can group and co
 
 ## 2. Permitted Fields
 
-An envelope in `private-managed-cohort` mode MAY include all OTEP telemetry and metadata fields, **including** `operator.cohort_id`.
+An envelope in `private-managed-cohort` mode MAY include all TTEOP telemetry and metadata fields, **including** `operator.cohort_id`.
 
 | Field group | Permitted | Notes |
 |-------------|-----------|-------|
@@ -91,7 +91,7 @@ A consumer hosting a `private-managed-cohort` deployment MUST authenticate acces
 | Exporter | Scope | Format |
 |----------|-------|--------|
 | Cohort admin | Aggregate cohort statistics only | Schema-valid aggregate report; no individual peer records |
-| Operator | Their own individual records only | Schema-valid OTEP envelope stream (JSON Lines / JSON array) |
+| Operator | Their own individual records only | Schema-valid TTEOP envelope stream (JSON Lines / JSON array) |
 
 - The cohort admin MAY export aggregate cohort statistics (distributions, group metrics) but MUST NOT export individual peer records.
 - An operator MAY export only their own individual records (all envelopes bearing their pseudonymous key within the cohort).

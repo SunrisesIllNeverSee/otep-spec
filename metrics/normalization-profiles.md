@@ -1,13 +1,13 @@
 # Normalization Profiles
 
 **Document status:** Informative (v0.1-draft)
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 ---
 
 ## 1. Purpose
 
-The core OTEP metrics (Yield, Leverage, Velocity, output_fraction, log_leverage)
+The core TTEOP metrics (Yield, Leverage, Velocity, output_fraction, log_leverage)
 are defined with fixed formulas in `metrics/registry.json`. Some metrics,
 particularly Yield (Υ), have known scale sensitivities that make cross-window
 or cross-operator comparison difficult without normalization.
@@ -100,7 +100,7 @@ factor of `input`, so Υ_lin is not a replacement but a complementary metric.
    Changing the formula would break this invariant.
 2. Υ is classified as `experimental`, allowing formula changes in future
    versions. However, the v0.1-draft retains Υ for continuity.
-3. Υ_lin can be registered as a new metric in v0.2 via the OEP process.
+3. Υ_lin can be registered as a new metric in v0.2 via the TEP process.
 
 **Test vector (MOSES canonical seed):**
 
@@ -177,7 +177,7 @@ log_Υ = log10(18436.98) = 4.27
 
 ## 4. Decision Framework
 
-| Profile | When to use | Maturity | OEP required? |
+| Profile | When to use | Maturity | TEP required? |
 |---------|-------------|----------|---------------|
 | Core Υ | Default; frozen invariant | experimental | No (already registered) |
 | Υ_w (window-normalized) | Cross-operator comparison within a cohort | experimental | Yes (v0.2) |
@@ -190,7 +190,7 @@ log_Υ = log10(18436.98) = 4.27
 ## 5. Implementation Notes
 
 - Normalization profiles are NOT part of the v0.1-draft conformance suite.
-  They are proposed for v0.2 and require OEP acceptance before becoming
+  They are proposed for v0.2 and require TEP acceptance before becoming
   normative.
 - A conforming implementation MAY implement normalization profiles as
   extensions, but MUST NOT claim conformance to them until they are registered.
@@ -216,4 +216,4 @@ log_Υ = log10(18436.98) = 4.27
    in public-pseudonymous mode without a reference cohort.
 
 These questions are tracked in `UNRESOLVED-DECISIONS.md` and will be resolved
-through the OEP process before v0.5.
+through the TEP process before v0.5.

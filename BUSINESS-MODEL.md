@@ -1,14 +1,14 @@
 # SignalAF Business Model
 
-**Status:** Draft — companion document to the OTEP specification
-**Scope:** Revenue strategy for SignalAF (the commercial product built on the open OTEP protocol)
+**Status:** Draft — companion document to the TTEOP specification
+**Scope:** Revenue strategy for SignalAF (the commercial product built on the open TTEOP protocol)
 **Relationship to spec:** Non-normative. This document does not define protocol requirements. Where it references normative requirements (e.g., `SRP-CONF-005`, `SRP-CONF-006`), those requirements are authoritative and this document is subordinate.
 
 ---
 
 ## 1. Purpose
 
-OTEP (Operator Token Efficiency Protocol) is an open measurement specification. SignalAF is the commercial product built on top of OTEP — it provides a hosted leaderboard, reference implementation, enterprise platform, and certification services. The central question this document answers is: **how does SignalAF build sustainable revenue without undermining the neutrality of the open protocol it sits on?**
+TTEOP (Token Telemetry Evaluation Operator Protocol) is an open measurement specification. SignalAF is the commercial product built on top of TTEOP — it provides a hosted leaderboard, reference implementation, enterprise platform, and certification services. The central question this document answers is: **how does SignalAF build sustainable revenue without undermining the neutrality of the open protocol it sits on?**
 
 The answer has two parts:
 
@@ -51,7 +51,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 **Description.** SignalAF offers on-premise and private-cloud deployment of the Upsilon measurement engine for enterprise customers. This includes deployment automation, configuration management, air-gapped operation, and enterprise-grade telemetry ingestion pipelines that connect to internal provider endpoints without data leaving the customer's network.
 
 **Openness boundary.**
-- **Open:** The OTEP telemetry envelope schema, metric formulas, and adapter registry. An enterprise can build its own ingestion pipeline against the open spec without buying SignalAF.
+- **Open:** The TTEOP telemetry envelope schema, metric formulas, and adapter registry. An enterprise can build its own ingestion pipeline against the open spec without buying SignalAF.
 - **Commercial:** The deployment automation, the Upsilon engine's operational tooling, internal dashboards, and the integration glue that connects enterprise identity systems to the telemetry pipeline.
 
 **Neutrality risk: Low.** Enterprise deployment is a packaging and operations service. It does not alter the protocol.
@@ -70,7 +70,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 **Description.** SignalAF curates private benchmarking cohorts for enterprise teams — groups of operators within or across organizations who share telemetry on a private, invite-only basis for comparative analysis. Cohorts have defined eligibility criteria, observation windows, and composition rules.
 
 **Openness boundary.**
-- **Open:** The cohort telemetry format (standard OTEP envelopes), the metric definitions used for comparison, and the claim-level disclosure requirements (`SRP-NON-005`, `SRP-NON-007`).
+- **Open:** The cohort telemetry format (standard TTEOP envelopes), the metric definitions used for comparison, and the claim-level disclosure requirements (`SRP-NON-005`, `SRP-NON-007`).
 - **Commercial:** The cohort curation logic, eligibility thresholds, composition algorithms, and the private hosting infrastructure. Per `SPEC.md` §2.2, private cohort composition and eligibility thresholds are explicitly out of scope for the base protocol.
 
 **Neutrality risk: Low–Medium.** Risk arises if cohort composition criteria implicitly favor or penalize certain providers or operators in ways that leak into public rankings.
@@ -86,7 +86,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 
 ### 2.4 Advanced analytics
 
-**Description.** SignalAF provides proprietary analytics beyond the open metric set: anomaly detection (flagging statistically improbable telemetry patterns), trend analysis (longitudinal metric trajectories), and comparative intelligence (cross-operator, cross-team, cross-provider comparisons with statistical context). These analytics operate on top of OTEP telemetry but produce insights not defined by the open spec.
+**Description.** SignalAF provides proprietary analytics beyond the open metric set: anomaly detection (flagging statistically improbable telemetry patterns), trend analysis (longitudinal metric trajectories), and comparative intelligence (cross-operator, cross-team, cross-provider comparisons with statistical context). These analytics operate on top of TTEOP telemetry but produce insights not defined by the open spec.
 
 **Openness boundary.**
 - **Open:** The five core metrics (Υ, Leverage, Velocity, output_fraction, log_leverage), their formulas, rounding rules, and null semantics. Anyone can compute these from token counts.
@@ -95,7 +95,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 **Neutrality risk: Low.** Analytics are additive. They do not change what the protocol measures.
 
 **Mitigation.**
-- Advanced analytics MUST NOT be presented as OTEP metrics. They are SignalAF product features, not protocol-defined measurements.
+- Advanced analytics MUST NOT be presented as TTEOP metrics. They are SignalAF product features, not protocol-defined measurements.
 - Analytics that produce scores or rankings MUST disclose their methodology at a level sufficient for independent critique, even if the implementation is proprietary.
 - Anomaly flags in telemetry envelopes (`SRP-VAL-003`, `SRP-VAL-004`) are part of the open spec; proprietary anomaly *models* that go beyond the spec's recommended flags MUST be clearly labeled as SignalAF extensions.
 
@@ -125,7 +125,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 
 ### 2.6 SSO, audit, and governance
 
-**Description.** SignalAF provides enterprise identity integration (SAML, OIDC, SCIM), audit trails (immutable logs of who accessed what telemetry and when), and governance dashboards (policy configuration, data retention controls, access delegation). These are standard enterprise platform features layered on top of OTEP telemetry.
+**Description.** SignalAF provides enterprise identity integration (SAML, OIDC, SCIM), audit trails (immutable logs of who accessed what telemetry and when), and governance dashboards (policy configuration, data retention controls, access delegation). These are standard enterprise platform features layered on top of TTEOP telemetry.
 
 **Openness boundary.**
 - **Open:** The telemetry envelope, privacy mode definitions, and provenance levels. The spec defines what must be protected; it does not define how an enterprise authenticates users.
@@ -152,7 +152,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 **Neutrality risk: Low.** Support contracts do not affect protocol neutrality.
 
 **Mitigation.**
-- Support MUST NOT include preferential treatment in the OEP governance process. A paying customer's OEP proposal gets the same process as a community member's.
+- Support MUST NOT include preferential treatment in the TEP governance process. A paying customer's TEP proposal gets the same process as a community member's.
 - Bug fixes discovered through support contracts MUST be contributed back to the open spec/reference implementation within the SLA's confidentiality window, not held as a proprietary advantage.
 
 **Revenue potential: Medium.** Standard and predictable. Scales with enterprise customer count.
@@ -161,7 +161,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 
 ### 2.8 Partner programs
 
-**Description.** SignalAF operates an integration partner program. Partners (tooling vendors, consultancies, system integrators) build OTEP-compatible adapters, dashboards, or deployment services. SignalAF certifies partners, lists them in a partner directory, and may share revenue on referrals or co-sold deployments.
+**Description.** SignalAF operates an integration partner program. Partners (tooling vendors, consultancies, system integrators) build TTEOP-compatible adapters, dashboards, or deployment services. SignalAF certifies partners, lists them in a partner directory, and may share revenue on referrals or co-sold deployments.
 
 **Openness boundary.**
 - **Open:** The adapter registry (`adapters/registry.json`), the adapter registration requirements (`SRP-EXT-005`), and the conformance classes. Anyone can register an adapter without joining the partner program.
@@ -171,7 +171,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 
 **Mitigation.**
 - Partner certification MUST NOT affect adapter registry inclusion. A partner adapter and a community adapter face the same registration requirements (`SRP-EXT-005`).
-- Partner status MUST NOT grant governance privileges. Partners do not get extra OEP votes.
+- Partner status MUST NOT grant governance privileges. Partners do not get extra TEP votes.
 - Revenue-sharing terms MUST be publicly disclosed at a summary level to prevent hidden conflicts of interest.
 
 **Revenue potential: Low–Medium.** Partner programs are ecosystem accelerants more than direct revenue drivers. Indirect value through market expansion.
@@ -180,16 +180,16 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 
 ### 2.9 Training and accreditation
 
-**Description.** SignalAF offers OTEP training courses (protocol fundamentals, adapter development, conformance testing, metric interpretation) and an operator accreditation program (certifying individuals as knowledgeable about OTEP measurement and its limitations). Courses are paid; accreditation requires passing an exam.
+**Description.** SignalAF offers TTEOP training courses (protocol fundamentals, adapter development, conformance testing, metric interpretation) and an operator accreditation program (certifying individuals as knowledgeable about TTEOP measurement and its limitations). Courses are paid; accreditation requires passing an exam.
 
 **Openness boundary.**
-- **Open:** The spec itself, the glossary (`docs/GLOSSARY.md`), the limitations document (`docs/LIMITATIONS.md`), and the explicit non-inferences (`SPEC.md` §25). All knowledge required to understand OTEP is in the open documents.
+- **Open:** The spec itself, the glossary (`docs/GLOSSARY.md`), the limitations document (`docs/LIMITATIONS.md`), and the explicit non-inferences (`SPEC.md` §25). All knowledge required to understand TTEOP is in the open documents.
 - **Commercial:** The course curriculum, the exam, the accreditation credential, and the instructional delivery.
 
 **Neutrality risk: Low.** Training is educational. Risk is limited to the accreditation credential being confused with conformance certification.
 
 **Mitigation.**
-- Operator accreditation (a person understands OTEP) MUST NOT be confused with system conformance certification (a system passes the conformance suite). These are separate credentials with separate names, visual designs, and criteria.
+- Operator accreditation (a person understands TTEOP) MUST NOT be confused with system conformance certification (a system passes the conformance suite). These are separate credentials with separate names, visual designs, and criteria.
 - Training materials MUST teach the explicit non-inferences (`SRP-NON-001` through `SRP-NON-007`) with equal prominence to the metric definitions. A training program that teaches people to misuse metrics as productivity proof undermines the protocol.
 - The exam MUST include questions on prohibited interpretations and the Yield input² sensitivity limitation.
 
@@ -199,7 +199,7 @@ For each stream: **description**, **openness boundary** (what stays open vs. wha
 
 ### 2.10 Hosted leaderboard
 
-**Description.** SignalAF operates the public SigRank leaderboard — a public ranking of operators by OTEP metrics. The leaderboard is free to view and free to submit to. SignalAF offers premium placement options: featured profiles, enhanced profile pages, sponsor badges, and promotional placement for partners.
+**Description.** SignalAF operates the public SigRank leaderboard — a public ranking of operators by TTEOP metrics. The leaderboard is free to view and free to submit to. SignalAF offers premium placement options: featured profiles, enhanced profile pages, sponsor badges, and promotional placement for partners.
 
 **Openness boundary.**
 - **Open:** The metric definitions, the ranking claim disclosure requirements (`SRP-NON-006`, `SRP-NON-007`), and the ability to submit telemetry at no cost.
@@ -274,7 +274,7 @@ Per `SRP-CONF-001`, a system that passes the open conformance suite has a valid 
 
 ### 4.3 No pay-to-play in governance
 
-The OEP process (`SPEC.md` §19.1, `docs/GOVERNANCE.md`) is open. OEP proposals are not gated by payment, partnership status, or customer relationship. A community member with no commercial relationship to SignalAF has the same OEP submission rights as SignalAF's largest enterprise customer. SignalAF employees participate in governance as individuals, not as a bloc; their proposals stand on merit.
+The TEP process (`SPEC.md` §19.1, `docs/GOVERNANCE.md`) is open. TEP proposals are not gated by payment, partnership status, or customer relationship. A community member with no commercial relationship to SignalAF has the same TEP submission rights as SignalAF's largest enterprise customer. SignalAF employees participate in governance as individuals, not as a bloc; their proposals stand on merit.
 
 ### 4.4 Reference implementation is not the spec
 
@@ -282,7 +282,7 @@ The reference implementation (`reference/`) is an artifact that implements the s
 
 ### 4.5 Trademark policy
 
-The OTEP name and conformance marks are governed by a published trademark policy. Non-conformant products MUST NOT use the marks. Conformant products MAY use the marks, regardless of commercial relationship to SignalAF. The trademark policy MUST NOT be used to exclude competitors that conform. See `RISK-REGISTER.md` risk R-08.
+The TTEOP name and conformance marks are governed by a published trademark policy. Non-conformant products MUST NOT use the marks. Conformant products MAY use the marks, regardless of commercial relationship to SignalAF. The trademark policy MUST NOT be used to exclude competitors that conform. See `RISK-REGISTER.md` risk R-08.
 
 ### 4.6 Revenue-stream neutrality audit
 
@@ -290,7 +290,7 @@ SignalAF conducts an annual neutrality audit of its revenue streams. The audit e
 
 ### 4.7 Second-implementation requirement
 
-Per `SRP-CONF-004`, `SigRank Conformant` / `OTEP Conformant` is reserved until a third-party implementation passes the conformance suite independently. SignalAF's own implementation cannot establish the conformance mark alone. This prevents the commercial entity from being the sole arbiter of conformance. See `RISK-REGISTER.md` risk R-13.
+Per `SRP-CONF-004`, `SigRank Conformant` / `TTEOP Conformant` is reserved until a third-party implementation passes the conformance suite independently. SignalAF's own implementation cannot establish the conformance mark alone. This prevents the commercial entity from being the sole arbiter of conformance. See `RISK-REGISTER.md` risk R-13.
 
 ### 4.8 Spec revenue firewall
 

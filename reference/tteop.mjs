@@ -1,20 +1,20 @@
 /**
- * reference/otep.mjs — OTEP v0.1-draft reference implementation.
+ * reference/tteop.mjs — TTEOP v0.1-draft reference implementation.
  *
- * This is the reference implementation for the Operator Token Efficiency
+ * This is the reference implementation for the Token Telemetry Evaluation Operator
  * Protocol. It is normative only insofar as it demonstrates conformity with
  * SPEC.md; it does not silently define undocumented behavior.
  *
  * Two modes:
- *   - `validate`  — validate a telemetry envelope against the OTEP schema and
+ *   - `validate`  — validate a telemetry envelope against the TTEOP schema and
  *                    semantic rules, then compute metrics if valid.
  *   - `compute`   — compute the five registered metrics from a telemetry
  *                    object (input, output, cache_write, cache_read).
  *
  * Usage:
- *   node reference/otep.mjs validate <envelope.json>
- *   node reference/otep.mjs compute  <telemetry.json>
- *   node reference/otep.mjs compute-inline <input> <output> <cache_write> <cache_read>
+ *   node reference/tteop.mjs validate <envelope.json>
+ *   node reference/tteop.mjs compute  <telemetry.json>
+ *   node reference/tteop.mjs compute-inline <input> <output> <cache_write> <cache_read>
  *
  * Exit codes:
  *   0 — success (valid envelope or metrics computed)
@@ -32,8 +32,8 @@ import addFormats from "ajv-formats";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const SPEC_VERSION = "otep/0.1-draft";
-const METRIC_SPEC_VERSION = "otep-metrics/0.1-draft";
+const SPEC_VERSION = "tteop/0.1-draft";
+const METRIC_SPEC_VERSION = "tteop-metrics/0.1-draft";
 const SCHEMA_PATH = join(__dirname, "..", "schemas", "telemetry-envelope-v0.1.schema.json");
 
 const FORBIDDEN_FIELDS = [
@@ -195,7 +195,7 @@ function validateWithAjv(envelope, schema, errors) {
 }
 
 /**
- * Validate a telemetry envelope against the OTEP schema and semantic rules.
+ * Validate a telemetry envelope against the TTEOP schema and semantic rules.
  *
  * @param {object} envelope - the telemetry envelope to validate
  * @param {object} schema - the parsed JSON Schema
@@ -282,10 +282,10 @@ function main() {
   const mode = args[0];
 
   if (mode === "compute-inline") {
-    // node reference/otep.mjs compute-inline <input> <output> <cache_write> <cache_read>
+    // node reference/tteop.mjs compute-inline <input> <output> <cache_write> <cache_read>
     const [input, output, cacheWriteStr, cacheReadStr] = args.slice(1);
     if (input === undefined || output === undefined) {
-      console.error("Usage: node reference/otep.mjs compute-inline <input> <output> <cache_write> <cache_read>");
+      console.error("Usage: node reference/tteop.mjs compute-inline <input> <output> <cache_write> <cache_read>");
       process.exit(2);
     }
     const telemetry = {
@@ -300,10 +300,10 @@ function main() {
   }
 
   if (mode === "compute") {
-    // node reference/otep.mjs compute <telemetry.json>
+    // node reference/tteop.mjs compute <telemetry.json>
     const file = args[1];
     if (!file) {
-      console.error("Usage: node reference/otep.mjs compute <telemetry.json>");
+      console.error("Usage: node reference/tteop.mjs compute <telemetry.json>");
       process.exit(2);
     }
     const telemetry = JSON.parse(readFileSync(file, "utf8"));
@@ -313,10 +313,10 @@ function main() {
   }
 
   if (mode === "validate") {
-    // node reference/otep.mjs validate <envelope.json>
+    // node reference/tteop.mjs validate <envelope.json>
     const file = args[1];
     if (!file) {
-      console.error("Usage: node reference/otep.mjs validate <envelope.json>");
+      console.error("Usage: node reference/tteop.mjs validate <envelope.json>");
       process.exit(2);
     }
     const envelope = JSON.parse(readFileSync(file, "utf8"));
@@ -326,7 +326,7 @@ function main() {
     process.exit(result.valid ? 0 : 1);
   }
 
-  console.error("Usage: node reference/otep.mjs <validate|compute|compute-inline> <args>");
+  console.error("Usage: node reference/tteop.mjs <validate|compute|compute-inline> <args>");
   process.exit(2);
 }
 

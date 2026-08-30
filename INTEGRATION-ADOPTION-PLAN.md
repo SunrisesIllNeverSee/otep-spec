@@ -1,7 +1,7 @@
-# OTEP Integration and Adoption Plan
+# TTEOP Integration and Adoption Plan
 
-**Protocol:** OTEP (Operator Token Efficiency Protocol)
-**Current version:** `otep/0.1-draft`
+**Protocol:** TTEOP (Token Telemetry Evaluation Operator Protocol)
+**Current version:** `tteop/0.1-draft`
 **Document status:** Living document — updated as integrations land
 **Companion to:** `ADOPTION-ROADMAP.md`
 
@@ -9,11 +9,11 @@
 
 ## 1. Purpose
 
-This plan prioritizes OTEP integrations by **dependency** (what unblocks other integrations) and **distribution value** (how much an integration expands the protocol's reach). It defines, for each integration class, the minimal technical contract a partner must satisfy, the incentive for the partner, the effort estimate, and the acceptance criteria.
+This plan prioritizes TTEOP integrations by **dependency** (what unblocks other integrations) and **distribution value** (how much an integration expands the protocol's reach). It defines, for each integration class, the minimal technical contract a partner must satisfy, the incentive for the partner, the effort estimate, and the acceptance criteria.
 
-Integrations are ranked P1 through P8. P1 is the highest priority because it is the primary production path — without producers emitting OTEP records, every downstream integration is theoretical.
+Integrations are ranked P1 through P8. P1 is the highest priority because it is the primary production path — without producers emitting TTEOP records, every downstream integration is theoretical.
 
-**What this plan is not:** a commitment to ship every integration by a fixed date, nor a promise that every listed partner will adopt OTEP. Each integration is independent and optional. The plan exists so that when a partner is ready, the contract is already defined.
+**What this plan is not:** a commitment to ship every integration by a fixed date, nor a promise that every listed partner will adopt TTEOP. Each integration is independent and optional. The plan exists so that when a partner is ready, the contract is already defined.
 
 ---
 
@@ -24,7 +24,7 @@ Integrations are ranked P1 through P8. P1 is the highest priority because it is 
 | P1 | AI coding tool and CLI collectors | Primary producers. Without records, nothing downstream works. |
 | P2 | GitHub/GitLab workflow metadata | Automated collection path. Enables CI/CD-native emission without per-tool adapters. |
 | P3 | CSV, JSON, API, and warehouse export | Enterprise analytics floor. Unblocks data teams who cannot run live consumers. |
-| P4 | OpenTelemetry semantic mapping | Standards alignment. Makes OTEP consumable by the existing OTel ecosystem. |
+| P4 | OpenTelemetry semantic mapping | Standards alignment. Makes TTEOP consumable by the existing OTel ecosystem. |
 | P5 | Observability systems | Consumer-side validation. Proves the envelope is ingestible by real platforms. |
 | P6 | Engineering-intelligence platforms | Enterprise distribution. Extends reach into org-level analytics. |
 | P7 | IDE marketplaces | Distribution surface. Lowers friction for individual developers. |
@@ -40,11 +40,11 @@ The ordering reflects a deliberate producer-first strategy: P1–P3 create and m
 
 ### 3.1 Value proposition
 
-These tools are where operators actually spend tokens. An OTEP adapter in a coding tool gives the operator a portable record of their session without requiring a separate instrumentation step. For the tool vendor, emitting OTEP means their users can export usage data into any OTEP-compatible consumer — leaderboard, observability platform, or warehouse — without the vendor building each integration itself.
+These tools are where operators actually spend tokens. An TTEOP adapter in a coding tool gives the operator a portable record of their session without requiring a separate instrumentation step. For the tool vendor, emitting TTEOP means their users can export usage data into any TTEOP-compatible consumer — leaderboard, observability platform, or warehouse — without the vendor building each integration itself.
 
 ### 3.2 Minimal technical contract
 
-- Emit one OTEP record per session (or per observation window) with `input`, `output`, `cache_write`, `cache_read` as non-negative integers
+- Emit one TTEOP record per session (or per observation window) with `input`, `output`, `cache_write`, `cache_read` as non-negative integers
 - Populate `provider` and `provider_model` fields
 - Set `provenance_level` to at least `1` (self-reported) or higher if the tool has access to provider-native usage metadata
 - Validate against the published JSON Schema before emission
@@ -69,7 +69,7 @@ These tools are where operators actually spend tokens. An OTEP adapter in a codi
 
 - Adapter emits records that pass the conformance runner
 - At least one session record published as a test vector or example
-- Documentation describing how the adapter maps native usage fields to OTEP primitives
+- Documentation describing how the adapter maps native usage fields to TTEOP primitives
 
 ### 3.7 Conformance class
 
@@ -85,11 +85,11 @@ Reference adapter in `integrations/cli/` (sigrank-mcp) plus a per-tool integrati
 
 ### 4.1 Value proposition
 
-CI/CD workflows already run AI steps (code review bots, test generation, doc summarization). Attaching OTEP metadata to workflow runs makes token efficiency an observable property of the pipeline, not just of individual sessions. Teams can track efficiency alongside build time and test coverage.
+CI/CD workflows already run AI steps (code review bots, test generation, doc summarization). Attaching TTEOP metadata to workflow runs makes token efficiency an observable property of the pipeline, not just of individual sessions. Teams can track efficiency alongside build time and test coverage.
 
 ### 4.2 Minimal technical contract
 
-- Emit an OTEP record as a workflow artifact (JSON file) or as a step output
+- Emit an TTEOP record as a workflow artifact (JSON file) or as a step output
 - Include `workflow_run_id`, `repository`, and `commit_sha` in the extension fields
 - Link the record to the AI step that produced it
 - Validate against the schema before publishing the artifact
@@ -112,7 +112,7 @@ CI/CD workflows already run AI steps (code review bots, test generation, doc sum
 ### 4.6 Acceptance criteria
 
 - A reusable workflow action or template published in the repo
-- Example workflow run producing a valid OTEP artifact
+- Example workflow run producing a valid TTEOP artifact
 - Documentation on artifact naming and retention
 
 ### 4.7 Conformance class
@@ -129,19 +129,19 @@ GitHub Action and GitLab CI template in `integrations/` published at v0.5 (when 
 
 ### 5.1 Value proposition
 
-Most enterprise data teams do not run live observability consumers. They want a file or an API endpoint they can load into Snowflake, BigQuery, or a notebook. A standard export format means a data team can analyze OTEP records from any producer without custom parsing per tool.
+Most enterprise data teams do not run live observability consumers. They want a file or an API endpoint they can load into Snowflake, BigQuery, or a notebook. A standard export format means a data team can analyze TTEOP records from any producer without custom parsing per tool.
 
 ### 5.2 Minimal technical contract
 
-- Export OTEP records as newline-delimited JSON (NDJSON) for streaming loads
+- Export TTEOP records as newline-delimited JSON (NDJSON) for streaming loads
 - Provide a CSV projection for the flat fields (primitives, derived metrics, provider, timestamp)
-- Provide a REST or GraphQL API endpoint returning OTEP records with pagination
+- Provide a REST or GraphQL API endpoint returning TTEOP records with pagination
 - Include schema version in every export so consumers can detect format changes
 - Preserve null semantics — do not coerce null to zero in CSV exports
 
 ### 5.3 Partner incentive
 
-- Analysts can query OTEP data in their existing warehouse without a new pipeline
+- Analysts can query TTEOP data in their existing warehouse without a new pipeline
 - Standard format eliminates per-tool parsing logic
 - Enables cross-tool efficiency benchmarking inside an organization
 
@@ -175,19 +175,19 @@ Export specification and reference NDJSON/CSV examples in `integrations/` publis
 
 ### 6.1 Value proposition
 
-OpenTelemetry is the dominant observability standard. Mapping OTEP primitives and metrics to OTel semantic conventions means any OTel-compatible backend can ingest OTEP data without a custom collector. This is the single highest-leverage standards alignment in the roadmap.
+OpenTelemetry is the dominant observability standard. Mapping TTEOP primitives and metrics to OTel semantic conventions means any OTel-compatible backend can ingest TTEOP data without a custom collector. This is the single highest-leverage standards alignment in the roadmap.
 
 ### 6.2 Minimal technical contract
 
-- Define OTEP attributes as OTel semantic-convention attributes (e.g., `otep.input_tokens`, `otep.output_tokens`, `otep.cache_write_tokens`, `otep.cache_read_tokens`)
+- Define TTEOP attributes as OTel semantic-convention attributes (e.g., `tteop.input_tokens`, `tteop.output_tokens`, `tteop.cache_write_tokens`, `tteop.cache_read_tokens`)
 - Map derived metrics as OTel gauge or histogram metrics
-- Provide an OTel collector processor or exporter that translates OTEP envelopes to OTel spans/metrics
+- Provide an OTel collector processor or exporter that translates TTEOP envelopes to OTel spans/metrics
 - Pin the mapping to a dated OTel semantic-conventions release
 
 ### 6.3 Partner incentive
 
 - OTel ecosystem gains AI-operator measurement semantics without inventing them
-- OTEP gains access to every OTel-compatible backend (Jaeger, Tempo, Prometheus, Datadog, Honeycomb, etc.)
+- TTEOP gains access to every OTel-compatible backend (Jaeger, Tempo, Prometheus, Datadog, Honeycomb, etc.)
 - Reduces friction for observability teams already invested in OTel
 
 ### 6.4 Implementation effort
@@ -203,8 +203,8 @@ OpenTelemetry is the dominant observability standard. Mapping OTEP primitives an
 ### 6.6 Acceptance criteria
 
 - Mapping document published and pinned to a dated OTel release
-- Collector processor or exporter passes round-trip tests (OTEP → OTel → OTEP preserves primitives)
-- At least one OTel backend ingests mapped OTEP data successfully
+- Collector processor or exporter passes round-trip tests (TTEOP → OTel → TTEOP preserves primitives)
+- At least one OTel backend ingests mapped TTEOP data successfully
 
 ### 6.7 Conformance class
 
@@ -220,25 +220,25 @@ OTel mapping guide and collector component published at v0.5 (per `ADOPTION-ROAD
 
 ### 7.1 Value proposition
 
-Observability platforms already ingest LLM telemetry. Accepting OTEP records as a native input format means these platforms can consume data from any OTEP-compatible producer without per-producer adapters. For the platform, this expands the universe of ingestible sources; for the producer, it means one export format works across platforms.
+Observability platforms already ingest LLM telemetry. Accepting TTEOP records as a native input format means these platforms can consume data from any TTEOP-compatible producer without per-producer adapters. For the platform, this expands the universe of ingestible sources; for the producer, it means one export format works across platforms.
 
 ### 7.2 Minimal technical contract
 
-- Accept OTEP NDJSON or API input
+- Accept TTEOP NDJSON or API input
 - Validate incoming records against the published schema
 - Preserve null semantics — display null distinctly from zero
 - Compute derived metrics using the published formulas (or accept pre-computed values with a flag)
-- Expose OTEP primitives and metrics in the platform's query and dashboard surfaces
+- Expose TTEOP primitives and metrics in the platform's query and dashboard surfaces
 
 ### 7.3 Partner incentive
 
-- Ingestion of any OTEP-compatible producer without custom adapters
-- Differentiation as an OTEP-native consumer
+- Ingestion of any TTEOP-compatible producer without custom adapters
+- Differentiation as an TTEOP-native consumer
 - Access to a growing producer ecosystem without per-tool business development
 
 ### 7.4 Implementation effort
 
-**Medium.** Schema validation and ingestion are standard; the work is surfacing OTEP metrics in existing dashboard and query UIs.
+**Medium.** Schema validation and ingestion are standard; the work is surfacing TTEOP metrics in existing dashboard and query UIs.
 
 ### 7.5 Dependencies
 
@@ -248,7 +248,7 @@ Observability platforms already ingest LLM telemetry. Accepting OTEP records as 
 
 ### 7.6 Acceptance criteria
 
-- Platform ingests OTEP NDJSON and validates against the schema
+- Platform ingests TTEOP NDJSON and validates against the schema
 - Platform displays I/O/W/R and at least two derived metrics
 - Null values displayed distinctly from zero
 - At least one dashboard template published
@@ -267,13 +267,13 @@ Ingestion guide and dashboard template published at v0.9 (when metric definition
 
 ### 8.1 Value proposition
 
-Engineering-intelligence platforms aggregate developer productivity and system metrics at the organization level. OTEP gives these platforms a neutral token-efficiency signal that complements their existing DORA, SPACE, and commit-based metrics — without conflating token efficiency with developer productivity (per SPEC §25, prohibited interpretations).
+Engineering-intelligence platforms aggregate developer productivity and system metrics at the organization level. TTEOP gives these platforms a neutral token-efficiency signal that complements their existing DORA, SPACE, and commit-based metrics — without conflating token efficiency with developer productivity (per SPEC §25, prohibited interpretations).
 
 ### 8.2 Minimal technical contract
 
-- Ingest OTEP records via the P3 export format or API
+- Ingest TTEOP records via the P3 export format or API
 - Aggregate records at the team, repository, or workflow level — never at the individual-operator level for personnel evaluation (privacy requirement)
-- Present OTEP metrics alongside existing engineering metrics with clear labeling that token efficiency is not a productivity measure
+- Present TTEOP metrics alongside existing engineering metrics with clear labeling that token efficiency is not a productivity measure
 - Respect the three privacy modes defined in SPEC §17
 
 ### 8.3 Partner incentive
@@ -295,9 +295,9 @@ Engineering-intelligence platforms aggregate developer productivity and system m
 
 ### 8.6 Acceptance criteria
 
-- Platform ingests OTEP records and aggregates at team/repository/workflow level
+- Platform ingests TTEOP records and aggregates at team/repository/workflow level
 - No individual-operator efficiency scores exposed for personnel evaluation
-- OTEP metrics labeled as token-processing efficiency, not productivity
+- TTEOP metrics labeled as token-processing efficiency, not productivity
 - Privacy mode respected in aggregation (redacted records not deanonymized)
 
 ### 8.7 Conformance class
@@ -314,11 +314,11 @@ Enterprise integration guide published at v0.9 or v1.0, depending on platform pa
 
 ### 9.1 Value proposition
 
-Most AI-assisted development happens inside an IDE. A marketplace extension that emits OTEP records lowers the barrier for individual developers to measure their own token efficiency without a separate CLI or workflow setup. For the protocol, IDE distribution is the highest-friction-reduction surface for individual adoption.
+Most AI-assisted development happens inside an IDE. A marketplace extension that emits TTEOP records lowers the barrier for individual developers to measure their own token efficiency without a separate CLI or workflow setup. For the protocol, IDE distribution is the highest-friction-reduction surface for individual adoption.
 
 ### 9.2 Minimal technical contract
 
-- Extension wraps the IDE's AI features and emits OTEP records per session or per observation window
+- Extension wraps the IDE's AI features and emits TTEOP records per session or per observation window
 - Records validate against the published schema
 - Extension stores records locally and offers export (NDJSON/CSV) — no mandatory cloud upload
 - Privacy mode selectable by the user (SPEC §17)
@@ -342,7 +342,7 @@ Most AI-assisted development happens inside an IDE. A marketplace extension that
 ### 9.6 Acceptance criteria
 
 - Extension published on VS Code Marketplace and/or JetBrains Marketplace
-- Extension emits validated OTEP records for at least one AI feature
+- Extension emits validated TTEOP records for at least one AI feature
 - Local export to NDJSON and CSV working
 - Privacy mode enforced and user-selectable
 - No measurable editor performance degradation in normal use
@@ -361,14 +361,14 @@ Reference VS Code extension in `integrations/` published at v0.9; JetBrains exte
 
 ### 10.1 Value proposition
 
-Academic researchers studying AI-assisted development need a shared measurement vocabulary to make studies comparable. OTEP provides a ready-made, content-independent metric set that respects subject privacy — critical for IRB-approved studies. For educators, OTEP gives students a concrete way to measure and reflect on their own AI tool usage.
+Academic researchers studying AI-assisted development need a shared measurement vocabulary to make studies comparable. TTEOP provides a ready-made, content-independent metric set that respects subject privacy — critical for IRB-approved studies. For educators, TTEOP gives students a concrete way to measure and reflect on their own AI tool usage.
 
 ### 10.2 Minimal technical contract
 
-- Use OTEP records as a data source in research studies, citing the spec version
-- For education tools, emit OTEP records that students can inspect and export
+- Use TTEOP records as a data source in research studies, citing the spec version
+- For education tools, emit TTEOP records that students can inspect and export
 - Respect privacy modes — research studies must use at least privacy mode 2 (redacted) unless IRB approval covers mode 1
-- Publish replication packages that include the OTEP schema version used
+- Publish replication packages that include the TTEOP schema version used
 
 ### 10.3 Partner incentive
 
@@ -388,8 +388,8 @@ Academic researchers studying AI-assisted development need a shared measurement 
 
 ### 10.6 Acceptance criteria
 
-- At least one research study or course using OTEP published with a replication package
-- OTEP cited with the correct version string in the study
+- At least one research study or course using TTEOP published with a replication package
+- TTEOP cited with the correct version string in the study
 - Privacy mode documented in the IRB submission materials
 
 ### 10.7 Conformance class
@@ -398,7 +398,7 @@ Academic researchers studying AI-assisted development need a shared measurement 
 
 ### 10.8 Launch artifact
 
-Researcher's guide to OTEP (citation template, privacy-mode IRB language) published at v0.5; course materials published as adoption grows.
+Researcher's guide to TTEOP (citation template, privacy-mode IRB language) published at v0.5; course materials published as adoption grows.
 
 ---
 
@@ -408,9 +408,9 @@ Every integration, regardless of priority, must satisfy these cross-cutting crit
 
 1. **Schema validation.** Emitted or ingested records validate against the published JSON Schema for the declared version.
 2. **Null semantics.** Null, zero, unsupported, and invalid values are handled per SPEC §13. No coercion of null to zero.
-3. **Version string.** Every record carries the spec version string (`otep/0.1-draft` or successor).
+3. **Version string.** Every record carries the spec version string (`tteop/0.1-draft` or successor).
 4. **Privacy modes.** Integrations that handle records respect the three privacy modes defined in SPEC §17.
-5. **No content telemetry.** No integration emits or logs prompt or completion text as part of an OTEP record.
+5. **No content telemetry.** No integration emits or logs prompt or completion text as part of an TTEOP record.
 6. **Provenance honesty.** `provenance_level` reflects the actual source of the data, not an aspirational source.
 
 ---
@@ -435,7 +435,7 @@ Every integration, regardless of priority, must satisfy these cross-cutting crit
 Partners are not asked to commit before the spec is useful. The engagement model is:
 
 1. **Observe (v0.1).** Any party can read the spec, run the conformance runner, and form an opinion. No commitment required.
-2. **Attempt (v0.5).** A party tries to emit or consume OTEP records and reports back via GitHub Issues. Failure reports are as valuable as success reports.
+2. **Attempt (v0.5).** A party tries to emit or consume TTEOP records and reports back via GitHub Issues. Failure reports are as valuable as success reports.
 3. **Implement (v0.9).** A party ships an integration that passes the conformance suite and publishes results.
 4. **Maintain (v1.0+).** A party maintains its integration across spec versions and participates in governance.
 

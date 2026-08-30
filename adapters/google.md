@@ -3,13 +3,13 @@
 **Adapter ID:** `google-v1`
 **Provider:** Google (Gemini)
 **Supported API versions:** `v1beta`, `v1`
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 ---
 
 ## 1. Field mappings
 
-| OTEP primitive | Native field | Notes |
+| TTEOP primitive | Native field | Notes |
 |----------------|--------------|-------|
 | `input` | `usageMetadata.promptTokenCount` | Total prompt tokens. See §2 for double-counting. |
 | `output` | `usageMetadata.candidatesTokenCount` | Completion tokens. |

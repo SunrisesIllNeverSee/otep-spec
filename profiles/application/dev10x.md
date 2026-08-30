@@ -2,13 +2,13 @@
 
 **Status:** Optional application profile (NOT normative core)
 **Maturity:** Experimental
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 ---
 
 ## Important Disclaimer
 
-The "10xDEV" label is an **application profile alias**, not a normative metric name. The normative metric is `log_leverage` (`otep.log_leverage`). The "10xDEV" name is retained for backward compatibility with existing product surfaces but MUST NOT be used in normative protocol contexts.
+The "10xDEV" label is an **application profile alias**, not a normative metric name. The normative metric is `log_leverage` (`tteop.log_leverage`). The "10xDEV" name is retained for backward compatibility with existing product surfaces but MUST NOT be used in normative protocol contexts.
 
 **The "10xDEV" label MUST NOT be presented as:**
 - A developer productivity classification
@@ -21,7 +21,7 @@ The "10xDEV" label is an **application profile alias**, not a normative metric n
 ## Definition
 
 **Application profile name:** 10xDEV
-**Underlying metric:** `otep.log_leverage` (`log10(cache_read / input)`)
+**Underlying metric:** `tteop.log_leverage` (`log10(cache_read / input)`)
 **Formula:** `10xDEV = log10(R / I)`
 
 ## Minimum Evidence Requirements
@@ -39,11 +39,11 @@ To use the "10xDEV" label in any public-facing context:
 1. **No employment use:** The 10xDEV label MUST NOT be used as the sole or primary basis for employment decisions (hiring, firing, promotion, compensation, performance review).
 2. **No causal claims:** The 10xDEV label MUST NOT be presented as causing any outcome (productivity, quality, business impact).
 3. **No absolute ranking without context:** A 10xDEV value MUST NOT be presented as an absolute ranking without disclosing the reference field, eligibility criteria, and observation window.
-4. **No misrepresentation:** The 10xDEV label MUST NOT be presented as a normative OTEP metric. It is an application profile alias.
+4. **No misrepresentation:** The 10xDEV label MUST NOT be presented as a normative TTEOP metric. It is an application profile alias.
 
 ## Classification Bands (SignalAF Reference)
 
-The following bands are **SignalAF reference extensions**, not OTEP normative requirements:
+The following bands are **SignalAF reference extensions**, not TTEOP normative requirements:
 
 | Band | log_leverage range | Label |
 |------|-------------------|-------|
@@ -53,7 +53,7 @@ The following bands are **SignalAF reference extensions**, not OTEP normative re
 | — | 3.0 – 4.0 | Expert |
 | — | > 4.0 | Elite |
 
-These bands are defined by SignalAF and MAY change. They are NOT part of the OTEP specification.
+These bands are defined by SignalAF and MAY change. They are NOT part of the TTEOP specification.
 
 ## Relationship to log_leverage
 

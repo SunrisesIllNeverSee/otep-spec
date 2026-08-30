@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * conformance/otep-validate.mjs
+ * conformance/tteop-validate.mjs
  *
- * `otep validate` CLI — validates a single OTEP v0.1-draft telemetry envelope
+ * `tteop validate` CLI — validates a single TTEOP v0.1-draft telemetry envelope
  * against the schema and semantic rules, and optionally computes metrics.
  *
  * Uses ajv for full JSON Schema 2020-12 validation.
  *
  * Usage:
- *   node conformance/otep-validate.mjs <payload.json> [--profile <mode>] [--report <format>]
+ *   node conformance/tteop-validate.mjs <payload.json> [--profile <mode>] [--report <format>]
  *
  * Arguments:
  *   <payload.json>              path to the telemetry envelope JSON file
@@ -165,7 +165,7 @@ function main() {
   const args = process.argv.slice(2);
   const payloadPath = args.find((a) => !a.startsWith("--"));
   if (!payloadPath) {
-    console.error("Usage: otep validate <payload.json> [--profile <mode>] [--report <format>]");
+    console.error("Usage: tteop validate <payload.json> [--profile <mode>] [--report <format>]");
     process.exit(4);
   }
   const profileIdx = args.indexOf("--profile");
@@ -194,7 +194,7 @@ function main() {
   const schema = JSON.parse(readFileSync(schemaPath, "utf8"));
 
   // Version check (SRP-VER-002)
-  const supportedVersions = ["otep/0.1-draft", "sigrank/0.1-draft"];
+  const supportedVersions = ["tteop/0.1-draft", "sigrank/0.1-draft"];
   if (envelope.protocol_version && !supportedVersions.includes(envelope.protocol_version)) {
     if (reportFormat === "json") {
       console.log(JSON.stringify({ overall_result: "fail", error: `unsupported_version: ${envelope.protocol_version}` }));
@@ -236,7 +236,7 @@ function main() {
 
   if (reportFormat === "json") {
     console.log(JSON.stringify({
-      report_version: "otep-conformance/0.1-draft",
+      report_version: "tteop-conformance/0.1-draft",
       timestamp: new Date().toISOString(),
       protocol_version: envelope.protocol_version,
       payload: payloadPath,
@@ -251,7 +251,7 @@ function main() {
       warnings,
     }, null, 2));
   } else {
-    console.log(`OTEP validate: ${payloadPath}`);
+    console.log(`TTEOP validate: ${payloadPath}`);
     console.log(`Overall: ${overall.toUpperCase()}`);
     console.log(`Protocol version: ${envelope.protocol_version}`);
     console.log(`Privacy mode (declared): ${envelope.privacy?.mode}`);

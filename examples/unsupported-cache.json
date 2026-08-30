@@ -1,6 +1,6 @@
 {
-  "protocol_version": "otep/0.1-draft",
-  "metric_spec_version": "otep-metrics/0.1-draft",
+  "protocol_version": "tteop/0.1-draft",
+  "metric_spec_version": "tteop-metrics/0.1-draft",
   "collector_version": "openai-collector/0.5.0",
   "operator": {
     "pseudonymous_key": "op_b3c8e1f7a2d6",

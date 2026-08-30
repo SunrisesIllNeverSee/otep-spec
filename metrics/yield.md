@@ -1,6 +1,6 @@
 # Yield (Υ)
 
-**Metric ID:** `otep.yield`
+**Metric ID:** `tteop.yield`
 **Maturity:** Experimental
 **Spec section:** SPEC.md §26.1
 

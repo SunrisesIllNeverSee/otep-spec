@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://otep.dev/schemas/conformance-report-v0.1.schema.json",
-  "title": "OTEP Conformance Report v0.1-draft",
-  "description": "Machine-readable conformance report produced by the OTEP conformance runner.",
+  "$id": "https://tteop.dev/schemas/conformance-report-v0.1.schema.json",
+  "title": "TTEOP Conformance Report v0.1-draft",
+  "description": "Machine-readable conformance report produced by the TTEOP conformance runner.",
   "type": "object",
   "additionalProperties": false,
   "required": ["report_version", "timestamp", "protocol_version", "metric_spec_version", "conformance_class", "overall_result", "tests"],
   "properties": {
-    "report_version": { "const": "otep-conformance/0.1-draft" },
+    "report_version": { "const": "tteop-conformance/0.1-draft" },
     "timestamp": { "type": "string", "format": "date-time" },
     "protocol_version": { "type": "string" },
     "metric_spec_version": { "type": "string" },

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the OTEP specification are documented in this file.
+All notable changes to the TTEOP specification are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — 2026-08-28
 
-### Added — OTEP v0.1-draft public specification package
+### Added — TTEOP v0.1-draft public specification package
 
-This release upgrades the `sigrank/0.1-draft` minimal specification to a complete, implementable public specification package under the proposed neutral name "OTEP" (Operator Token Efficiency Protocol).
+This release upgrades the `sigrank/0.1-draft` minimal specification to a complete, implementable public specification package under the proposed neutral name "TTEOP" (Token Telemetry Evaluation Operator Protocol).
 
 #### Core specification
 - `SPEC.md` — complete normative protocol specification with 100+ stable requirement IDs (`SRP-*`)
@@ -49,7 +49,7 @@ This release upgrades the `sigrank/0.1-draft` minimal specification to a complet
 #### Conformance
 - `conformance/classes.md` — 6 conformance classes (producer, consumer, adapter, metric-engine, privacy-profile, full-platform)
 - `conformance/example-report.json` — example machine-readable conformance report
-- CLI specification: `otep validate payload.json --profile <mode> --class <class> --report <format>`
+- CLI specification: `tteop validate payload.json --profile <mode> --class <class> --report <format>`
 
 #### Examples and test vectors
 - `examples/minimal-valid.json` — minimal valid telemetry envelope
@@ -66,8 +66,8 @@ This release upgrades the `sigrank/0.1-draft` minimal specification to a complet
 
 #### Governance
 - `GOVERNANCE.md` — complete governance document (343 lines, 56 requirement IDs)
-- `oeps/OEP-0000.md` — OEP process and template
-- `oeps/OEP-0001.md` — protocol name and versioning proposal
+- `teps/TEP-0000.md` — TEP process and template
+- `teps/TEP-0001.md` — protocol name and versioning proposal
 - `CONTRIBUTING.md` — contribution guide (DCO model)
 - `CODE_OF_CONDUCT.md` — Contributor Covenant 2.1
 - `TRADEMARKS.md` — trademark usage guidelines
@@ -84,8 +84,8 @@ This release upgrades the `sigrank/0.1-draft` minimal specification to a complet
 - `LICENSING-DECISION-MATRIX.md` — licensing analysis
 
 ### Changed
-- Protocol name proposed change: "SigRank Standard" → "OTEP" (Operator Token Efficiency Protocol)
-- Spec version string: `sigrank/0.1-draft` → `otep/0.1-draft` (legacy alias retained)
+- Protocol name proposed change: "SigRank Standard" → "TTEOP" (Token Telemetry Evaluation Operator Protocol)
+- Spec version string: `sigrank/0.1-draft` → `tteop/0.1-draft` (legacy alias retained)
 - `docs/SPEC.md` superseded by root-level `SPEC.md` (305 → 600+ lines)
 - `docs/GOVERNANCE.md` superseded by root-level `GOVERNANCE.md` (31 → 343 lines)
 

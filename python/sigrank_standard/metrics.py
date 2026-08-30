@@ -1,9 +1,9 @@
 """
-Metric computation for OTEP v0.1-draft (Operator Token Efficiency Protocol).
+Metric computation for TTEOP v0.1-draft (Token Telemetry Evaluation Operator Protocol).
 
 Implements the five portable metrics from four token pillars (I/O/W/R).
-Conforms to the otep/0.1-draft specification. Metric names and warning text
-match the JS reference implementation (reference/otep.mjs) byte-for-byte.
+Conforms to the tteop/0.1-draft specification. Metric names and warning text
+match the JS reference implementation (reference/tteop.mjs) byte-for-byte.
 """
 
 import math
@@ -116,7 +116,7 @@ def build_record(
     provider: str = "unknown",
     model: str = "unknown",
     tool: str = "unknown",
-    spec_version: str = "otep/0.1-draft",
+    spec_version: str = "tteop/0.1-draft",
     *,
     platform: Optional[str] = None,
     adapter_id: Optional[str] = None,
@@ -128,19 +128,19 @@ def build_record(
     window_duration_seconds: Optional[int] = None,
 ) -> dict:
     """
-    Build a complete OTEP v0.1-draft telemetry envelope.
+    Build a complete TTEOP v0.1-draft telemetry envelope.
 
     Returns a dict conforming to schemas/telemetry-envelope-v0.1.schema.json:
         protocol_version, metric_spec_version, observation, source, telemetry,
         provenance, privacy, metrics, warnings.
 
-    The spec_version parameter defaults to "otep/0.1-draft". Pass
+    The spec_version parameter defaults to "tteop/0.1-draft". Pass
     "sigrank/0.1-draft" for legacy compatibility.
     """
     result = compute_metrics(input_tokens, output_tokens, cache_write, cache_read)
     return {
         "protocol_version": spec_version,
-        "metric_spec_version": "otep-metrics/0.1-draft",
+        "metric_spec_version": "tteop-metrics/0.1-draft",
         "observation": {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "window_start": window_start,

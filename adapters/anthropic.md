@@ -3,13 +3,13 @@
 **Adapter ID:** `anthropic-v1`
 **Provider:** Anthropic
 **Supported API versions:** `2023-06-01`, `2024-10-22`
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 ---
 
 ## 1. Field mappings
 
-| OTEP primitive | Native field | Notes |
+| TTEOP primitive | Native field | Notes |
 |----------------|--------------|-------|
 | `input` | `usage.input_tokens` | Fresh input tokens. Anthropic reports this as the count of non-cached input tokens. |
 | `output` | `usage.output_tokens` | Completion tokens. |

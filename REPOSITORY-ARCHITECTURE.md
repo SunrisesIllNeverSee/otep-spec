@@ -1,19 +1,19 @@
 # Repository Architecture
 
-**Purpose:** Defines the complete file tree for the OTEP specification repository and explains the authority of every major path.
+**Purpose:** Defines the complete file tree for the TTEOP specification repository and explains the authority of every major path.
 
 ---
 
 ## Complete Tree
 
 ```text
-otep-spec/
+tteop-spec/
 ├── README.md                          — entry point, quick start, compatibility labels
 ├── SPEC.md                            — normative protocol specification (authoritative)
 ├── TERMINOLOGY.md                     — canonical terminology and definitions
 ├── PRIVACY.md                         — privacy modes and content-independence requirements
 ├── SECURITY.md                        — security considerations and reporting process
-├── GOVERNANCE.md                      — maintainer roles, OEP process, change control
+├── GOVERNANCE.md                      — maintainer roles, TEP process, change control
 ├── CONTRIBUTING.md                    — how to contribute (code, spec, adapters, tests)
 ├── CODE_OF_CONDUCT.md                 — community code of conduct
 ├── TRADEMARKS.md                      — trademark usage rules and certification marks
@@ -87,10 +87,10 @@ otep-spec/
 │   ├── google.md                              — Google provider adapter
 │   └── registry.json                          — adapter registry (machine-readable)
 │
-├── oeps/
-│   ├── OEP-0000.md                            — OEP process and template
-│   ├── OEP-0001.md                            — first OEP (protocol name and versioning)
-│   └── OEP-0002.md                            — second OEP (provider adapter extension process)
+├── teps/
+│   ├── TEP-0000.md                            — TEP process and template
+│   ├── TEP-0001.md                            — first TEP (protocol name and versioning)
+│   └── TEP-0002.md                            — second TEP (provider adapter extension process)
 │
 ├── integrations/
 │   ├── typescript/                            — TypeScript reference implementation
@@ -115,7 +115,7 @@ otep-spec/
 │   └── CANON_RECONCILIATION.md                — canon reconciliation history
 │
 ├── rfc/
-│   └── RFC-0001.md                            — legacy RFC (superseded by OEP process)
+│   └── RFC-0001.md                            — legacy RFC (superseded by TEP process)
 │
 ├── reports/
 │   └── PHASE1_REVIEW_EXCHANGE.md              — review history
@@ -135,7 +135,7 @@ otep-spec/
 | `TERMINOLOGY.md` | **Normative** | Canonical definitions of all terms used in SPEC.md. Terms defined here are binding. |
 | `PRIVACY.md` | **Normative** | Privacy mode definitions and content-independence requirements. Binding on all implementations. |
 | `SECURITY.md` | **Normative** | Security considerations, threat model, and reporting process. |
-| `GOVERNANCE.md` | **Normative** | Governance process, maintainer roles, OEP lifecycle. Binding on contributors. |
+| `GOVERNANCE.md` | **Normative** | Governance process, maintainer roles, TEP lifecycle. Binding on contributors. |
 | `CONTRIBUTING.md` | **Informative** | How to contribute. Not normative but follows governance rules. |
 | `CODE_OF_CONDUCT.md` | **Normative** | Community behavior standards. Binding on all participants. |
 | `TRADEMARKS.md` | **Normative** | Trademark usage rules. Binding on anyone using the protocol name or marks. |
@@ -156,11 +156,11 @@ otep-spec/
 | `conformance/` | **Normative** | Conformance runner and class definitions. Binding on conformance claims. |
 | `reference/` | **Informative** | Implementation maps and provenance. Not normative. |
 | `adapters/` | **Normative (when adopted)** | Provider adapter definitions are normative when an implementation claims adapter conformance for that provider. |
-| `oeps/` | **Normative (when accepted)** | Accepted OEPs are normative. Draft OEPs are informative. |
+| `teps/` | **Normative (when accepted)** | Accepted TEPs are normative. Draft TEPs are informative. |
 | `integrations/` | **Informative** | Reference implementations demonstrate conformance but do not define it. |
 | `python/` | **Informative** | Python package is a reference implementation, not normative. |
 | `docs/` | **Mixed** | GLOSSARY, LIMITATIONS, CONFORMANCE are supplementary. PRODUCT_ARCHITECTURE is informative context. |
-| `rfc/` | **Deprecated** | Superseded by `oeps/`. Retained for history. |
+| `rfc/` | **Deprecated** | Superseded by `teps/`. Retained for history. |
 | `.github/workflows/` | **Normative** | CI gates are binding on the repository itself. |
 
 ---
@@ -170,5 +170,5 @@ otep-spec/
 1. **Single source of truth:** `SPEC.md` is authoritative. All other documents defer to it.
 2. **Machine-readable where possible:** Schemas, registry, test vectors, and adapter definitions are JSON.
 3. **Separation of concerns:** Normative requirements are in root files and `schemas/`, `metrics/`, `conformance/`, `test-vectors/`. Informative context is in `docs/`, `reference/`, `reports/`.
-4. **Extensibility:** `oeps/` provides a formal extension process. `adapters/` provides provider extensibility. `profiles/` provides application extensibility.
+4. **Extensibility:** `teps/` provides a formal extension process. `adapters/` provides provider extensibility. `profiles/` provides application extensibility.
 5. **Provenance:** `reference/EXTRACTION_LOG.md` documents where content came from. `IMPLEMENTATION-EXPERIENCE.md` tracks who has implemented what.

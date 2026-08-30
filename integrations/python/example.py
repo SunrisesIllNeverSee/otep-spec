@@ -2,7 +2,7 @@
 """
 integrations/python/example.py
 
-Minimal Python implementation of the OTEP v0.1-draft
+Minimal Python implementation of the TTEOP v0.1-draft
 five-metric portable core + schema-conforming envelope builder.
 No dependencies.
 
@@ -105,11 +105,11 @@ def build_envelope(
     window_end: Optional[str] = None,
     window_duration_seconds: Optional[int] = None,
 ) -> dict:
-    """Build a schema-conforming OTEP v0.1-draft envelope."""
+    """Build a schema-conforming TTEOP v0.1-draft envelope."""
     result = compute_metrics(input_tokens, output_tokens, cache_write, cache_read)
     return {
-        "protocol_version": "otep/0.1-draft",
-        "metric_spec_version": "otep-metrics/0.1-draft",
+        "protocol_version": "tteop/0.1-draft",
+        "metric_spec_version": "tteop-metrics/0.1-draft",
         "observation": {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "window_start": window_start,

@@ -17,7 +17,7 @@ This mode adds a tenant identifier so that consumers can scope all queries, aggr
 
 ## 2. Permitted Fields
 
-An envelope in `enterprise-isolated` mode MAY include all OTEP telemetry and metadata fields, **including** a tenant identifier.
+An envelope in `enterprise-isolated` mode MAY include all TTEOP telemetry and metadata fields, **including** a tenant identifier.
 
 | Field group | Permitted | Notes |
 |-------------|-----------|-------|
@@ -47,7 +47,7 @@ The following fields MUST NOT appear in an `enterprise-isolated` envelope.
 | `operator.cohort_id` (non-null) | Cohort grouping is a separate mode; enterprise uses tenant scoping | Mode consistency |
 | Prompt text, completion text, source code, diffs, keystrokes, screen contents | Content independence | `SRP-VAL-005`, `SRP-VAL-006` |
 
-**Important distinction:** The enterprise MAY maintain an internal mapping from `operator.pseudonymous_key` to real-world identity (e.g., employee directory) **outside** the envelope. That mapping is enterprise-owned, never transmitted in the envelope, and never part of the OTEP wire format. The prohibition applies to the envelope only.
+**Important distinction:** The enterprise MAY maintain an internal mapping from `operator.pseudonymous_key` to real-world identity (e.g., employee directory) **outside** the envelope. That mapping is enterprise-owned, never transmitted in the envelope, and never part of the TTEOP wire format. The prohibition applies to the envelope only.
 
 ---
 
@@ -56,7 +56,7 @@ The following fields MUST NOT appear in an `enterprise-isolated` envelope.
 An `enterprise-isolated` envelope carries `operator.pseudonymous_key` **plus** a tenant identifier (in a namespaced extension).
 
 - The pseudonymous key MUST be a stable, opaque identifier. The enterprise mints it and maintains the internal mapping to real-world identity (e.g., employee ID, SSO subject).
-- The internal mapping is enterprise-owned and stored in enterprise-controlled systems (HR directory, identity provider). It MUST NOT appear in any OTEP envelope.
+- The internal mapping is enterprise-owned and stored in enterprise-controlled systems (HR directory, identity provider). It MUST NOT appear in any TTEOP envelope.
 - The tenant identifier scopes all data to the enterprise; a consumer MUST NOT mix data across tenant identifiers.
 - A consumer MUST NOT transmit the internal mapping or any envelope to an external party without explicit enterprise consent (`SRP-PRIV-003`).
 
@@ -99,8 +99,8 @@ A consumer hosting an `enterprise-isolated` deployment MUST authenticate access 
 
 | Exporter | Scope | Format |
 |----------|-------|--------|
-| Enterprise admin | All tenant records (aggregate + individual) | Schema-valid OTEP envelope stream or aggregate report |
-| Operator | Their own individual records only | Schema-valid OTEP envelope stream |
+| Enterprise admin | All tenant records (aggregate + individual) | Schema-valid TTEOP envelope stream or aggregate report |
+| Operator | Their own individual records only | Schema-valid TTEOP envelope stream |
 | External party | **Prohibited** without explicit enterprise consent | N/A |
 
 - The enterprise admin MAY export all tenant records for internal analytics, compliance, or migration.
@@ -160,7 +160,7 @@ The `enterprise-isolated` mode assumes the following deployment context:
 | Enterprise-owned identity mapping | The enterprise maintains pseudonymous-key-to-identity mapping internally |
 | Tenant scoping | All queries, aggregation, and retention are scoped to a single tenant |
 | Admin-governed access | Enterprise admins control access; operators have self-access and opt-out |
-| Employee-surveillance guardrails | `SRP-SEC-003` prohibits using OTEP metrics as the sole basis for employment decisions |
+| Employee-surveillance guardrails | `SRP-SEC-003` prohibits using TTEOP metrics as the sole basis for employment decisions |
 
 This mode is NOT appropriate for public leaderboards (use `public-pseudonymous`) or multi-organization cohort benchmarking (use `private-managed-cohort`).
 
@@ -180,7 +180,7 @@ A Privacy-profile conformance claim for `enterprise-isolated` mode requires:
 - [ ] Tenant aggregate publication applies small-cell suppression (n < 5)
 - [ ] Access restricted to enterprise admin + operator self-access
 - [ ] Operators have access, opt-out, and transparency per `SRP-SEC-004`
-- [ ] OTEP metrics not used as sole basis for employment decisions (`SRP-SEC-003`)
+- [ ] TTEOP metrics not used as sole basis for employment decisions (`SRP-SEC-003`)
 - [ ] Deletion requests honored within 30 days
 - [ ] Enterprise admin can export; external export prohibited without consent
 - [ ] Retention ≥ 90 days with disclosed enterprise policy

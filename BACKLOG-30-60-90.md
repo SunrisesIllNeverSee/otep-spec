@@ -1,11 +1,11 @@
-# OTEP v0.1-draft — 30/60/90-Day Implementation Backlog
+# TTEOP v0.1-draft — 30/60/90-Day Implementation Backlog
 
 **Status:** Draft
 **Last updated:** 2025-01-15
-**Owner:** OTEP Working Group
+**Owner:** TTEOP Working Group
 **Specification version:** v0.1-draft
 
-This document tracks the implementation backlog for the OTEP (Operator Token Efficiency Protocol) v0.1-draft specification package. It is organized into three 30-day phases: Foundation, Validation, and Expansion. Each item lists a task, owner, dependency, acceptance criteria, and status.
+This document tracks the implementation backlog for the TTEOP (Token Telemetry Evaluation Operator Protocol) v0.1-draft specification package. It is organized into three 30-day phases: Foundation, Validation, and Expansion. Each item lists a task, owner, dependency, acceptance criteria, and status.
 
 **Owner legend:**
 - **DREP1** — Domain Representative 1 (primary spec author / founder)
@@ -102,13 +102,13 @@ The Foundation phase establishes the canonical artifacts, tooling, and governanc
   - GitHub Actions CI runs markdown lint + conformance runner on every PR.
 - **Status:** pending
 
-### 1.9 Publish governance document and OEP template
+### 1.9 Publish governance document and TEP template
 
 - **Owner:** DREP1
 - **Dependency:** 1.8
 - **Acceptance criteria:**
-  - `GOVERNANCE.md` defines: DREP roles, decision tiers, feedback windows, OEP process.
-  - `OEP-0000-template.md` provides a skeleton for future OEPs.
+  - `GOVERNANCE.md` defines: DREP roles, decision tiers, feedback windows, TEP process.
+  - `TEP-0000-template.md` provides a skeleton for future TEPs.
   - Governance document references the 60-day feedback window for v0.1.
 - **Status:** pending
 
@@ -173,7 +173,7 @@ The Validation phase exercises the v0.1-draft package against at least one real 
 - **Owner:** Community
 - **Dependency:** 1.1, 1.4
 - **Acceptance criteria:**
-  - Blog post (1,500–2,500 words) explaining OTEP's problem space and v0.1 scope.
+  - Blog post (1,500–2,500 words) explaining TTEOP's problem space and v0.1 scope.
   - One-page summary PDF suitable for conference distribution.
   - Recorded demo (≤10 min) showing conformance runner against SignalAF.
 - **Status:** pending
@@ -205,7 +205,7 @@ The Validation phase exercises the v0.1-draft package against at least one real 
 - **Dependency:** 2.1
 - **Acceptance criteria:**
   - Report covers: integration effort (person-hours), friction points, spec ambiguities discovered, and recommended v0.5 changes.
-  - Report is published as an OEP or appendix to the spec repo.
+  - Report is published as an TEP or appendix to the spec repo.
   - SignalAF team reviews and sign-offs the report.
 - **Status:** pending
 
@@ -225,14 +225,14 @@ The Expansion phase pivots from v0.1 stabilization toward v0.5 planning, communi
   - Document circulated to working group for comment.
 - **Status:** pending
 
-### 3.2 Publish first OEP (protocol name finalization)
+### 3.2 Publish first TEP (protocol name finalization)
 
 - **Owner:** DREP1
 - **Dependency:** Decision UD-1 (protocol name) approved
 - **Acceptance criteria:**
-  - OEP-0001 submitted using the OEP template.
-  - OEP records the final protocol name, trademark status, and rationale.
-  - OEP is merged following the governance-defined OEP process (discussion → review → merge).
+  - TEP-0001 submitted using the TEP template.
+  - TEP records the final protocol name, trademark status, and rationale.
+  - TEP is merged following the governance-defined TEP process (discussion → review → merge).
 - **Status:** pending
 
 ### 3.3 Establish security reporting process
@@ -261,7 +261,7 @@ The Expansion phase pivots from v0.1 stabilization toward v0.5 planning, communi
 - **Owner:** DREP2
 - **Dependency:** 2.1, 2.2, 3.4
 - **Acceptance criteria:**
-  - Dashboard tracks: number of conformant implementations, conformance-class coverage, adapter count, GitHub stars/issues, OEP count.
+  - Dashboard tracks: number of conformant implementations, conformance-class coverage, adapter count, GitHub stars/issues, TEP count.
   - Dashboard is auto-updated from repository metadata (GitHub Actions + generated JSON).
   - Dashboard is linked from the README.
 - **Status:** pending

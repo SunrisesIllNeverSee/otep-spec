@@ -1,10 +1,10 @@
 {
-  "registry_version": "otep-metrics/0.1-draft",
+  "registry_version": "tteop-metrics/0.1-draft",
   "registry_maturity": "experimental",
   "last_updated": "2026-08-28",
   "metrics": [
     {
-      "metric_id": "otep.yield",
+      "metric_id": "tteop.yield",
       "name": "Yield",
       "symbol": "\u03a5",
       "maturity": "experimental",
@@ -18,7 +18,7 @@
       "zero_behavior": "Yield = 0 when cache_read = 0 or output = 0 (and input > 0)",
       "missingness_behavior": "null when input = 0 or cache_read is null",
       "aggregation_behavior": "Compute from aggregated sums, not averaged from per-request values",
-      "normalization_profile": "None normative in v0.1. Proposed profiles in metrics/normalization-profiles.md: window-normalized (\u03a5_w), linear-input (\u03a5_lin), sqrt-input (\u03a5_sqrt), log-yield (log_\u03a5). All experimental, deferred to v0.2 via OEP.",
+      "normalization_profile": "None normative in v0.1. Proposed profiles in metrics/normalization-profiles.md: window-normalized (\u03a5_w), linear-input (\u03a5_lin), sqrt-input (\u03a5_sqrt), log-yield (log_\u03a5). All experimental, deferred to v0.2 via TEP.",
       "interpretation": "A composite signal combining cache reuse (Leverage) and output generation (Velocity). Higher values indicate more output per unit of fresh input, amplified by cache reuse.",
       "prohibited_interpretation": "Must not be presented as proof of code quality, productivity, task success, employee performance, or business impact.",
       "known_limitations": [
@@ -75,7 +75,7 @@
       "spec_section": "SPEC.md \u00a726.1"
     },
     {
-      "metric_id": "otep.leverage",
+      "metric_id": "tteop.leverage",
       "name": "Leverage",
       "symbol": "L",
       "maturity": "experimental",
@@ -136,7 +136,7 @@
       "spec_section": "SPEC.md \u00a726.2"
     },
     {
-      "metric_id": "otep.velocity",
+      "metric_id": "tteop.velocity",
       "name": "Velocity",
       "symbol": "V",
       "maturity": "experimental",
@@ -196,7 +196,7 @@
       "spec_section": "SPEC.md \u00a726.3"
     },
     {
-      "metric_id": "otep.output_fraction",
+      "metric_id": "tteop.output_fraction",
       "name": "output_fraction",
       "symbol": "F",
       "maturity": "experimental",
@@ -256,7 +256,7 @@
       "spec_section": "SPEC.md \u00a726.4"
     },
     {
-      "metric_id": "otep.log_leverage",
+      "metric_id": "tteop.log_leverage",
       "name": "log_leverage",
       "symbol": "D",
       "maturity": "experimental",

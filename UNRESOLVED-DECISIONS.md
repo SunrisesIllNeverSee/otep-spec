@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Last updated:** 2025-01-15
-**Owner:** OTEP Working Group
+**Owner:** TTEOP Working Group
 
 This document lists all decisions that have been analyzed and proposed but **not yet approved**. Each decision blocks one or more backlog items (see `BACKLOG-30-60-90.md`). Decisions are identified by `UD-N` IDs and must not be reused.
 
@@ -15,20 +15,20 @@ This document lists all decisions that have been analyzed and proposed but **not
 
 ## UD-1: Protocol name
 
-**Title:** Finalize the protocol name as "OTEP"
+**Title:** Finalize the protocol name as "TTEOP"
 
-**Description:** The specification is currently circulated under the working name "OTEP" (Operator Token Efficiency Protocol). This name is neutral, pronounceable, and does not reference any commercial product. It has not been formally approved, and no trademark clearance has been performed. The name appears in the spec, schema, conformance runner, and all external communications, so an unapproved name creates accumulating rework risk.
+**Description:** The specification is currently circulated under the working name "TTEOP" (Token Telemetry Evaluation Operator Protocol). This name is neutral, pronounceable, and does not reference any commercial product. It has not been formally approved, and no trademark clearance has been performed. The name appears in the spec, schema, conformance runner, and all external communications, so an unapproved name creates accumulating rework risk.
 
 **Options analyzed:**
-1. **Adopt "OTEP" as the final name.** Neutral, short, acronym-friendly. Requires trademark search. Risk: collision with existing use in unrelated domains.
+1. **Adopt "TTEOP" as the final name.** Neutral, short, acronym-friendly. Requires trademark search. Risk: collision with existing use in unrelated domains.
 2. **Adopt a descriptive name (e.g., "Token Efficiency Protocol", "TEP").** Lower collision risk but less distinctive; harder to search for.
-3. **Retain a temporary internal codename and defer naming to v0.5.** Eliminates near-term rework but blocks marketing, OEP-0001, and trademark filing.
+3. **Retain a temporary internal codename and defer naming to v0.5.** Eliminates near-term rework but blocks marketing, TEP-0001, and trademark filing.
 
-**Recommendation:** Option 1 — adopt "OTEP" as the final name, contingent on trademark clearance.
+**Recommendation:** Option 1 — adopt "TTEOP" as the final name, contingent on trademark clearance.
 
-**Rationale:** The name is already in use across artifacts and external discussions. Reverting creates rework and community confusion. A trademark search should be commissioned immediately; if clear, the name is locked via OEP-0001.
+**Rationale:** The name is already in use across artifacts and external discussions. Reverting creates rework and community confusion. A trademark search should be commissioned immediately; if clear, the name is locked via TEP-0001.
 
-**Impact of delay:** Spec uses a temporary name; marketing materials cannot be finalized; OEP-0001 (backlog item 3.2) is blocked; trademark filing (UD-9) cannot proceed.
+**Impact of delay:** Spec uses a temporary name; marketing materials cannot be finalized; TEP-0001 (backlog item 3.2) is blocked; trademark filing (UD-9) cannot proceed.
 
 **Who must approve:** Founder (with trademark clearance from legal counsel).
 
@@ -101,7 +101,7 @@ This document lists all decisions that have been analyzed and proposed but **not
 
 **Title:** Whether to establish a paid conformance certification program
 
-**Description:** The conformance runner is open-source and freely usable. The question is whether to layer a paid certification program on top, where implementations that pass conformance can purchase a "Certified OTEP-Conformant" badge and listing. This has revenue implications and requires legal structure.
+**Description:** The conformance runner is open-source and freely usable. The question is whether to layer a paid certification program on top, where implementations that pass conformance can purchase a "Certified TTEOP-Conformant" badge and listing. This has revenue implications and requires legal structure.
 
 **Options analyzed:**
 1. **Establish a paid certification program.** Potential revenue stream; provides marketing signal for adopters. Risk: creates a paywall perception around an open standard; requires legal entity and trademark protection (UD-9).
@@ -164,11 +164,11 @@ This document lists all decisions that have been analyzed and proposed but **not
 
 **Title:** Temporary `security@signalaf.com` vs. a neutral security contact
 
-**Description:** A security reporting address is required before publishing `SECURITY.md` (backlog item 3.3). The only currently available address is `security@signalaf.com`, which routes to a commercial entity. A neutral address (e.g., `security@otep.dev` or a hosted disclosure platform) requires domain registration and infrastructure not yet in place.
+**Description:** A security reporting address is required before publishing `SECURITY.md` (backlog item 3.3). The only currently available address is `security@signalaf.com`, which routes to a commercial entity. A neutral address (e.g., `security@tteop.dev` or a hosted disclosure platform) requires domain registration and infrastructure not yet in place.
 
 **Options analyzed:**
 1. **Use `security@signalaf.com` temporarily; migrate to neutral address post-v0.5.** Pragmatic; available now; carries commercial-association risk.
-2. **Register `otep.dev` and use `security@otep.dev` immediately.** Neutral but requires domain registration, DNS, and mailbox setup before SECURITY.md can publish.
+2. **Register `tteop.dev` and use `security@tteop.dev` immediately.** Neutral but requires domain registration, DNS, and mailbox setup before SECURITY.md can publish.
 3. **Use a third-party disclosure platform (e.g., GitHub Security Advisories).** Neutral, free, integrated with the repo; limited to GitHub-hosted workflow.
 
 **Recommendation:** Option 3 — use GitHub Security Advisories as the primary channel, with `security@signalaf.com` as a fallback during v0.1.
@@ -183,16 +183,16 @@ This document lists all decisions that have been analyzed and proposed but **not
 
 ## UD-9: Trademark registration
 
-**Title:** Whether to register "OTEP" as a trademark
+**Title:** Whether to register "TTEOP" as a trademark
 
-**Description:** If "OTEP" is adopted as the final name (UD-1), the question arises whether to register it as a trademark (USPTO and/or international). Registration protects the name but incurs cost and requires a legal entity to hold the mark.
+**Description:** If "TTEOP" is adopted as the final name (UD-1), the question arises whether to register it as a trademark (USPTO and/or international). Registration protects the name but incurs cost and requires a legal entity to hold the mark.
 
 **Options analyzed:**
-1. **Register "OTEP" immediately (USPTO).** Protects the name before adoption broadens; cost ~$350–$2,500 plus attorney fees; requires holder entity.
+1. **Register "TTEOP" immediately (USPTO).** Protects the name before adoption broadens; cost ~$350–$2,500 plus attorney fees; requires holder entity.
 2. **Defer registration until foundation transfer (UD-6).** Avoids near-term cost; risk of third-party registration in the interim.
 3. **Do not register; rely on common-law unregistered-mark rights.** No cost; weaker protection; insufficient for a certification badge (UD-5).
 
-**Recommendation:** Option 1 — register "OTEP" immediately, held by the founder's entity, with transfer to foundation at governance transfer (UD-6).
+**Recommendation:** Option 1 — register "TTEOP" immediately, held by the founder's entity, with transfer to foundation at governance transfer (UD-6).
 
 **Rationale:** The cost of registration is low relative to the risk of third-party capture. If a certification program (UD-5) is ever established, a registered mark is a prerequisite. Holding the mark in a founder entity with a documented transfer commitment is the lowest-friction path.
 
@@ -227,22 +227,25 @@ This document lists all decisions that have been analyzed and proposed but **not
 
 | ID | Title | Status | Approver | Date |
 |----|-------|--------|----------|------|
-| UD-1 | Protocol name | **PENDING — overlap discovered** | Founder + Legal | — |
+| UD-1 | Protocol name | **RESOLVED — renamed to TTEOP** | Founder | 2026-08-30 |
 | UD-2 | 10xDEV rename | **RESOLVED — ratified** | Founder | 2026-08-30 |
 | UD-3 | SNR rename | **RESOLVED — ratified** | Founder | 2026-08-30 |
 | UD-4 | Υ formula retention | **RESOLVED — ratified** | Founder | 2026-08-30 |
 | UD-5 | Conformance certification program | **DEFERRED — offer all three when ready** | Founder + Legal | — |
 | UD-6 | Foundation transfer timing | **DEFERRED — TSC governance deferred by founder** | Founder + Community | — |
-| UD-7 | Contribution model (DCO vs CLA) | **PENDING — founder reviewing DCO vs CLA definitions** | Founder + Legal | — |
+| UD-7 | Contribution model (DCO vs CLA) | **RESOLVED — DCO permanent** | Founder | 2026-08-30 |
 | UD-8 | Security contact | **RESOLVED — designated** | Founder | 2026-08-30 |
 | UD-9 | Trademark registration | **DEFERRED — MO§ES™ trademark noted** | Founder + Legal | — |
-| UD-10 | Open/closed boundary enforcement | **PENDING — founder reviewing options** | Founder | — |
+| UD-10 | Open/closed boundary enforcement | **RESOLVED — passive now, divergence registry at v0.3+** | Founder | 2026-08-30 |
 
-**Recommended resolution order:** ~~UD-2, UD-3, UD-4, UD-7 first~~ (UD-2/3/4 resolved), followed by UD-1, UD-8 (UD-8 resolved; UD-1 pending overlap review), then UD-9, UD-5, UD-10, UD-6 (all deferred).
+**All v0.1-blocking decisions resolved.** UD-5, UD-6, UD-9 deferred (not blocking v0.1-draft publication).
 
 ---
 
 ## Resolution log
+
+### UD-1: Protocol name — RESOLVED (2026-08-30)
+**Decision:** Renamed from "OTEP" (Operator Token Efficiency Protocol) to "TTEOP" (Token Telemetry Evaluation Operator Protocol). The "OTEP" acronym collided with OpenTelemetry Enhancement Proposals (same industry). "TTEOP" has no search overlaps. Full repo rename completed: version strings (`tteop/0.1-draft`), schema, spec, runner, integrations, Python package, governance docs, CI, examples, file names (`tteop-runner.mjs`, `tteop-validate.mjs`, `tteop.mjs`), directory (`oeps/` → `teps/`), TEP numbering (OEP → TEP). Legacy alias `sigrank/0.1-draft` preserved. No trademark clearance performed — name used provisionally per UD-9.
 
 ### UD-2: 10xDEV rename — RESOLVED (2026-08-30)
 **Decision:** Ratified. `log_leverage` is the normative core name; `10xDEV` is retained as an application-profile alias. Already implemented across spec, schema, runner, and all integrations.
@@ -259,29 +262,14 @@ This document lists all decisions that have been analyzed and proposed but **not
 ### UD-6: Foundation transfer timing — DEFERRED
 **Decision:** Deferred by founder. TSC governance transition is deferred until the project reaches sufficient maturity. Lead Maintainer arrangement (§2.1 of GOVERNANCE.md) remains in effect.
 
+### UD-7: Contribution model (DCO vs CLA) — RESOLVED (2026-08-30)
+**Decision:** DCO (Developer Certificate of Origin) adopted permanently. No CLA planned. Contributors sign off commits with `Signed-off-by: Name <email>`. No copyright assignment. Lightweight, no paperwork beyond the sign-off line. This is the same model used by Linux, Git, and many large open-source projects.
+
 ### UD-8: Security contact — RESOLVED (2026-08-30)
 **Decision:** Security contact designated as Deric J McHenry. Contact: `deric.mchenry@gmail.com` or `hello@signalaf.com`. Business address: 84 W Utica St, Buffalo, NY 14299. Updated in `SECURITY.md`.
 
 ### UD-9: Trademark registration — DEFERRED
-**Decision:** Deferred by founder. Note: MO§ES™ carries an existing trademark claim. No trademark registration for "OTEP" at this time. Trademark status for "OTEP" remains "no clearance performed" per DISCLOSURES.md.
+**Decision:** Deferred by founder. Note: MO§ES™ carries an existing trademark claim. No trademark registration for "TTEOP" at this time. Trademark status for "TTEOP" remains "no clearance performed" per DISCLOSURES.md.
 
-### UD-1: Protocol name — PENDING (overlap discovered 2026-08-30)
-**Status:** Founder indicated provisional approval of "OTEP" contingent on no overlap. Search discovered three overlaps:
-1. **OpenTelemetry** uses "OTEP" as the acronym for "OpenTelemetry Enhancement Proposal" — same industry (telemetry/observability protocols). This is the most significant overlap.
-2. **Open Tracking Event Protocol** — a logistics protocol also called "OTEP" with an MCP server. Different industry.
-3. **WIPO trademark #1296236** — "OTEP" registered by OMNIUM TECHNIQUE D'ETUDES ET DE PRECONTRAINTE (France), Class 019 (building materials). Different class, but the mark is live.
-
-**Awaiting founder decision:** Proceed with "OTEP" despite overlaps, or select an alternative name.
-
-### UD-7: Contribution model (DCO vs CLA) — PENDING
-**Status:** DCO adopted prospectively (2026-08-30). Founder reviewing DCO vs CLA definitions before deciding on permanent model. DCO = lightweight per-commit sign-off, no copyright assignment. CLA = formal legal agreement, grants project license to contributions, stronger legal protection but adds contributor friction.
-
-**Awaiting founder decision:** Keep DCO permanently, or plan CLA at foundation transfer.
-
-### UD-10: Open/closed boundary enforcement — PENDING
-**Status:** Founder reviewing the three options:
-1. Conformance-only enforcement (passive)
-2. Conformance + public divergence registry (transparent, lightweight)
-3. Automated scanning of public docs/APIs (expensive, brittle)
-
-**Awaiting founder decision.**
+### UD-10: Open/closed boundary enforcement — RESOLVED (2026-08-30)
+**Decision:** Passive enforcement (conformance-only) for v0.1. Products that fail conformance are non-conformant. No active policing at this stage. A public divergence registry is planned for v0.3+ once there are 2+ third-party implementations to track. Automated scanning rejected as expensive and brittle.

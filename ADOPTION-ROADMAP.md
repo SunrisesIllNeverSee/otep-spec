@@ -1,7 +1,7 @@
-# OTEP Adoption Roadmap
+# TTEOP Adoption Roadmap
 
-**Protocol:** OTEP (Operator Token Efficiency Protocol)
-**Current version:** `otep/0.1-draft`
+**Protocol:** TTEOP (Token Telemetry Evaluation Operator Protocol)
+**Current version:** `tteop/0.1-draft`
 **Document status:** Living document — updated at each stage transition
 **Legacy alias:** `sigrank/0.1-draft` (backward-compatible)
 
@@ -9,9 +9,9 @@
 
 ## 1. Purpose
 
-This roadmap defines the public launch and standards maturation path for OTEP. It states what ships at each stage, what must be true before a stage can exit, and how the project decides whether and when to pursue neutral-foundation governance.
+This roadmap defines the public launch and standards maturation path for TTEOP. It states what ships at each stage, what must be true before a stage can exit, and how the project decides whether and when to pursue neutral-foundation governance.
 
-OTEP is an **open measurement specification**, not a product. The roadmap is written so that any party — including competitors of the founding implementer — can adopt, implement, and extend the protocol under the same terms as the originator.
+TTEOP is an **open measurement specification**, not a product. The roadmap is written so that any party — including competitors of the founding implementer — can adopt, implement, and extend the protocol under the same terms as the originator.
 
 **What this roadmap is not:** a promise of ISO/IEC recognition, a guarantee of foundation transfer, or a vendor lock-in schedule. The post-v1 governance evaluation is genuinely open-ended; several acceptable outcomes do not involve a foundation at all.
 
@@ -23,7 +23,7 @@ OTEP is an **open measurement specification**, not a product. The roadmap is wri
 
 In 1963 the American Standard Code for Information Interchange made text portable across machines that had no other reason to agree. ASCII did not solve every encoding problem, but it gave every system a common 7-bit floor to stand on. Interoperability followed not from a grand bargain but from a small, well-defined contract that anyone could implement.
 
-OTEP aims for the analogous floor in AI operator measurement. Four non-negative integer primitives — input, output, cache write, cache read — and five derived metrics are small enough that every major provider already exposes them in some form, yet specific enough that two independent implementations producing the same envelope for the same session will compute the same Yield, Leverage, Velocity, SNR, and 10xDEV.
+TTEOP aims for the analogous floor in AI operator measurement. Four non-negative integer primitives — input, output, cache write, cache read — and five derived metrics are small enough that every major provider already exposes them in some form, yet specific enough that two independent implementations producing the same envelope for the same session will compute the same Yield, Leverage, Velocity, SNR, and 10xDEV.
 
 The v0.1 launch is deliberately narrow: one envelope, one schema, five example payloads, a conformance runner, and a governance draft. The goal is not to ship a finished standard. The goal is to ship the smallest contract that makes cross-tool measurement *possible*, then let the field tell us what is missing.
 
@@ -52,7 +52,7 @@ The v0.1 launch is deliberately narrow: one envelope, one schema, five example p
 3. Five example payloads covering minimal, complete, signed, unsupported-cache, and invalid cases
 4. Test vectors and expected validation results
 5. Executable conformance runner (`conformance/runner.mjs`) with self-contained fixture suite
-6. Governance draft (`docs/GOVERNANCE.md`) covering change control, RFC/OEP process, and compatibility labels
+6. Governance draft (`docs/GOVERNANCE.md`) covering change control, RFC/TEP process, and compatibility labels
 7. Privacy, limitations, glossary, and conformance companion documents
 
 ### 4.2 Prerequisites
@@ -96,13 +96,13 @@ The v0.1 launch is deliberately narrow: one envelope, one schema, five example p
 
 1. Provider normalization rules — how Anthropic, OpenAI, Google, and others map their native usage fields onto I/O/W/R
 2. Cryptographic signature model — envelope integrity for signed records
-3. OpenTelemetry semantic mapping — OTEP attributes expressed as OTel semantic conventions
+3. OpenTelemetry semantic mapping — TTEOP attributes expressed as OTel semantic conventions
 4. Revised metric definitions incorporating v0.1 feedback (including the Υ scale-dependency decision)
 5. Expanded conformance suite covering normalization and signature cases
 
 ### 5.2 Prerequisites
 
-- At least **one external implementation attempt** — a party other than SignalAF that has tried to emit or consume OTEP records and reported back
+- At least **one external implementation attempt** — a party other than SignalAF that has tried to emit or consume TTEOP records and reported back
 - v0.1 feedback formally triaged and incorporated or explicitly deferred with rationale
 - Provider normalization rules reviewed by at least one party with direct provider-API experience
 
@@ -222,7 +222,7 @@ The v0.1 launch is deliberately narrow: one envelope, one schema, five example p
 
 ### 8.1 Scope
 
-Evaluate whether to transfer OTEP governance to a neutral foundation (e.g., Linux Foundation, Eclipse Foundation, or another suitable home). This stage produces a **decision**, not necessarily a transfer. Declining to transfer is an acceptable outcome if the rationale is sound.
+Evaluate whether to transfer TTEOP governance to a neutral foundation (e.g., Linux Foundation, Eclipse Foundation, or another suitable home). This stage produces a **decision**, not necessarily a transfer. Declining to transfer is an acceptable outcome if the rationale is sound.
 
 ### 8.2 Prerequisites
 
@@ -235,14 +235,14 @@ Evaluate whether to transfer OTEP governance to a neutral foundation (e.g., Linu
 
 - A willing foundation with a relevant SIG or working group
 - Funding model for legal transfer and ongoing maintenance
-- Trademark status for "OTEP" and "SigRank" clarified
+- Trademark status for "TTEOP" and "SigRank" clarified
 
 ### 8.4 Risks
 
 - **Premature transfer.** Moving to a foundation before the community can sustain maintenance can orphan the spec. Mitigation: transfer requires ≥2 active non-founder maintainers.
 - **Foundation mismatch.** Not every foundation is a good fit. Mitigation: evaluate at least two foundations against explicit criteria before committing.
 - **Stall after transfer.** Foundation processes can slow iteration. Mitigation: negotiate a lightweight working-group charter, not a heavyweight committee.
-- **Loss of identity.** A transfer that renames or buries the protocol can reset adoption. Mitigation: retain the OTEP name and version history through any transfer.
+- **Loss of identity.** A transfer that renames or buries the protocol can reset adoption. Mitigation: retain the TTEOP name and version history through any transfer.
 
 ### 8.5 Decision gates
 
@@ -262,7 +262,7 @@ This stage deliberately leaves multiple outcomes open:
 
 1. **Transfer to a neutral foundation.** Best fit when adoption is broad and the community can sustain maintenance independently.
 2. **Remain founder-stewarded with a public advisory board.** Best fit when adoption is growing but the community is not yet self-sustaining.
-3. **Merge into an existing standards effort.** Best fit if a related measurement standard emerges and OTEP's core can be adopted as a profile.
+3. **Merge into an existing standards effort.** Best fit if a related measurement standard emerges and TTEOP's core can be adopted as a profile.
 4. **Remain a lightweight community spec.** Best fit when the spec is stable, adoption is niche, and foundation overhead is not justified.
 
 **No path is pre-selected.** The evaluation at Stage 5 determines which path fits the evidence at that time.
@@ -287,7 +287,7 @@ This stage deliberately leaves multiple outcomes open:
 |-------|-------|-------|
 | Launch blog post — "The ASCII moment for AI measurement" | v0.1 | SignalAF (founding implementer) |
 | One-page summary (printable PDF + Markdown) | v0.1 | Spec maintainers |
-| Demo video — emitting and validating an OTEP record | v0.1 | SignalAF |
+| Demo video — emitting and validating an TTEOP record | v0.1 | SignalAF |
 | Provider normalization walkthrough | v0.5 | Spec maintainers |
 | OTel mapping demo | v0.5 | Spec maintainers |
 | Conformance suite walkthrough | v0.9 | Spec maintainers |
@@ -303,14 +303,14 @@ Explainer assets are licensed CC BY 4.0 alongside the spec so that any party may
 
 SignalAF's responsibilities as Implementation #1:
 
-- Emit valid OTEP records from a production system
+- Emit valid TTEOP records from a production system
 - Run the conformance suite in CI and publish results
-- Provide a public leaderboard consuming OTEP records (a consumer-side demonstration, not part of the open spec)
+- Provide a public leaderboard consuming TTEOP records (a consumer-side demonstration, not part of the open spec)
 - Refrain from claiming conformance superiority over other implementations
 
 SignalAF's boundaries:
 
-- Leaderboard logic, anti-gaming, and proprietary cohorts are **not** part of OTEP
+- Leaderboard logic, anti-gaming, and proprietary cohorts are **not** part of TTEOP
 - SignalAF does not hold veto power over spec changes after v1.0 governance is in place
 - SignalAF's commercial extensions are clearly labeled as extensions, not core
 
@@ -338,7 +338,7 @@ Conventions:
 - `normalization` label for provider-mapping questions
 - `conformance` label for suite and test-vector issues
 - `governance` label for process and decision-log questions
-- `oep` label for OTEP Extension Proposals (the RFC equivalent)
+- `oep` label for TTEOP Extension Proposals (the RFC equivalent)
 
 No private issue channel exists for spec feedback. Security reports are handled separately (§14).
 

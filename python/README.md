@@ -1,7 +1,7 @@
 # sigrank-standard (Python)
 
 Portable five-metric core for AI operator token-processing efficiency.
-Conforms to the OTEP v0.1-draft specification.
+Conforms to the TTEOP v0.1-draft specification.
 
 ## Install
 
@@ -73,7 +73,7 @@ Legacy aliases (deprecated): SNR → output_fraction, 10xDEV → log_leverage.
 
 ## Spec
 
-OTEP v0.1-draft (Operator Token Efficiency Protocol). See [signalaf.com/standard](https://signalaf.com/standard).
+TTEOP v0.1-draft (Token Telemetry Evaluation Operator Protocol). See [signalaf.com/standard](https://signalaf.com/standard).
 
 ## License
 

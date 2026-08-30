@@ -1,8 +1,8 @@
 /**
  * integrations/mcp/example.mjs
  *
- * Minimal MCP server that exposes the OTEP v0.1-draft
- * as a single tool: get_otep_record.
+ * Minimal MCP server that exposes the TTEOP v0.1-draft
+ * as a single tool: get_tteop_record.
  *
  * Emits schema-conforming envelopes per schemas/telemetry-envelope-v0.1.schema.json.
  */
@@ -10,8 +10,8 @@
 import { buildEnvelope } from "../typescript/example.ts";
 
 const TOOL_DEF = {
-  name: "get_otep_record",
-  description: "Build an OTEP v0.1-draft schema-conforming envelope from token telemetry. Computes Yield, Leverage, Velocity, output_fraction, and log_leverage. No data is submitted or persisted.",
+  name: "get_tteop_record",
+  description: "Build an TTEOP v0.1-draft schema-conforming envelope from token telemetry. Computes Yield, Leverage, Velocity, output_fraction, and log_leverage. No data is submitted or persisted.",
   inputSchema: {
     type: "object",
     required: ["input", "output"],
@@ -37,7 +37,7 @@ process.stdin.on("data", (data) => {
         id: msg.id,
         result: { tools: [TOOL_DEF] },
       }) + "\n");
-    } else if (msg.method === "tools/call" && msg.params?.name === "get_otep_record") {
+    } else if (msg.method === "tools/call" && msg.params?.name === "get_tteop_record") {
       const args = msg.params.arguments;
       const envelope = buildEnvelope(
         {

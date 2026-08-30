@@ -2,7 +2,7 @@
 /**
  * integrations/cli/example.mjs
  *
- * Minimal CLI that computes an OTEP v0.1-draft schema-conforming envelope
+ * Minimal CLI that computes an TTEOP v0.1-draft schema-conforming envelope
  * from command-line arguments. No dependencies.
  *
  * Usage:

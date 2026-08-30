@@ -1,5 +1,5 @@
 {
-  "protocol_version": "otep/0.1-draft",
+  "protocol_version": "tteop/0.1-draft",
   "telemetry": {
     "input": 1000,
     "output": 500,

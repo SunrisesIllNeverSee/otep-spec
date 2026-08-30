@@ -1,9 +1,9 @@
 {
-  "report_version": "otep-conformance/0.1-draft",
+  "report_version": "tteop-conformance/0.1-draft",
   "timestamp": "2026-08-28T19:00:00Z",
-  "protocol_version": "otep/0.1-draft",
-  "metric_spec_version": "otep-metrics/0.1-draft",
-  "conformance_runner_version": "otep-conformance/0.1.0",
+  "protocol_version": "tteop/0.1-draft",
+  "metric_spec_version": "tteop-metrics/0.1-draft",
+  "conformance_runner_version": "tteop-conformance/0.1.0",
   "implementation_under_test": {
     "name": "SignalAF",
     "version": "1.0.7",
@@ -61,15 +61,15 @@
     "skipped": 0
   },
   "allowed_claims": [
-    "OTEP Full-Platform Conformant — v0.1-draft",
-    "OTEP Producer Conformant — v0.1-draft",
-    "OTEP Consumer Conformant — v0.1-draft",
-    "OTEP Metric-Engine Conformant — v0.1-draft",
-    "OTEP Privacy-Profile Conformant — v0.1-draft (all modes)"
+    "TTEOP Full-Platform Conformant — v0.1-draft",
+    "TTEOP Producer Conformant — v0.1-draft",
+    "TTEOP Consumer Conformant — v0.1-draft",
+    "TTEOP Metric-Engine Conformant — v0.1-draft",
+    "TTEOP Privacy-Profile Conformant — v0.1-draft (all modes)"
   ],
   "prohibited_claims": [
-    "OTEP Conformant (reserved for third-party validation)",
-    "OTEP Certified (no certification program exists)",
-    "OTEP Standard (not a formal standard)"
+    "TTEOP Conformant (reserved for third-party validation)",
+    "TTEOP Certified (no certification program exists)",
+    "TTEOP Standard (not a formal standard)"
   ]
 }

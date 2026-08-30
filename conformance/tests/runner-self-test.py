@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-conformance/tests/runner-self-test.py — Self-test for the Python OTEP conformance runner.
+conformance/tests/runner-self-test.py — Self-test for the Python TTEOP conformance runner.
 
 Mirrors conformance/tests/runner-self-test.mjs. Verifies that the Python
 conformance runner correctly REJECTS non-conforming implementations.
@@ -67,7 +67,7 @@ def test_runner_catches_incorrect_metric_values():
     modified = json.loads(original)
     modified["expected"]["metrics"]["yield"] = 99999.99  # wrong value
 
-    tmp_dir = Path(tempfile.mkdtemp(prefix="otep-self-test-"))
+    tmp_dir = Path(tempfile.mkdtemp(prefix="tteop-self-test-"))
     try:
         tmp_vectors = tmp_dir / "test-vectors"
         tmp_vectors.mkdir()
@@ -113,7 +113,7 @@ def test_runner_validates_warnings():
 
 # ─── Test 4: Runner catches wrong metric names ────────────────────────────────
 # Verify the runner would fail if a vector expected old metric names (snr/dev10x)
-# that the OTEP implementation no longer produces.
+# that the TTEOP implementation no longer produces.
 
 def test_runner_catches_old_metric_names():
     sys.path.insert(0, str(REPO_ROOT / "python"))
@@ -130,7 +130,7 @@ def test_runner_catches_old_metric_names():
             },
         }
         errors = _validate_vector(vector)
-        # "snr" and "dev10x" are not in the OTEP metrics output, so the runner
+        # "snr" and "dev10x" are not in the TTEOP metrics output, so the runner
         # should report them as missing expected metrics (the actual values will
         # be None since those keys don't exist in the output)
         assert len(errors) > 0, (
@@ -153,7 +153,7 @@ def test_runner_catches_wrong_version():
                 "source": {"provider": "test", "model": "test", "tool": "test"},
             },
             "expected": {
-                "spec": "otep/0.2-draft",
+                "spec": "tteop/0.2-draft",
             },
         }
         errors = _validate_vector(vector)
@@ -171,7 +171,7 @@ def test_runner_catches_missing_required_metrics():
     try:
         from sigrank_standard.conformance import _validate_vector
         # A vector with no expected metrics at all — the runner should still
-        # verify all 5 OTEP metrics are present in the output
+        # verify all 5 TTEOP metrics are present in the output
         vector = {
             "id": "self-test-missing-metrics",
             "input": {

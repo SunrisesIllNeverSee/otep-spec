@@ -1,9 +1,9 @@
 # Terminology
 
 **Document status:** Normative
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
-This document is the canonical glossary for the OTEP specification. Terms
+This document is the canonical glossary for the TTEOP specification. Terms
 defined here are binding on all implementations. Where a term is used in
 `SPEC.md`, it has the meaning defined here.
 
@@ -12,7 +12,7 @@ defined here are binding on all implementations. Where a term is used in
 ## A
 
 ### Adapter
-Software that maps provider-native token-telemetry fields to OTEP canonical
+Software that maps provider-native token-telemetry fields to TTEOP canonical
 primitives (`input`, `output`, `cache_write`, `cache_read`). Adapters handle
 double-counting, missing fields, and provider-specific cache semantics. See
 SPEC.md §10 and `adapters/`.
@@ -48,15 +48,15 @@ not expose cache-write telemetry. See SPEC.md §9.
 
 ### Collector
 Software that gathers token telemetry from an AI tool or provider API and
-emits OTEP-conformant envelopes. A collector is a kind of producer.
+emits TTEOP-conformant envelopes. A collector is a kind of producer.
 
 ### Conformance class
-A named category of OTEP conformance (producer, consumer, adapter,
+A named category of TTEOP conformance (producer, consumer, adapter,
 metric-engine, privacy-profile, full-platform) with a defined set of
 mandatory and optional tests. See SPEC.md §23 and `conformance/classes.md`.
 
 ### Consumer
-Software that ingests OTEP-conformant telemetry envelopes and processes them
+Software that ingests TTEOP-conformant telemetry envelopes and processes them
 (computing metrics, aggregating, visualizing, exporting). See SPEC.md §6.
 
 ---
@@ -121,8 +121,8 @@ A time-bounded period over which token counts are aggregated. Every envelope
 represents exactly one observation window, defined by `window_start` and
 `window_end`. See SPEC.md §11.
 
-### OEP (OTEP Extension Proposal)
-A formal proposal to add, modify, or deprecate a normative requirement. OEPs
+### TEP (TTEOP Extension Proposal)
+A formal proposal to add, modify, or deprecate a normative requirement. TEPs
 follow the lifecycle defined in `GOVERNANCE.md`. See SPEC.md §19.
 
 ### Operator
@@ -153,7 +153,7 @@ identity is handled. Three modes: `public-pseudonymous`,
 `PRIVACY.md`.
 
 ### Producer
-Software that emits OTEP-conformant telemetry envelopes. A collector is a
+Software that emits TTEOP-conformant telemetry envelopes. A collector is a
 producer. See SPEC.md §6.
 
 ### Provenance
@@ -175,7 +175,7 @@ fewer than 5 members MUST be suppressed. See SPEC.md §17 and `PRIVACY.md`.
 
 ### Spec version string
 The protocol version identifier in `protocol_version` (e.g.,
-`otep/0.1-draft`). The legacy alias `sigrank/0.1-draft` is accepted. See
+`tteop/0.1-draft`). The legacy alias `sigrank/0.1-draft` is accepted. See
 SPEC.md §20.
 
 ---

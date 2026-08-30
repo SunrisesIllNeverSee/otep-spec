@@ -17,7 +17,7 @@ This mode maximizes comparability across operators while prohibiting any field t
 
 ## 2. Permitted Fields
 
-An envelope in `public-pseudonymous` mode MAY include all OTEP telemetry and metadata fields **except** cohort and tenant identifiers.
+An envelope in `public-pseudonymous` mode MAY include all TTEOP telemetry and metadata fields **except** cohort and tenant identifiers.
 
 | Field group | Permitted | Notes |
 |-------------|-----------|-------|
@@ -86,7 +86,7 @@ A consumer publishing under `public-pseudonymous` mode MUST apply small-cell sup
 ## 7. Export Behavior
 
 - An operator MAY export their own individual records (all envelopes bearing their pseudonymous key) from the hosting platform.
-- Export format MUST be a schema-valid OTEP envelope stream (JSON Lines or a JSON array of envelopes validating against `schemas/telemetry-envelope-v0.1.schema.json`).
+- Export format MUST be a schema-valid TTEOP envelope stream (JSON Lines or a JSON array of envelopes validating against `schemas/telemetry-envelope-v0.1.schema.json`).
 - Exported individual records retain `privacy.mode = public-pseudonymous` and MUST NOT gain cohort or tenant fields during export.
 - Aggregate export by a cohort admin is not applicable in this mode (no cohort concept).
 
@@ -108,7 +108,7 @@ A consumer publishing under `public-pseudonymous` mode MUST apply small-cell sup
 | Eligible? | Yes |
 |-----------|-----|
 
-Envelopes in `public-pseudonymous` mode are **eligible** for public ranking, leaderboards, and credentialing surfaces built on top of the OTEP protocol. This is the only privacy mode with public-ranking eligibility.
+Envelopes in `public-pseudonymous` mode are **eligible** for public ranking, leaderboards, and credentialing surfaces built on top of the TTEOP protocol. This is the only privacy mode with public-ranking eligibility.
 
 A public ranking built on `public-pseudonymous` records MUST still comply with `SRP-NON-006` and `SRP-NON-007`: it is an application-layer feature, not a base-protocol requirement, and it MUST disclose the field definition, eligibility criteria, observation window, and provenance level of ranked records.
 

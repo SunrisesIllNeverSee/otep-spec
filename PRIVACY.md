@@ -1,9 +1,9 @@
 # Privacy
 
 **Document status:** Normative
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
-This document defines the three OTEP privacy modes and the content-independence
+This document defines the three TTEOP privacy modes and the content-independence
 requirements that bind all implementations. It is referenced normatively by
 SPEC.md §17. The requirements here carry the same authority as SPEC.md.
 
@@ -16,7 +16,7 @@ require collection of prompt text, completion text, source code, diffs,
 keystrokes, screen contents, unrestricted file paths, or sensitive repository
 content.
 
-**`SRP-PRIV-007`** (restated from SPEC.md §17.2) The core OTEP metrics MUST be
+**`SRP-PRIV-007`** (restated from SPEC.md §17.2) The core TTEOP metrics MUST be
 computable from token counts alone, without any semantic content.
 
 **Failure condition:** Any implementation requires semantic content to compute
@@ -132,7 +132,7 @@ breakdown) do not require deletion.
 ## 5. Employee-surveillance misuse
 
 **`SRP-SEC-003`** (restated from SPEC.md §18.3) The specification explicitly
-prohibits using OTEP metrics as the sole basis for employment decisions
+prohibits using TTEOP metrics as the sole basis for employment decisions
 (hiring, firing, promotion, compensation).
 
 **`SRP-SEC-004`** (restated) Enterprise deployments MUST provide operators
@@ -165,7 +165,7 @@ envelope locations: `prompt`, `prompt_text`, `completion`, `completion_text`,
 
 **`SRP-PRIV-008`** (restated from SPEC.md §17.2) Optional enrichment (model,
 provider, tool, timestamps, workflow stage, task result, PR data, cost,
-incidents, business KPIs) MAY be combined with OTEP metrics but MUST be
+incidents, business KPIs) MAY be combined with TTEOP metrics but MUST be
 distinguishable from the core metric layer.
 
 Enrichment fields belong in the `extensions` object with a namespace prefix,

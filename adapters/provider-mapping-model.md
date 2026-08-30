@@ -1,10 +1,10 @@
 # Provider Adapter Mapping Model
 
 **Document status:** Normative (when an adapter conformance claim is made)
-**Spec version:** otep/0.1-draft
+**Spec version:** tteop/0.1-draft
 
 This document defines the architecture for mapping provider-native
-token-telemetry fields to OTEP canonical primitives. It is referenced by
+token-telemetry fields to TTEOP canonical primitives. It is referenced by
 SPEC.md §10.
 
 ---
@@ -21,7 +21,7 @@ semantics:
 | Google | `usageMetadata.promptTokenCount` | `usageMetadata.candidatesTokenCount` | Not exposed | `usageMetadata.cachedContentTokenCount` |
 
 An **adapter** is a deterministic mapping from these native fields to the four
-OTEP primitives (`input`, `output`, `cache_write`, `cache_read`). Adapters are
+TTEOP primitives (`input`, `output`, `cache_write`, `cache_read`). Adapters are
 registered in `adapters/registry.json` and documented in per-provider files.
 
 ---
@@ -29,7 +29,7 @@ registered in `adapters/registry.json` and documented in per-provider files.
 ## 2. Mapping rules
 
 **`SRP-ADAPT-001`** An adapter MUST map each provider-native token-count field
-to exactly one OTEP primitive or declare it unmapped.
+to exactly one TTEOP primitive or declare it unmapped.
 
 **`SRP-ADAPT-002`** An adapter MUST document how it handles providers that
 report cached tokens inside total input (double-counting).
@@ -51,7 +51,7 @@ MUST set both `cache_write` and `cache_read` to `null` and include both
 `validity.missingness_flags`.
 
 **`SRP-ADAPT-007`** Custom adapters MUST NOT map non-token-count fields (cost,
-latency, character counts) to OTEP primitives.
+latency, character counts) to TTEOP primitives.
 
 ---
 
@@ -96,7 +96,7 @@ Adapters are registered in `adapters/registry.json`. Each entry MUST include:
 - `provider` — provider name
 - `supported_api_versions` — API versions the adapter supports
 - `definition_file` — path to the per-provider `.md` documentation
-- `field_mappings` — native field → OTEP primitive mapping
+- `field_mappings` — native field → TTEOP primitive mapping
 - `double_counting_policy` — how double-counting is handled
 - `cache_creation_exposed` — boolean
 - `cache_read_exposed` — boolean

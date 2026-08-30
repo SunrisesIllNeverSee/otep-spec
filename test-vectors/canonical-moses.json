@@ -6,7 +6,7 @@
     "source": { "provider": "anthropic", "model": "claude-sonnet-4", "tool": "claude-code" }
   },
   "expected": {
-    "spec": "otep/0.1-draft",
+    "spec": "tteop/0.1-draft",
     "metrics": { "yield": 18436.98, "leverage": 2042.2, "velocity": 9.028, "output_fraction": 0.9003, "log_leverage": 3.31 },
     "warnings": [],
     "output_telemetry_keys": ["cache_read", "cache_write", "input", "output"],

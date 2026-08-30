@@ -7,7 +7,7 @@
 
 ## Purpose
 
-This document tracks known implementations of the OTEP specification, their conformance status, and lessons learned. It is a requirement for v1.0 that at least 2 independent implementations pass the conformance suite.
+This document tracks known implementations of the TTEOP specification, their conformance status, and lessons learned. It is a requirement for v1.0 that at least 2 independent implementations pass the conformance suite.
 
 ---
 
@@ -20,7 +20,7 @@ This document tracks known implementations of the OTEP specification, their conf
 | 3 | sigrank-mcp | SunrisesIllNeverSee | Producer + Metric-engine | Producer + Metric-engine | Reference candidate (v0.1-draft) | No — reference instrument |
 | 4 | *Pending* | *Seeking* | *Target: IDE or observability platform* | *Target: Producer or Consumer* | *Not started* | *Yes — target* |
 
-> **Note:** No implementation has been certified as OTEP Conformant yet. The implementations above are reference candidates maintained by the specification author. Certification requires passing the conformance suite via an independent harness, not a self-test.
+> **Note:** No implementation has been certified as TTEOP Conformant yet. The implementations above are reference candidates maintained by the specification author. Certification requires passing the conformance suite via an independent harness, not a self-test.
 
 ---
 
@@ -91,9 +91,9 @@ An implementation is **independent** if:
 
 **Candidate pipeline:**
 - IDE extensions (VS Code, JetBrains) — would produce telemetry from IDE-integrated AI tools
-- Observability platforms (Langfuse, Helicone, Phoenix) — would consume OTEP envelopes
-- Open-source collectors — would produce OTEP envelopes from CLI tools
-- Academic/research projects — would consume OTEP envelopes for studies
+- Observability platforms (Langfuse, Helicone, Phoenix) — would consume TTEOP envelopes
+- Open-source collectors — would produce TTEOP envelopes from CLI tools
+- Academic/research projects — would consume TTEOP envelopes for studies
 
 ---
 

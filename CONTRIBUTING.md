@@ -1,8 +1,8 @@
-# Contributing to OTEP
+# Contributing to TTEOP
 
 **Document status:** Informative
 
-Thank you for your interest in contributing to the OTEP specification! This document explains how to contribute.
+Thank you for your interest in contributing to the TTEOP specification! This document explains how to contribute.
 
 ---
 
@@ -11,7 +11,7 @@ Thank you for your interest in contributing to the OTEP specification! This docu
 | Contribution type | How |
 |-------------------|-----|
 | Report a bug or ambiguity | Open a GitHub Issue |
-| Propose a specification change | Submit an OEP (see `oeps/OEP-0000.md`) |
+| Propose a specification change | Submit an TEP (see `teps/TEP-0000.md`) |
 | Add a provider adapter | Create a file in `adapters/` and submit a PR |
 | Add a test vector | Create a file in `test-vectors/` and submit a PR |
 | Improve documentation | Submit a PR with your changes |
@@ -21,7 +21,7 @@ Thank you for your interest in contributing to the OTEP specification! This docu
 
 ## Contribution Model
 
-OTEP adopts the **Developer Certificate of Origin (DCO)** prospectively from the remediation merge date (2026-08-30). All commits made on or after that date MUST include `Signed-off-by: Name <email>`.
+TTEOP adopts the **Developer Certificate of Origin (DCO)** prospectively from the remediation merge date (2026-08-30). All commits made on or after that date MUST include `Signed-off-by: Name <email>`.
 
 The DCO certifies that the contributor wrote or has the right to submit the code. It does NOT assign copyright. See https://developercertificate.org/ for the full text.
 
@@ -38,10 +38,10 @@ To sign off, use `git commit -s` or add `Signed-off-by: Your Name <your.email@ex
 1. Fork the repository
 2. Create a branch from `main`
 3. Make your changes
-4. Ensure tests pass: `node conformance/otep-runner.mjs`
+4. Ensure tests pass: `node conformance/tteop-runner.mjs`
 5. Sign off your commits (`git commit -s`)
 6. Open a pull request
-7. For normative changes, reference the OEP number
+7. For normative changes, reference the TEP number
 
 ### Review windows
 
@@ -62,7 +62,7 @@ To sign off, use `git commit -s` or add `Signed-off-by: Your Name <your.email@ex
 
 ## Conflict of Interest Disclosure
 
-All maintainers and frequent contributors MUST disclose any commercial affiliation with AI tool providers, observability platforms, or companies that build products on OTEP. Disclosures are recorded in the governance repository.
+All maintainers and frequent contributors MUST disclose any commercial affiliation with AI tool providers, observability platforms, or companies that build products on TTEOP. Disclosures are recorded in the governance repository.
 
 ---
 
