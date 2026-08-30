@@ -260,7 +260,7 @@ This document lists all decisions that have been analyzed and proposed but **not
 **Decision:** Deferred by founder. TSC governance transition is deferred until the project reaches sufficient maturity. Lead Maintainer arrangement (§2.1 of GOVERNANCE.md) remains in effect.
 
 ### UD-8: Security contact — RESOLVED (2026-08-30)
-**Decision:** Security contact designated as Deric J McHenry. Contact: `deric.mchenry@gmail.com` or `hello@signalaf.com`. Updated in `SECURITY.md`. (Physical address withheld from public repo for privacy — doxxing risk.)
+**Decision:** Security contact designated as Deric J McHenry. Contact: `deric.mchenry@gmail.com` or `hello@signalaf.com`. Business address: 84 W Utica St, Buffalo, NY 14299. Updated in `SECURITY.md`.
 
 ### UD-9: Trademark registration — DEFERRED
 **Decision:** Deferred by founder. Note: MO§ES™ carries an existing trademark claim. No trademark registration for "OTEP" at this time. Trademark status for "OTEP" remains "no clearance performed" per DISCLOSURES.md.

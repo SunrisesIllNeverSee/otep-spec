@@ -23,6 +23,7 @@
 
 - **Contact:** Deric J McHenry
 - **Email:** `deric.mchenry@gmail.com` or `hello@signalaf.com`
+- **Address:** 84 W Utica St, Buffalo, NY 14299
 - **Acknowledgement:** within 48 hours (per SRP-SEC-002)
 - **PGP key:** will be published at v0.5 for encrypted reports
 
