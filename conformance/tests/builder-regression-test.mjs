@@ -180,6 +180,14 @@ async function main() {
   const listResult = JSON.parse(listResponse.trim());
   assert(listResult.result?.tools?.length === 1, "MCP: tools/list returns 1 tool");
   assert(listResult.result?.tools?.[0]?.name === "get_tteop_record", "MCP: tool name is get_tteop_record");
+  // CodeRabbit minor #1: published inputSchema must advertise the same runtime
+  // maximum (Number.MAX_SAFE_INTEGER) on all four token properties.
+  const tokenProps = listResult.result.tools[0].inputSchema.properties;
+  const MAX_SAFE = 9007199254740991;
+  for (const field of ["input", "output", "cache_write", "cache_read"]) {
+    assert(tokenProps[field]?.minimum === 0, `MCP: ${field} advertises minimum:0`);
+    assert(tokenProps[field]?.maximum === MAX_SAFE, `MCP: ${field} advertises maximum:MAX_SAFE_INTEGER`);
+  }
 
   // Summary
   console.log(`\n=== Summary ===\n`);

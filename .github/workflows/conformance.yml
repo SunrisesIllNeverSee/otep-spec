@@ -113,10 +113,28 @@ jobs:
           node conformance/tteop-validate.mjs /tmp/mcp-record.json --report text
 
       # Gate 10b: Validate MCP tools/list
+      # Asserts the published inputSchema advertises the same runtime maximum
+      # (Number.MAX_SAFE_INTEGER) that validateTokenField enforces, on all four
+      # token properties, so MCP clients cannot generate oversized values that
+      # the server would subsequently reject (CodeRabbit minor #1).
       - name: 10b. Validate MCP tools/list
         run: |
           echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | node integrations/mcp/example.mjs > /tmp/mcp-tools.json
-          python3 -c "import json; f=open('/tmp/mcp-tools.json'); resp=json.load(f); f.close(); assert resp['jsonrpc']=='2.0','Not JSON-RPC'; assert len(resp['result']['tools'])==1,'Expected 1 tool'; assert resp['result']['tools'][0]['name']=='get_tteop_record','Wrong tool name'; print('MCP tools/list verified')"
+          python3 -c "
+          import json
+          f=open('/tmp/mcp-tools.json'); resp=json.load(f); f.close()
+          assert resp['jsonrpc']=='2.0','Not JSON-RPC'
+          assert len(resp['result']['tools'])==1,'Expected 1 tool'
+          tool=resp['result']['tools'][0]
+          assert tool['name']=='get_tteop_record','Wrong tool name'
+          props=tool['inputSchema']['properties']
+          MAX=9007199254740991
+          for field in ('input','output','cache_write','cache_read'):
+              assert field in props, f'missing token field {field}'
+              assert props[field].get('minimum')==0, f'{field} missing minimum:0'
+              assert props[field].get('maximum')==MAX, f'{field} missing maximum:{MAX} (got {props[field].get(\"maximum\")})'
+          print('MCP tools/list verified (4 token fields advertise minimum:0 + maximum:MAX_SAFE_INTEGER)')
+          "
 
       # Gate 11: Exercise half-even tie vectors across implementations
       - name: 11. Run cross-implementation tie tests

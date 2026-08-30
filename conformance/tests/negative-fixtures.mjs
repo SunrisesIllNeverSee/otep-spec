@@ -35,6 +35,7 @@ const EXPECTED_REASONS = {
   "10-signed-valid-status": ["valid", "SRP-PROV-005", "signature"],
   "11-forbidden-top-level": ["forbidden", "SRP-VAL-006"],
   "12-forbidden-in-extension": ["forbidden", "SRP-VAL-006"],
+  "13-conflicting-metric-alias": ["conflict", "snr", "output_fraction"],
 };
 
 function run() {

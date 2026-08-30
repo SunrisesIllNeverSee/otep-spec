@@ -110,6 +110,82 @@ try {
   assert(true, "CLI: tteop/9.9 correctly rejected (non-zero exit)");
 }
 
+// ─── CodeRabbit minor #2: legacy/canonical metric alias conflict handling ───
+// SPEC §26.4/26.5. Protocol aliases must be lossless and deterministic.
+// Silently choosing one conflicting value creates cross-implementation ambiguity.
+console.log("\n=== Legacy metric alias conflict handling (CodeRabbit #2) ===\n");
+
+// Build a metrics-only test base: canonical envelope with valid metrics.
+const canonicalMetrics = { ...canonical.metrics };
+
+// 8. Alias-only (snr present, output_fraction absent) → normalized and accepted
+const aliasOnly = { ...canonical, metrics: { ...canonicalMetrics } };
+delete aliasOnly.metrics.output_fraction;
+aliasOnly.metrics.snr = canonicalMetrics.output_fraction;
+const aliasOnlyResult = validateEnvelope(aliasOnly);
+assert(aliasOnlyResult.valid,
+  "Alias-only: snr→output_fraction normalized and accepted");
+assert(!aliasOnlyResult.schemaErrors?.some(e => e.includes("snr") || e.includes("output_fraction")),
+  "Alias-only: no schema error mentioning snr or output_fraction");
+
+// 9. Matching pair (snr == output_fraction) → accepted, alias dropped
+const matchingPair = { ...canonical, metrics: { ...canonicalMetrics } };
+matchingPair.metrics.snr = canonicalMetrics.output_fraction; // same value
+const matchingResult = validateEnvelope(matchingPair);
+assert(matchingResult.valid,
+  "Matching pair: snr==output_fraction accepted (alias dropped, canonical kept)");
+assert(!matchingResult.schemaErrors?.some(e => e.includes("conflict")),
+  "Matching pair: no conflict error");
+
+// 10. Conflicting pair (snr != output_fraction) → REJECTED
+const conflictingPair = { ...canonical, metrics: { ...canonicalMetrics } };
+conflictingPair.metrics.snr = canonicalMetrics.output_fraction + 0.1; // different value
+const conflictingResult = validateEnvelope(conflictingPair);
+assert(!conflictingResult.valid,
+  "Conflicting pair: snr!=output_fraction rejected (hard fail)");
+assert(conflictingResult.schemaErrors?.some(e => e.includes("conflict") && e.includes("snr") && e.includes("output_fraction")),
+  "Conflicting pair: error mentions conflict + snr + output_fraction");
+
+// 11. Alias-only (dev10x present, log_leverage absent) → normalized and accepted
+const aliasOnlyDev = { ...canonical, metrics: { ...canonicalMetrics } };
+delete aliasOnlyDev.metrics.log_leverage;
+aliasOnlyDev.metrics.dev10x = canonicalMetrics.log_leverage;
+const aliasOnlyDevResult = validateEnvelope(aliasOnlyDev);
+assert(aliasOnlyDevResult.valid,
+  "Alias-only: dev10x→log_leverage normalized and accepted");
+
+// 12. Matching pair (dev10x == log_leverage) → accepted
+const matchingDev = { ...canonical, metrics: { ...canonicalMetrics } };
+matchingDev.metrics.dev10x = canonicalMetrics.log_leverage; // same value
+const matchingDevResult = validateEnvelope(matchingDev);
+assert(matchingDevResult.valid,
+  "Matching pair: dev10x==log_leverage accepted");
+
+// 13. Conflicting pair (dev10x != log_leverage) → REJECTED
+const conflictingDev = { ...canonical, metrics: { ...canonicalMetrics } };
+conflictingDev.metrics.dev10x = canonicalMetrics.log_leverage + 1.0; // different value
+const conflictingDevResult = validateEnvelope(conflictingDev);
+assert(!conflictingDevResult.valid,
+  "Conflicting pair: dev10x!=log_leverage rejected (hard fail)");
+assert(conflictingDevResult.schemaErrors?.some(e => e.includes("conflict") && e.includes("dev10x") && e.includes("log_leverage")),
+  "Conflicting pair: error mentions conflict + dev10x + log_leverage");
+
+// 14. Both aliases conflict simultaneously → REJECTED with both conflicts
+const bothConflict = { ...canonical, metrics: { ...canonicalMetrics } };
+bothConflict.metrics.snr = canonicalMetrics.output_fraction + 0.1;
+bothConflict.metrics.dev10x = canonicalMetrics.log_leverage + 1.0;
+const bothConflictResult = validateEnvelope(bothConflict);
+assert(!bothConflictResult.valid,
+  "Both aliases conflict: rejected (hard fail)");
+assert(bothConflictResult.schemaErrors?.length >= 2,
+  "Both aliases conflict: at least 2 conflict errors reported");
+
+// 15. No legacy aliases present → no conflict (regression guard)
+const noAlias = { ...canonical, metrics: { ...canonicalMetrics } };
+const noAliasResult = validateEnvelope(noAlias);
+assert(noAliasResult.valid,
+  "No legacy aliases: canonical-only metrics still accepted (regression)");
+
 // Summary
 console.log(`\n=== Summary ===\n`);
 console.log(`Passed: ${passed}`);

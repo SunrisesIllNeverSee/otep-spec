@@ -20,6 +20,10 @@ const TOOL_DEF = {
     type: "object",
     required: ["input", "output"],
     properties: {
+      // maximum mirrors the canonical envelope schema (Number.MAX_SAFE_INTEGER)
+      // and the runtime validateTokenField guard below. Advertising it here
+      // prevents MCP clients from generating oversized values that the server
+      // would subsequently reject (CodeRabbit minor #1).
       input: { type: "integer", minimum: 0, maximum: 9007199254740991, description: "Fresh input tokens." },
       output: { type: "integer", minimum: 0, maximum: 9007199254740991, description: "Output tokens." },
       cache_write: { type: ["integer", "null"], minimum: 0, maximum: 9007199254740991, description: "Cache-write tokens, or null when unavailable." },
