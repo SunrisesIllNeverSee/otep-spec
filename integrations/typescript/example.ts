@@ -129,11 +129,11 @@ export function computeMetrics(t: Telemetry): { metrics: Metrics; warnings: stri
 
   return {
     metrics: {
-      yield: round(y, 2),
-      leverage: round(leverage, 1),
-      velocity: round(velocity, 3),
-      output_fraction: round(ofRaw, 4),
-      log_leverage: round(logLev, 2),
+      yield: roundHalfToEven(y, 2),
+      leverage: roundHalfToEven(leverage, 1),
+      velocity: roundHalfToEven(velocity, 3),
+      output_fraction: roundHalfToEven(ofRaw, 4),
+      log_leverage: roundHalfToEven(logLev, 2),
     },
     warnings: orderedWarnings,
   };

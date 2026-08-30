@@ -45,41 +45,52 @@ function cliCompute(telemetry) {
   const args = [
     "node",
     join(ROOT, "integrations", "cli", "example.mjs"),
-    `--input=${telemetry.input}`,
-    `--output=${telemetry.output}`,
+    "--input", String(telemetry.input),
+    "--output", String(telemetry.output),
   ];
   if (telemetry.cache_write !== undefined && telemetry.cache_write !== null) {
-    args.push(`--cache-write=${telemetry.cache_write}`);
+    args.push("--cache-write", String(telemetry.cache_write));
   } else {
-    args.push(`--cache-write=null`);
+    args.push("--cache-write", "null");
   }
   if (telemetry.cache_read !== undefined && telemetry.cache_read !== null) {
-    args.push(`--cache-read=${telemetry.cache_read}`);
+    args.push("--cache-read", String(telemetry.cache_read));
   } else {
-    args.push(`--cache-read=null`);
+    args.push("--cache-read", "null");
   }
   const stdout = execSync(args.join(" "), { encoding: "utf8", cwd: ROOT });
   const envelope = JSON.parse(stdout);
   return { metrics: envelope.metrics, warnings: envelope.warnings };
 }
 
-// 4. Python — spawn python3 and parse JSON output
-function pyCompute(telemetry) {
-  const script = `
-import json, sys, math
+// 4. Python — spawn python3 with a temp script file and parse JSON output
+import { writeFileSync, unlinkSync, mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+
+const _pyDir = mkdtempSync(join(tmpdir(), "tie-test-"));
+const _pyScriptPath = join(_pyDir, "run_tie.py");
+writeFileSync(
+  _pyScriptPath,
+  `import json, sys
 sys.path.insert(0, ${JSON.stringify(join(ROOT, "integrations", "python"))})
 from example import compute_metrics
-result = compute_metrics(
-    ${telemetry.input},
-    ${telemetry.output},
-    ${telemetry.cache_write === null ? "None" : telemetry.cache_write},
-    ${telemetry.cache_read === null ? "None" : telemetry.cache_read},
-)
+t = json.loads(sys.stdin.read())
+result = compute_metrics(t["input"], t["output"], t.get("cache_write"), t.get("cache_read"))
 print(json.dumps(result))
-`;
-  const stdout = execSync(`python3 -c ${JSON.stringify(script)}`, {
+`
+);
+
+function pyCompute(telemetry) {
+  const stdin = JSON.stringify({
+    input: telemetry.input,
+    output: telemetry.output,
+    cache_write: telemetry.cache_write ?? null,
+    cache_read: telemetry.cache_read ?? null,
+  });
+  const stdout = execSync(`python3 ${JSON.stringify(_pyScriptPath)}`, {
     encoding: "utf8",
     cwd: ROOT,
+    input: stdin,
   });
   return JSON.parse(stdout);
 }

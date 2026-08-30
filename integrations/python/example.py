@@ -17,9 +17,29 @@ from typing import Optional
 
 
 def _round(n: Optional[float], d: int) -> Optional[float]:
+    """Banker's rounding (round-half-to-even).
+
+    SPEC.md SRP-METRIC-002 requires round-half-to-even.  Python's built-in
+    round() also uses round-half-to-even but operates on the decimal
+    representation of the float, which can disagree with the JS reference
+    implementation on values that are not exactly representable in binary
+    floating point (e.g. 1/2000).  This implementation mirrors the JS
+    reference's binary-scaled algorithm so all implementations agree.
+    """
     if n is None or not math.isfinite(n):
         return None
-    return round(n, d)
+    factor = math.pow(10, d)
+    scaled = n * factor
+    floor = math.floor(scaled)
+    frac = scaled - floor
+    if frac < 0.5:
+        result = floor
+    elif frac > 0.5:
+        result = floor + 1
+    else:
+        # Exactly 0.5: round to even
+        result = floor if floor % 2 == 0 else floor + 1
+    return result / factor
 
 
 def compute_metrics(
