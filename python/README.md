@@ -3,6 +3,10 @@
 Portable five-metric core for AI operator token-processing efficiency.
 Conforms to the TTEOP v0.1-draft specification.
 
+> **Note:** The PyPI distribution name remains `sigrank-standard` for backward
+> compatibility with existing installs. The canonical protocol name is TTEOP
+> (Token Telemetry Evaluation Operator Protocol). See `teps/TEP-0001.md`.
+
 ## Install
 
 ```bash

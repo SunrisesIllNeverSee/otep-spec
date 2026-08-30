@@ -3,9 +3,12 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
+# Distribution name kept as "sigrank-standard" for PyPI compatibility.
+# The package was originally published under this name; renaming would break
+# existing installs. The canonical protocol name is TTEOP (see TEP-0001).
 name = "sigrank-standard"
 version = "0.1.0"
-description = "SigRank Standard v0.1-draft — portable five-metric core for AI operator token-processing efficiency. No dependencies."
+description = "TTEOP (Token Telemetry Evaluation Operator Protocol) v0.1-draft — canonical portable five-metric core for AI operator token-processing efficiency. No dependencies."
 readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.9"
@@ -39,9 +42,9 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://signalaf.com/standard"
-Repository = "https://github.com/SunrisesIllNeverSee/sigrank-standard"
-Documentation = "https://github.com/SunrisesIllNeverSee/sigrank-standard#readme"
-"Bug Tracker" = "https://github.com/SunrisesIllNeverSee/sigrank-standard/issues"
+Repository = "https://github.com/SunrisesIllNeverSee/otep-spec"
+Documentation = "https://github.com/SunrisesIllNeverSee/otep-spec#readme"
+"Bug Tracker" = "https://github.com/SunrisesIllNeverSee/otep-spec/issues"
 
 [project.scripts]
 sigrank-conformance = "sigrank_standard.conformance:main"

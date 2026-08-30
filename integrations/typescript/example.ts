@@ -49,7 +49,7 @@ export interface OtepEnvelope {
   };
   provenance: {
     level: "self-reported" | "collector-attested" | "platform-verified" | "signed";
-    signature_status: "unsigned" | "valid" | "invalid" | "not-applicable";
+    signature_status: "unsigned" | "valid" | "invalid" | "not-applicable" | "signature-present-unverified";
   };
   privacy: {
     mode: "public-pseudonymous" | "private-managed-cohort" | "enterprise-isolated";
@@ -58,9 +58,25 @@ export interface OtepEnvelope {
   warnings: string[];
 }
 
-function round(n: number | null, d: number): number | null {
-  if (n === null || !Number.isFinite(n)) return null;
-  return Number(n.toFixed(d));
+// ─── Banker's rounding (round-half-to-even) ─────────────────────────────────
+// SPEC.md SRP-METRIC-002 requires round-half-to-even, NOT toFixed (round-half-up).
+
+function roundHalfToEven(value: number | null, decimals: number): number | null {
+  if (value === null || !Number.isFinite(value)) return null;
+  const factor = Math.pow(10, decimals);
+  const scaled = value * factor;
+  const floor = Math.floor(scaled);
+  const frac = scaled - floor;
+  let result: number;
+  if (frac < 0.5) {
+    result = floor;
+  } else if (frac > 0.5) {
+    result = floor + 1;
+  } else {
+    // Exactly 0.5: round to even
+    result = (floor % 2 === 0) ? floor : floor + 1;
+  }
+  return result / factor;
 }
 
 export function computeMetrics(t: Telemetry): { metrics: Metrics; warnings: string[] } {

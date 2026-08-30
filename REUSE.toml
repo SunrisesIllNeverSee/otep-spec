@@ -1,0 +1,249 @@
+# REUSE.toml — SPDX license identifiers for TTEOP specification repository
+#
+# This file follows the REUSE Specification (https://reuse.software/).
+# License texts are stored in the LICENSES/ directory.
+
+version = 1
+
+# ---------------------------------------------------------------------------
+# Specification documents — Creative Commons Attribution 4.0 International
+# ---------------------------------------------------------------------------
+[[annotations]]
+path = "SPEC.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "schemas/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "metrics/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "profiles/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "adapters/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "teps/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "examples/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "test-vectors/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+# ---------------------------------------------------------------------------
+# Code — Apache License 2.0
+# ---------------------------------------------------------------------------
+[[annotations]]
+path = "conformance/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "reference/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "integrations/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "python/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "scripts/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+# ---------------------------------------------------------------------------
+# Governance documents — Creative Commons Attribution 4.0 International
+# ---------------------------------------------------------------------------
+[[annotations]]
+path = "GOVERNANCE.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "CONTRIBUTING.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "CODE_OF_CONDUCT.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "DISCLOSURES.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "MAINTAINERS.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "TRADEMARKS.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "README.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "CHANGELOG.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "TERMINOLOGY.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "PRIVACY.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "SECURITY.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "NOTICE"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "ARCHITECTURE-DECISION-MEMO.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "REPOSITORY-ARCHITECTURE.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "IMPLEMENTATION-EXPERIENCE.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "LICENSING-DECISION-MATRIX.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "OPEN-COMMERCIAL-BOUNDARY.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "ADOPTION-ROADMAP.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "BUSINESS-MODEL.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "RISK-REGISTER.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "BACKLOG-30-60-90.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "UNRESOLVED-DECISIONS.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "INTEGRATION-ADOPTION-PLAN.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "docs/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "rfc/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "reports/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"

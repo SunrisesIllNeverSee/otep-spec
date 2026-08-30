@@ -1,0 +1,59 @@
+{
+  "protocol_version": "tteop/0.1-draft",
+  "metric_spec_version": "tteop-metrics/0.1-draft",
+  "collector_version": "my-collector/1.2.3",
+  "operator": {
+    "pseudonymous_key": "op_a7f3e2b1c9d4",
+    "cohort_id": null
+  },
+  "observation": {
+    "timestamp": "2026-08-28T12:00:00Z",
+    "window_start": "2026-08-28T08:00:00Z",
+    "window_end": "2026-08-28T12:00:00Z",
+    "window_duration_seconds": 14400
+  },
+  "source": {
+    "tool": "claude-code",
+    "platform": "terminal",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4",
+    "adapter_id": "anthropic-v1",
+    "adapter_version": "1.0.0"
+  },
+  "telemetry": {
+    "input": 1251211,
+    "output": 11296121,
+    "cache_write": null,
+    "cache_read": null
+  },
+  "raw_provider_fields": {
+    "input_tokens": 1251211,
+    "output_tokens": 11296121,
+    "cache_creation_input_tokens": 128196310,
+    "cache_read_input_tokens": 2555179769
+  },
+  "validity": {
+    "status": "valid",
+    "missingness_flags": [],
+    "anomaly_flags": []
+  },
+  "provenance": {
+    "level": "collector-attested",
+    "signature_status": "unsigned"
+  },
+  "privacy": {
+    "mode": "public-pseudonymous"
+  },
+  "metrics": {
+    "yield": 18436.98,
+    "leverage": 2042.2,
+    "velocity": 9.028,
+    "output_fraction": 0.9003,
+    "log_leverage": 3.31
+  },
+  "warnings": [],
+  "extensions": {},
+  "_fixture_id": "NEG-009",
+  "_fixture_description": "Null cache field without required missingness flag",
+  "_expected_rejection": true
+}

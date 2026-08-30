@@ -67,6 +67,7 @@ tteop-spec/
 ├── PRIVACY.md                         — privacy modes and content-independence
 ├── SECURITY.md                        — security considerations
 ├── GOVERNANCE.md                      — maintainer roles, TEP process, change control
+├── MAINTAINERS.md                     — maintainer roster (lead + reviewers)
 ├── DISCLOSURES.md                     — conflict-of-interest disclosures (SRP-GOV-014)
 ├── CONTRIBUTING.md                    — how to contribute
 ├── CODE_OF_CONDUCT.md                 — community code of conduct
