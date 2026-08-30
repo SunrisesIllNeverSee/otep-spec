@@ -152,6 +152,12 @@ jobs:
       - name: 13b. Legacy alias acceptance tests
         run: node conformance/tests/alias-acceptance-test.mjs
 
+      # Gate 13c: Stable builder API (lib/envelope-builder.mjs) — buildEnvelope
+      # produces schema+semantic-valid envelopes across the documented input
+      # matrix; all documented error conditions throw.
+      - name: 13c. Stable builder API tests
+        run: node conformance/tests/builder-api-test.mjs
+
       # Gate 14: Exercise the installed 'tteop' executable
       - name: 14. Exercise installed tteop executable
         run: |

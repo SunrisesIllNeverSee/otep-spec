@@ -97,6 +97,22 @@ This release upgrades the `sigrank/0.1-draft` minimal specification to a complet
 
 ---
 
+## [0.1.4-draft] — 2026-08-30
+
+### Added — Stable JavaScript builder API
+- `lib/envelope-builder.mjs` — canonical, production-importable `buildEnvelope(telemetry, options)` function. Ports the TypeScript example's construction logic to a stable `.mjs` module and delegates metric computation to `lib/envelope-validator.mjs` (single source of truth for the five portable metrics with banker's rounding).
+- Exports: `buildEnvelope`, `buildRecord` (backward-compatible alias).
+- Enforces SRP-PRIV-002 (public-pseudonymous excludes cohort_id), SRP-MISS-001/002 (null cache missingness flags), and the cohort_id-requires-operator_key rule.
+- `package.json` `exports` field: `"."` → validator, `"./builder"` → builder, `"./validator"` → validator. Enables clean `import { buildEnvelope } from "tteop-spec/builder"` from downstream packages (e.g., `tteop-mcp`).
+- `conformance/tests/builder-api-test.mjs` — 40 assertions covering the full input matrix (all four pillars, null cache, privacy modes, provenance levels, defaults, alias equality) and all error conditions (negative, non-integer, oversized, cohort-without-operator_key, missing required fields, wrong types).
+- CI Gate 13c runs the new builder-api test.
+
+### Changed
+- Version bump `0.1.3-draft` → `0.1.4-draft` (new export surface — additive, no breaking changes to existing imports).
+- `bin/tteop.mjs` VERSION string updated to `tteop/0.1.4-draft`.
+
+---
+
 ## [sigrank/0.1-draft] — 2026-08-27
 
 ### Added — Initial draft

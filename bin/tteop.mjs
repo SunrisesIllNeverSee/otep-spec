@@ -29,7 +29,7 @@ import { spawn } from "node:child_process";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const VALIDATE_SCRIPT = join(__dirname, "..", "conformance", "tteop-validate.mjs");
 
-const VERSION = "tteop/0.1.3-draft";
+const VERSION = "tteop/0.1.4-draft";
 
 function showHelp() {
   console.log(`TTEOP — Token Telemetry Evaluation Operator Protocol
