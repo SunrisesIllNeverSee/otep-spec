@@ -18,6 +18,8 @@ import {
   validateEnvelope,
   SPEC_VERSION,
   METRIC_SPEC_VERSION,
+  PRIVACY_MODES,
+  PROVENANCE_LEVELS,
 } from "../../lib/envelope-validator.mjs";
 
 let passed = 0;
@@ -102,8 +104,11 @@ const e5 = buildEnvelope(
 const r5 = validateEnvelope(e5);
 assert(r5.valid, "Enterprise-isolated: valid");
 
-// 6. Provenance levels
-for (const level of ["self-reported", "collector-attested", "platform-verified"]) {
+// 6. Provenance levels (table-driven: every supported builder level)
+// "signed" is in PROVENANCE_LEVELS but rejected by the builder (SRP-SIG-001);
+// it is tested separately in the error-conditions section below.
+const BUILDER_PROVENANCE_LEVELS = PROVENANCE_LEVELS.filter((l) => l !== "signed");
+for (const level of BUILDER_PROVENANCE_LEVELS) {
   const e = buildEnvelope(
     { input: 100, output: 50, cache_write: 10, cache_read: 20 },
     { provenance_level: level },
@@ -111,6 +116,17 @@ for (const level of ["self-reported", "collector-attested", "platform-verified"]
   const r = validateEnvelope(e);
   assert(r.valid, `provenance_level=${level}: valid`);
   assert(e.provenance.level === level, `provenance.level is ${level}`);
+}
+
+// 6a. Privacy modes (table-driven: every valid privacy mode)
+for (const mode of PRIVACY_MODES) {
+  const e = buildEnvelope(
+    { input: 100, output: 50, cache_write: 10, cache_read: 20 },
+    { privacy_mode: mode },
+  );
+  const r = validateEnvelope(e);
+  assert(r.valid, `privacy_mode=${mode}: valid`);
+  assert(e.privacy.mode === mode, `privacy.mode is ${mode}`);
 }
 
 // 7. buildRecord alias === buildEnvelope (reference equality, not value equality)
@@ -141,6 +157,28 @@ assertThrows(
   () => buildEnvelope({ input: 100, output: 50 }, { provenance_level: "signed" }),
   "provenance_level 'signed' throws (no signature input supported, SRP-SIG-001)",
 );
+
+// 8a. Invalid privacy_mode values (table-driven)
+// Note: null/undefined are nullish and fall back to the default via ??, so they
+// are NOT invalid — they produce a valid default-mode envelope. Only non-nullish
+// values outside PRIVACY_MODES are rejected.
+const INVALID_PRIVACY_MODES = ["anything", "public", "private", "", "PUBLIC-PSEUDONYMOUS", "anonymous"];
+for (const mode of INVALID_PRIVACY_MODES) {
+  assertThrows(
+    () => buildEnvelope({ input: 100, output: 50 }, { privacy_mode: mode }),
+    `privacy_mode '${mode}' throws (not a valid TTEOP privacy mode)`,
+  );
+}
+
+// 8b. Invalid provenance_level values (table-driven, excluding "signed" which has its own error)
+// Same nullish note: null/undefined fall back to "self-reported" via ??.
+const INVALID_PROVENANCE_LEVELS = ["anything", "verified", "attested", "", "SIGNED", "platform"];
+for (const level of INVALID_PROVENANCE_LEVELS) {
+  assertThrows(
+    () => buildEnvelope({ input: 100, output: 50 }, { provenance_level: level }),
+    `provenance_level '${level}' throws (not a valid TTEOP provenance level)`,
+  );
+}
 
 // 9. Missing required fields
 assertThrows(() => buildEnvelope({ output: 50 }), "missing input throws");
