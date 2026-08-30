@@ -24,6 +24,10 @@ set -euo pipefail
 # DCO adoption date (YYYY-MM-DD). Commits on or after this date must be signed off.
 DCO_ADOPTION_DATE="2026-08-30"
 
+# Bootstrap commits explicitly exempt from DCO (see DISCLOSURES.md).
+# These predate the DCO policy adoption on the same calendar date.
+BOOTSTRAP_COMMITS="6ebc457 dbfb774"
+
 # Determine the commit range to check.
 # Priority:
 #   1. Explicit args: $1..$2
@@ -85,6 +89,11 @@ MISSING=0
 FAILED_COMMITS=""
 
 for commit in $COMMITS; do
+    # Skip bootstrap commits that are explicitly exempt (see DISCLOSURES.md).
+    SHORT=$(git rev-parse --short "$commit" 2>/dev/null || echo "")
+    if echo "$BOOTSTRAP_COMMITS" | grep -qw "$SHORT"; then
+        continue
+    fi
     # Check if the commit message contains a Signed-off-by trailer.
     if ! git log -1 --format='%B' "$commit" | grep -qiE '^Signed-off-by: .+ <.+@.+>'; then
         MISSING=$((MISSING + 1))

@@ -89,6 +89,18 @@ precedence = "aggregate"
 SPDX-License-Identifier = "Apache-2.0"
 SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
 
+[[annotations]]
+path = "bin/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
+path = "lib/**"
+precedence = "aggregate"
+SPDX-License-Identifier = "Apache-2.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
 # ---------------------------------------------------------------------------
 # Governance documents — Creative Commons Attribution 4.0 International
 # ---------------------------------------------------------------------------

@@ -514,7 +514,7 @@ function testVersionNegotiation(schema) {
 /**
  * Test SRP-COMP-* requirements.
  */
-function testBackwardCompatibility() {
+function testBackwardCompatibility(schema) {
   console.log("\n── SRP-COMP: Backward compatibility ──");
 
   // SRP-COMP-001: semantic versioning (verified by version string format)
@@ -522,12 +522,20 @@ function testBackwardCompatibility() {
   assert(/^tteop\/\d+\.\d+(-draft)?$/.test(complete.protocol_version),
     "COMP-001", "protocol version follows semver format");
 
-  // SRP-COMP-003: unknown optional fields ignored
+  // SRP-COMP-003: unknown optional fields ignored by consumers
+  // The schema has additionalProperties: false, so schema validation rejects unknown
+  // root-level fields (correct producer behavior). But a consumer MUST still extract
+  // and compute metrics from the known fields without crashing. We exercise the
+  // consumer path: extract telemetry from an envelope carrying an unknown optional
+  // field and verify metrics compute correctly (consumer ignores the unknown field).
   const withExtra = { ...complete, unknown_optional_field: "test" };
-  // The schema has additionalProperties: false, so this would fail schema validation.
-  // But consumers should ignore unknown fields per COMP-003. This is a consumer behavior,
-  // not a producer behavior. We test that the reference implementation doesn't crash.
-  // (Schema validation will reject it, which is correct producer behavior.)
+  const consumerMetrics = computeMetrics(withExtra.telemetry);
+  assert(consumerMetrics.metrics.yield === 18436.98,
+    "COMP-003", "consumer ignores unknown optional field and computes metrics correctly");
+  // Also verify the schema rejects the unknown field (producer-side check)
+  const extraSchemaResult = validateEnvelope(withExtra, schema);
+  assert(!extraSchemaResult.valid,
+    "COMP-003b", "schema rejects unknown root-level field (producer-side additionalProperties:false)");
 
   // SRP-COMP-005: stable metrics formula frozen (verified by frozen MOSES invariant)
   const result = computeMetrics({ input: 1251211, output: 11296121, cache_write: 128196310, cache_read: 2555179769 });
@@ -732,7 +740,7 @@ function main() {
   testPrivacyRequirements(schema);
   testExtensionMechanism();
   testVersionNegotiation(schema);
-  testBackwardCompatibility();
+  testBackwardCompatibility(schema);
   testErrorTaxonomy(schema);
   testConformanceClasses();
   testRegistry();

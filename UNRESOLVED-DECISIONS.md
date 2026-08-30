@@ -192,9 +192,9 @@ This document lists all decisions that have been analyzed and proposed but **not
 2. **Defer registration until foundation transfer (UD-6).** Avoids near-term cost; risk of third-party registration in the interim.
 3. **Do not register; rely on common-law unregistered-mark rights.** No cost; weaker protection; insufficient for a certification badge (UD-5).
 
-**Recommendation:** Option 1 — register "TTEOP" immediately, held by the founder's entity, with transfer to foundation at governance transfer (UD-6).
+**Recommendation:** Option 2 — defer registration until foundation transfer (UD-6). The founder's existing MO§ES™ trademark provides interim brand protection for the related ecosystem; TTEOP trademark registration is deferred to avoid near-term cost and entity-formation overhead until the specification reaches sufficient maturity for foundation transfer.
 
-**Rationale:** The cost of registration is low relative to the risk of third-party capture. If a certification program (UD-5) is ever established, a registered mark is a prerequisite. Holding the mark in a founder entity with a documented transfer commitment is the lowest-friction path.
+**Rationale:** The cost of registration is low relative to the risk of third-party capture, but the founder has elected to defer registration (recorded 2026-08-30) to avoid committing to a specific holding entity before the foundation transfer path is determined. The MO§ES™ trademark noted in `DISCLOSURES.md` provides interim brand coverage for the broader ecosystem. If a certification program (UD-5) is established, trademark registration will be revisited at that time.
 
 **Impact of delay:** Name is unprotected; third parties could register the mark; trademark usage guidelines (backlog item 3.7) cannot be enforced; certification badge (UD-5) is blocked.
 

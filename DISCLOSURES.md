@@ -21,7 +21,7 @@
 
 ## Bootstrap Contributions
 
-The following initial commits established the repository prior to DCO adoption (2026-08-30). They are documented here as bootstrap contributions by the project founder. Published `main` history is not rewritten; these commits are not retroactively signed off.
+The following initial commits established the repository before the DCO policy was adopted. They are explicitly exempt from the DCO sign-off requirement. Published `main` history is not rewritten; these commits are not retroactively signed off. The DCO check script (`scripts/check-dco.sh`) excludes these commits by short SHA.
 
 | Commit | Date | Description | Author |
 |--------|------|-------------|--------|

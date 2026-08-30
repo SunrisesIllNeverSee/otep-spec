@@ -770,7 +770,7 @@ See `PRIVACY.md` for full definitions. Summary:
 
 ### 18.2 Reporting process
 
-**`SRP-SEC-001`** Security vulnerabilities in the specification or reference implementation MUST be reported to `security@signalaf.com` (temporary; a neutral security contact will be established post-v0.5).
+**`SRP-SEC-001`** Security vulnerabilities in the specification or reference implementation MUST be reported to the designated security contact documented in `SECURITY.md` (currently `deric.mchenry@gmail.com` or `hello@signalaf.com`; a neutral security contact will be established post-v0.5).
 
 **Failure condition: A security vulnerability is reported through an undocumented channel, or no reporting channel is provided.**
 
@@ -780,9 +780,9 @@ See `PRIVACY.md` for full definitions. Summary:
 
 ### 18.3 Employee-surveillance misuse
 
-**`SRP-SEC-003`** The specification explicitly prohibits using TTEOP metrics as the sole basis for employment decisions (hiring, firing, promotion, compensation).
+**`SRP-SEC-003`** The specification explicitly prohibits using TTEOP metrics as the sole basis for employment decisions (hiring, firing, promotion, compensation, performance review).
 
-**Failure condition: TTEOP metrics are used as the sole basis for an employment decision (hiring, firing, promotion, compensation).**
+**Failure condition: TTEOP metrics are used as the sole basis for an employment decision (hiring, firing, promotion, compensation, performance review).**
 
 **`SRP-SEC-004`** Enterprise deployments MUST provide operators with:
 - Access to their own telemetry

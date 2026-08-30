@@ -5,6 +5,10 @@
  * Minimal CLI that computes an TTEOP v0.1-draft schema-conforming envelope
  * from command-line arguments. No dependencies.
  *
+ * Imports the TypeScript reference implementation directly (example.ts).
+ * Requires Node.js 22+ which has native TypeScript stripping support.
+ * No compilation step is needed.
+ *
  * Usage:
  *   node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769
  */
@@ -16,7 +20,9 @@ function getArg(name) {
   const idx = args.indexOf(`--${name}`);
   if (idx === -1) return undefined;
   const val = args[idx + 1];
-  return val === undefined ? undefined : Number(val);
+  if (val === undefined || val.startsWith("--")) return undefined;
+  const num = Number(val);
+  return Number.isNaN(num) ? undefined : num;
 }
 
 const input = getArg("input");

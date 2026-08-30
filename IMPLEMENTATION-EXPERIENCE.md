@@ -104,10 +104,10 @@ Before v1.0 can be released:
 
 1. ✅ Implementation #1 (SignalAF) passes self-test conformance — DONE (but self-test, not independent certification)
 2. ⬜ Implementation #1 certified by independent harness — PENDING
-2. ⬜ Implementation #2 (independent) passes at least one conformance class — PENDING
-3. ⬜ Interoperability demonstration between #1 and #2 — PENDING
-4. ⬜ Implementation-experience reports from both — #1 DONE, #2 PENDING
-5. ⬜ No unresolved specification ambiguities reported by either implementer — PENDING
+3. ⬜ Implementation #2 (independent) passes at least one conformance class — PENDING
+4. ⬜ Interoperability demonstration between #1 and #2 — PENDING
+5. ⬜ Implementation-experience reports from both — #1 DONE, #2 PENDING
+6. ⬜ No unresolved specification ambiguities reported by either implementer — PENDING
 
 ---
 

@@ -21,13 +21,13 @@ Thank you for your interest in contributing to the TTEOP specification! This doc
 
 ## Contribution Model
 
-TTEOP adopts the **Developer Certificate of Origin (DCO)** prospectively from the remediation merge date (2026-08-30). All commits made on or after that date MUST include `Signed-off-by: Name <email>`.
+TTEOP adopts the **Developer Certificate of Origin (DCO)** prospectively from the remediation merge date. The DCO effective timestamp is **2026-08-30 00:00 UTC**. All commits with an author date on or after that timestamp MUST include `Signed-off-by: Name <email>`.
 
 The DCO certifies that the contributor wrote or has the right to submit the code. It does NOT assign copyright. See https://developercertificate.org/ for the full text.
 
 To sign off, use `git commit -s` or add `Signed-off-by: Your Name <your.email@example.com>` to your commit message.
 
-**Bootstrap commits:** The initial commits that established the repository (prior to the DCO adoption date) are documented as bootstrap contributions by the project founder. They are not retroactively signed off, and published `main` history is not rewritten. See `DISCLOSURES.md` for the bootstrap contribution record.
+**Bootstrap exception:** The initial commits that established the repository (commit `6ebc457` through `dbfb774`, all dated 2026-08-30) are explicitly exempt from the DCO requirement. These commits were authored before the DCO policy was adopted and are documented as bootstrap contributions by the project founder in `DISCLOSURES.md`. Published `main` history is not rewritten; these commits are not retroactively signed off. The DCO check script (`scripts/check-dco.sh`) uses `--since="2026-08-30"` and excludes commits listed in the bootstrap exception table.
 
 **[PROSPECTIVE]** — The DCO is adopted prospectively. The CLA-vs-DCO question (UD-7) remains open for revisit at foundation transfer (UD-6). See `UNRESOLVED-DECISIONS.md` §7.
 

@@ -64,9 +64,21 @@ function main() {
   const reportFormat = reportIdx !== -1 ? args[reportIdx + 1] : "text";
 
   // Validate option values
+  // Normative classes per conformance/classes.md §1:
+  //   producer, consumer, adapter, metric-engine, privacy-profile, full-platform
+  // Convenience aliases (mapped to the normative class that performs that check):
+  //   schema-only → consumer (schema validation only)
+  //   semantic-only → privacy-profile (semantic validation only)
+  //   full → full-platform (full schema + semantic validation)
+  const CLASS_ALIASES = {
+    "schema-only": "consumer",
+    "semantic-only": "privacy-profile",
+    "full": "full-platform",
+  };
   const validClasses = ["producer", "consumer", "adapter", "metric-engine", "privacy-profile", "full-platform"];
-  if (!validClasses.includes(conformanceClass)) {
-    console.error(`Invalid --class value: ${conformanceClass}. Valid: ${validClasses.join(", ")}`);
+  const resolvedClass = CLASS_ALIASES[conformanceClass] || conformanceClass;
+  if (!validClasses.includes(resolvedClass)) {
+    console.error(`Invalid --class value: ${conformanceClass}. Valid: ${validClasses.join(", ")} (or aliases: ${Object.keys(CLASS_ALIASES).join(", ")})`);
     process.exit(4);
   }
   const validFormats = ["json", "text", "sarif"];
@@ -116,7 +128,7 @@ function main() {
         metricWarnings: [],
         metrics: null,
         expectedProfile,
-        conformanceClass,
+        conformanceClass: resolvedClass,
         protocolVersion: envelope.protocol_version,
         privacyMode: envelope.privacy?.mode,
       });
@@ -135,35 +147,47 @@ function main() {
     computeMetrics: true,
   };
 
-  // For class-specific validation, split the checks
+  // For class-specific validation, split the checks.
+  // Schema validation ALWAYS runs — even for privacy-profile (semantic-only) class,
+  // because reporting "schema pass" without actually running schema validation would
+  // be misleading. The class controls which checks count toward the overall result
+  // and exit code, not which checks are executed.
   let schemaErrors = [];
   let semanticErrors = [];
   let semanticWarnings = [];
   let metrics = null;
   let metricWarnings = [];
 
-  if (conformanceClass === "consumer") {
-    // Consumer: schema validation only
-    const result = validateEnvelopeSchema(envelope);
-    schemaErrors = result.errors;
-  } else if (conformanceClass === "privacy-profile") {
-    // Privacy-profile: semantic validation only
+  const schemaResult = validateEnvelopeSchema(envelope);
+  schemaErrors = schemaResult.errors;
+
+  if (resolvedClass === "consumer") {
+    // Consumer: schema validation only (semantic checks skipped)
+  } else if (resolvedClass === "privacy-profile") {
+    // Privacy-profile: semantic validation only, but schema errors are still
+    // reported for visibility. Schema errors do NOT count toward the overall
+    // result for this class (the class tests semantic rules, not schema shape).
     const result = validateEnvelopeSemantics(envelope, options);
     semanticErrors = result.errors;
     semanticWarnings = result.warnings;
   } else {
     // producer, adapter, metric-engine, full-platform: full validation
-    const result = validateEnvelope(envelope, options);
-    schemaErrors = result.schemaErrors;
-    semanticErrors = result.semanticErrors;
-    semanticWarnings = result.semanticWarnings;
-    metrics = result.metrics;
-    metricWarnings = result.metricWarnings;
+    const result = validateEnvelopeSemantics(envelope, options);
+    semanticErrors = result.errors;
+    semanticWarnings = result.warnings;
+    if (schemaErrors.length === 0 && semanticErrors.length === 0 && options.computeMetrics && envelope.telemetry) {
+      const mresult = computeMetrics(envelope.telemetry);
+      metrics = mresult.metrics;
+      metricWarnings = mresult.warnings;
+    }
   }
 
+  // For privacy-profile class, schema errors are reported but do not count
+  // toward the overall result (the class tests semantic rules only).
   const allErrors = [...schemaErrors, ...semanticErrors];
   const allWarnings = [...semanticWarnings, ...metricWarnings];
-  const overall = allErrors.length === 0 ? "pass" : "fail";
+  const classRelevantErrors = resolvedClass === "privacy-profile" ? semanticErrors : allErrors;
+  const overall = classRelevantErrors.length === 0 ? "pass" : "fail";
 
   // Build the conformance report (WS4: schema-conforming)
   const report = buildConformanceReport({
@@ -175,7 +199,7 @@ function main() {
     metricWarnings,
     metrics,
     expectedProfile,
-    conformanceClass,
+    conformanceClass: resolvedClass,
     protocolVersion: envelope.protocol_version,
     privacyMode: envelope.privacy?.mode,
   });
@@ -204,7 +228,7 @@ function main() {
     console.log(`Protocol version: ${envelope.protocol_version}`);
     console.log(`Privacy mode (declared): ${envelope.privacy?.mode}`);
     if (expectedProfile) console.log(`Privacy profile (asserted): ${expectedProfile}`);
-    console.log(`Conformance class: ${conformanceClass}`);
+    console.log(`Conformance class: ${resolvedClass}${conformanceClass !== resolvedClass ? ` (alias: ${conformanceClass})` : ""}`);
     if (allErrors.length === 0) {
       console.log("All checks passed.");
     } else {
@@ -222,10 +246,10 @@ function main() {
   }
 
   // Exit codes
-  if (schemaErrors.length > 0 && conformanceClass !== "privacy-profile") {
+  if (schemaErrors.length > 0 && resolvedClass !== "privacy-profile") {
     process.exit(2);
   }
-  process.exit(allErrors.length > 0 ? 1 : 0);
+  process.exit(classRelevantErrors.length > 0 ? 1 : 0);
 }
 
 /**

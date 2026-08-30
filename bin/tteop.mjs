@@ -47,6 +47,7 @@ Validate options:
                              (public-pseudonymous|private-managed-cohort|enterprise-isolated)
   --class <class>           Conformance class
                              (producer|consumer|adapter|metric-engine|privacy-profile|full-platform)
+                             Aliases: schema-only=consumer, semantic-only=privacy-profile, full=full-platform
                              default: full-platform
   --report <format>         Output format (json|text|sarif)
                              default: text

@@ -1,7 +1,7 @@
 # TTEOP v0.1-draft — 30/60/90-Day Implementation Backlog
 
 **Status:** Draft
-**Last updated:** 2025-01-15
+**Last updated:** 2026-08-30
 **Owner:** TTEOP Working Group
 **Specification version:** v0.1-draft
 

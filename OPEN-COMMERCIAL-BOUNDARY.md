@@ -7,8 +7,8 @@
 ## Purpose
 
 This document defines explicitly which parts of the TTEOP ecosystem are open
-and which are commercial. The open standard is **TTEOP** (Operator Token
-Efficiency Protocol). The commercial product is **SignalAF**. The boundary
+and which are commercial. The open standard is **TTEOP** (Token Telemetry
+Evaluation Operator Protocol). The commercial product is **SignalAF**. The boundary
 between them must be unambiguous so that:
 
 - Adopters can implement TTEOP independently, from the published specification

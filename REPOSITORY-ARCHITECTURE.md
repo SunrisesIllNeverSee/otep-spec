@@ -90,7 +90,7 @@ tteop-spec/
 ├── teps/
 │   ├── TEP-0000.md                            — TEP process and template
 │   ├── TEP-0001.md                            — first TEP (protocol name and versioning)
-│   └── TEP-0002.md                            — second TEP (provider adapter extension process)
+│   └── (future TEPs will be added here as they enter review)
 │
 ├── integrations/
 │   ├── typescript/                            — TypeScript reference implementation

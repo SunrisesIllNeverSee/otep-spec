@@ -199,7 +199,10 @@ A proposal MUST NOT enter `review` without an assigned TEP number and a populate
 
 **SRP-GOV-043:** The name "TTEOP" and "Token Telemetry Evaluation Operator Protocol" are used to identify the specification. During the v0.x interim, the SigRank project holds administrative custody of the name. Use of the TTEOP name to claim conformance MUST be backed by passing the published conformance tests in `conformance/`.
 
-**SRP-GOV-044:** No party MAY represent an implementation as "TTEOP-conformant" or "TTEOP-certified" unless it passes the current published conformance suite for the claimed version. Self-asserted conformance without test evidence is a violation of this requirement.
+**SRP-GOV-044:** No party MAY represent an implementation as "TTEOP-conformant" or "TTEOP-certified" unless it passes the current published conformance suite for the claimed version. Two conformance claim tiers are defined:
+
+1. **Self-asserted conformance:** An implementation that passes the published conformance suite may claim "TTEOP Compatible" (per `docs/CONFORMANCE.md`). The claim MUST be accompanied by the conformance runner output (exit code 0, all gates pass) for the claimed version. Self-asserted conformance without test evidence is a violation of this requirement.
+2. **Independently verified conformance:** The reserved term "TTEOP Conformant" (per `docs/CONFORMANCE.md`) MAY only be used when a third party — distinct from the implementation's organization — has independently run the conformance suite and confirmed the result. Self-asserted "TTEOP Conformant" claims are prohibited regardless of test evidence.
 
 **SRP-GOV-045:** If a certification mark is established in the future, the mark MUST be governed by published, version-pinned test criteria. Certification criteria MUST NOT reference unpublished, proprietary, or secret tests. Any certification program MUST be administered under terms no less open than the specification license.
 

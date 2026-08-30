@@ -192,7 +192,7 @@ This register identifies the risks that could compromise the TTEOP protocol's va
 
 **Warning indicators.** TEP acceptance rates correlated with proposer's affiliation. TEP discussions where a single party's position always prevails. Governance meetings dominated by one organization's employees. Long periods with no accepted external TEPs.
 
-**Prevention.** Open TEP process (`docs/GOVERNANCE.md`) with public submission and discussion. No payment or partnership requirement for TEP submission. Documented decision criteria. Separation of duties between spec and revenue teams (`BUSINESS-MODEL.md` §4.8).
+**Prevention.** Open TEP process (`GOVERNANCE.md`) with public submission and discussion. No payment or partnership requirement for TEP submission. Documented decision criteria. Separation of duties between spec and revenue teams (`BUSINESS-MODEL.md` §4.8).
 
 **Detection.** Annual governance audit: TEP submission/acceptance rates by affiliation. Community survey on governance fairness. External review of the TEP process by an independent party on a periodic basis.
 

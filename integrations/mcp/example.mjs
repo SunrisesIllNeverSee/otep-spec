@@ -4,6 +4,10 @@
  * Minimal MCP server that exposes the TTEOP v0.1-draft
  * as a single tool: get_tteop_record.
  *
+ * Imports the TypeScript reference implementation directly (example.ts).
+ * Requires Node.js 22+ which has native TypeScript stripping support.
+ * No compilation step is needed.
+ *
  * Emits schema-conforming envelopes per schemas/telemetry-envelope-v0.1.schema.json.
  */
 

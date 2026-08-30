@@ -199,7 +199,7 @@ tteop validate <payload.json> [--profile <privacy-mode>] [--class <conformance-c
 tteop validate payload.json --report json
 
 # Validate against a specific privacy profile
-tteop validate payload.json --profile private-managed --report json
+tteop validate payload.json --profile private-managed-cohort --report json
 
 # Validate an adapter specifically
 tteop validate payload.json --class adapter --report text

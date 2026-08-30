@@ -90,10 +90,26 @@ jobs:
       # Gate 10: Validate MCP integration via real tools/call JSON-RPC exchange
       - name: 10. Validate MCP integration output (tools/call JSON-RPC)
         run: |
+          set -e
           # Send a real tools/call JSON-RPC request to the MCP server
           echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_tteop_record","arguments":{"input":1251211,"output":11296121,"cache_write":128196310,"cache_read":2555179769,"tool":"claude-code","provider":"anthropic","model":"claude-sonnet-4"}}}' | node integrations/mcp/example.mjs > /tmp/mcp-response.json
+          # Verify the response is non-empty and valid JSON-RPC
+          test -s /tmp/mcp-response.json || { echo "FAIL: MCP response is empty"; exit 1; }
           # Extract the envelope from the JSON-RPC response
-          python3 -c "import json; f=open('/tmp/mcp-response.json'); resp=json.load(f); f.close(); assert resp['jsonrpc']=='2.0','Not JSON-RPC'; assert resp['id']==1,'id mismatch'; env=json.loads(resp['result']['content'][0]['text']); f=open('/tmp/mcp-record.json','w'); json.dump(env,f,indent=2); f.close(); print('MCP envelope extracted')"
+          python3 -c "
+          import json, sys
+          with open('/tmp/mcp-response.json') as f:
+              resp = json.load(f)
+          assert resp.get('jsonrpc') == '2.0', f'Not JSON-RPC 2.0: {resp}'
+          assert resp.get('id') == 1, f'id mismatch: {resp.get(\"id\")}'
+          assert 'error' not in resp, f'MCP returned error: {resp[\"error\"]}'
+          assert 'result' in resp, 'MCP response missing result'
+          env = json.loads(resp['result']['content'][0]['text'])
+          with open('/tmp/mcp-record.json', 'w') as f:
+              json.dump(env, f, indent=2)
+          print('MCP envelope extracted and non-empty')
+          "
+          test -s /tmp/mcp-record.json || { echo "FAIL: extracted MCP record is empty"; exit 1; }
           node conformance/tteop-validate.mjs /tmp/mcp-record.json --report text
 
       # Gate 10b: Validate MCP tools/list

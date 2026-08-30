@@ -54,6 +54,10 @@ export interface TteopEnvelope {
   privacy: {
     mode: "public-pseudonymous" | "private-managed-cohort" | "enterprise-isolated";
   };
+  operator?: {
+    pseudonymous_key: string;
+    cohort_id: string | null;
+  };
   metrics: Metrics;
   warnings: string[];
   validity?: {
@@ -211,6 +215,24 @@ export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): Tt
     metrics,
     warnings,
   };
+
+  // Attach operator when operator_key or cohort_id is provided.
+  // In public-pseudonymous mode, cohort_id MUST be null (SRP-PRIV-002).
+  // In private-managed-cohort mode, cohort_id SHOULD be set (SRP-PRIV-004).
+  if (opts.operator_key || opts.cohort_id !== undefined) {
+    const privacyMode = opts.privacy_mode ?? "public-pseudonymous";
+    let cohortId: string | null = opts.cohort_id ?? null;
+    // Enforce SRP-PRIV-002: public-pseudonymous mode excludes cohort_id
+    if (privacyMode === "public-pseudonymous") {
+      cohortId = null;
+    }
+    if (opts.operator_key) {
+      envelope.operator = {
+        pseudonymous_key: opts.operator_key,
+        cohort_id: cohortId,
+      };
+    }
+  }
 
   // Attach validity only when there are missingness flags (keeps minimal envelope clean)
   if (missingnessFlags.length > 0) {
