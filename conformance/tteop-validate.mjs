@@ -58,12 +58,12 @@ function main() {
   const profileIdx = args.indexOf("--profile");
   const expectedProfile = profileIdx !== -1 ? args[profileIdx + 1] : null;
   const classIdx = args.indexOf("--class");
-  const conformanceClass = classIdx !== -1 ? args[classIdx + 1] : "full";
+  const conformanceClass = classIdx !== -1 ? args[classIdx + 1] : "full-platform";
   const reportIdx = args.indexOf("--report");
   const reportFormat = reportIdx !== -1 ? args[reportIdx + 1] : "text";
 
   // Validate option values
-  const validClasses = ["full", "schema-only", "semantic-only"];
+  const validClasses = ["producer", "consumer", "adapter", "metric-engine", "privacy-profile", "full-platform"];
   if (!validClasses.includes(conformanceClass)) {
     console.error(`Invalid --class value: ${conformanceClass}. Valid: ${validClasses.join(", ")}`);
     process.exit(4);
@@ -73,7 +73,7 @@ function main() {
     console.error(`Invalid --report value: ${reportFormat}. Valid: ${validFormats.join(", ")}`);
     process.exit(4);
   }
-  const validProfiles = ["public-pseudonymous", "private-managed-cohort", "enterprise-isolated"];
+  const validProfiles = ["public-pseudonymous", "private-managed-cohort", "enterprise-isolated", "all"];
   if (expectedProfile && !validProfiles.includes(expectedProfile)) {
     console.error(`Invalid --profile value: ${expectedProfile}. Valid: ${validProfiles.join(", ")}`);
     process.exit(4);
@@ -116,7 +116,7 @@ function main() {
   // Use the shared validator
   const options = {
     expectedProfile: expectedProfile || undefined,
-    computeMetrics: conformanceClass !== "schema-only",
+    computeMetrics: true,
   };
 
   // For class-specific validation, split the checks
@@ -126,15 +126,17 @@ function main() {
   let metrics = null;
   let metricWarnings = [];
 
-  if (conformanceClass === "schema-only") {
+  if (conformanceClass === "consumer") {
+    // Consumer: schema validation only
     const result = validateEnvelopeSchema(envelope);
     schemaErrors = result.errors;
-  } else if (conformanceClass === "semantic-only") {
+  } else if (conformanceClass === "privacy-profile") {
+    // Privacy-profile: semantic validation only
     const result = validateEnvelopeSemantics(envelope, options);
     semanticErrors = result.errors;
     semanticWarnings = result.warnings;
   } else {
-    // full
+    // producer, adapter, metric-engine, full-platform: full validation
     const result = validateEnvelope(envelope, options);
     schemaErrors = result.schemaErrors;
     semanticErrors = result.semanticErrors;
@@ -204,7 +206,7 @@ function main() {
   }
 
   // Exit codes
-  if (schemaErrors.length > 0 && conformanceClass !== "semantic-only") {
+  if (schemaErrors.length > 0 && conformanceClass !== "privacy-profile") {
     process.exit(2);
   }
   process.exit(allErrors.length > 0 ? 1 : 0);
@@ -219,25 +221,29 @@ function buildConformanceReport(opts) {
   // Schema validation test
   tests.push({
     test_id: "SCHEMA-001",
+    requirement_id: "SRP-VAL-001",
     description: "Envelope validates against JSON Schema 2020-12",
     result: opts.schemaErrors.length === 0 ? "pass" : "fail",
-    errors: opts.schemaErrors.length > 0 ? opts.schemaErrors : undefined,
+    error_message: opts.schemaErrors.length > 0 ? opts.schemaErrors.join("; ") : null,
   });
 
   // Semantic validation test
-  if (opts.conformanceClass !== "schema-only") {
+  if (opts.conformanceClass !== "consumer") {
     tests.push({
       test_id: "SEMANTIC-001",
+      requirement_id: "SRP-VAL-002",
       description: "Envelope passes all semantic rules",
       result: opts.semanticErrors.length === 0 ? "pass" : "fail",
-      errors: opts.semanticErrors.length > 0 ? opts.semanticErrors : undefined,
+      error_message: opts.semanticErrors.length > 0 ? opts.semanticErrors.join("; ") : null,
     });
 
     if (opts.expectedProfile) {
       tests.push({
         test_id: "PROFILE-001",
+        requirement_id: "SRP-PRIV-001",
         description: `Envelope matches asserted profile: ${opts.expectedProfile}`,
         result: opts.semanticErrors.some(e => e.includes("--profile")) ? "fail" : "pass",
+        error_message: null,
       });
     }
   }
@@ -250,7 +256,9 @@ function buildConformanceReport(opts) {
     conformance_class: opts.conformanceClass,
     overall_result: opts.overall,
     conformance_runner_version: "tteop-validate/0.1-draft",
-    implementation_under_test: opts.payloadPath,
+    implementation_under_test: {
+      name: opts.payloadPath,
+    },
     privacy_profile_tested: opts.expectedProfile || opts.privacyMode || undefined,
     tests,
     summary: {
