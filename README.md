@@ -1,5 +1,9 @@
 # TTEOP — Token Telemetry Evaluation Operator Protocol
 
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22179383-blue)](https://doi.org/10.5281/zenodo.22179383)
+[![npm version](https://img.shields.io/npm/v/tteop-spec.svg)](https://www.npmjs.com/package/tteop-spec)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 **An open, vendor-neutral interoperability standard for measuring AI-operator token efficiency.**
 
 TTEOP defines a minimal common language that any AI tool, IDE, observability platform, enterprise analytics system, or independent implementation can produce and consume consistently. It measures how efficiently an operator processes tokens — not cognition, work quality, employee productivity, or business outcomes.
@@ -138,6 +142,26 @@ Three privacy modes: `public-pseudonymous`, `private-managed-cohort`, `enterpris
 ## Non-inferences
 
 TTEOP metrics do NOT prove: code quality, task correctness, productivity, professional skill, employee performance, business impact, or causal improvement from AI tooling.
+
+## Citation
+
+If you use TTEOP in your research or product, please cite:
+
+```bibtex
+@software{mchenry_2026_tteop,
+  author       = {McHenry, Deric J},
+  title        = {{TTEOP — Token Telemetry Evaluation Operator Protocol:
+                  Specification and Reference Implementation, v0.1.3-draft}},
+  year         = 2026,
+  version      = {0.1.3-draft},
+  url          = {https://doi.org/10.5281/zenodo.22179383},
+  doi          = {10.5281/zenodo.22179383}
+}
+```
+
+**DOI:** [10.5281/zenodo.22179383](https://doi.org/10.5281/zenodo.22179383)
+
+See `CITATION.cff` for the full citation metadata.
 
 ## License
 

@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use TTEOP in your research or product, please cite this work."
+title: "TTEOP — Token Telemetry Evaluation Operator Protocol: Specification and Reference Implementation"
+type: software
+authors:
+  - given-names: "Deric J"
+    family-names: "McHenry"
+    email: "hello@signalaf.com"
+    orcid: "https://orcid.org/0009-0000-0000-0000"
+repository-code: "https://github.com/SunrisesIllNeverSee/otep-spec"
+url: "https://github.com/SunrisesIllNeverSee/otep-spec/releases/tag/v0.1.3-draft"
+abstract: >-
+  TTEOP (Token Telemetry Evaluation Operator Protocol) is an open,
+  vendor-neutral interoperability standard for measuring AI-operator token
+  efficiency. It defines four telemetry primitives (input, output,
+  cache_write, cache_read), five derived metrics (Yield, Leverage, Velocity,
+  output_fraction, log_leverage), three privacy modes, four provenance
+  levels, a JSON Schema for telemetry envelopes, a conformance suite with
+  frozen test vectors, and a governance process for protocol evolution.
+  The reference implementation is written in JavaScript (Node.js >= 18)
+  and published as the npm package tteop-spec.
+keywords:
+  - token-efficiency
+  - ai-operators
+  - telemetry
+  - protocol
+  - open-standard
+  - yield
+  - leverage
+  - cache
+  - mcp
+  - conformance
+license: Apache-2.0
+version: "0.1.3-draft"
+date-released: "2026-08-30"
+preferred-citation:
+  type: software
+  title: "TTEOP — Token Telemetry Evaluation Operator Protocol: Specification and Reference Implementation, v0.1.3-draft"
+  authors:
+    - given-names: "Deric J"
+      family-names: "McHenry"
+      email: "hello@signalaf.com"
+  year: 2026
+  url: "https://github.com/SunrisesIllNeverSee/otep-spec/releases/tag/v0.1.3-draft"
