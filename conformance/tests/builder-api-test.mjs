@@ -113,10 +113,12 @@ for (const level of ["self-reported", "collector-attested", "platform-verified"]
   assert(e.provenance.level === level, `provenance.level is ${level}`);
 }
 
-// 7. buildRecord alias === buildEnvelope
-const e7a = buildEnvelope({ input: 100, output: 50, cache_write: 10, cache_read: 20 });
-const e7b = buildRecord({ input: 100, output: 50, cache_write: 10, cache_read: 20 });
-assert(JSON.stringify(e7a) === JSON.stringify(e7b), "buildRecord alias produces identical envelope");
+// 7. buildRecord alias === buildEnvelope (reference equality, not value equality)
+// buildRecord is exported as `export const buildRecord = buildEnvelope`, so they
+// are the same function object. Comparing serialized output of two separate calls
+// is flaky because observation.timestamp uses new Date().toISOString(), which can
+// differ across millisecond boundaries.
+assert(buildRecord === buildEnvelope, "buildRecord is the same function as buildEnvelope (reference equality)");
 
 // 8. Error conditions
 console.log("\n--- Error conditions ---");
@@ -135,6 +137,10 @@ assertThrows(
 );
 assertThrows(() => buildEnvelope(null), "null telemetry throws");
 assertThrows(() => buildEnvelope("not an object"), "string telemetry throws");
+assertThrows(
+  () => buildEnvelope({ input: 100, output: 50 }, { provenance_level: "signed" }),
+  "provenance_level 'signed' throws (no signature input supported, SRP-SIG-001)",
+);
 
 // 9. Missing required fields
 assertThrows(() => buildEnvelope({ output: 50 }), "missing input throws");
