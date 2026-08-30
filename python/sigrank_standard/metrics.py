@@ -117,27 +117,61 @@ def build_record(
     model: str = "unknown",
     tool: str = "unknown",
     spec_version: str = "otep/0.1-draft",
+    *,
+    platform: Optional[str] = None,
+    adapter_id: Optional[str] = None,
+    adapter_version: Optional[str] = None,
+    privacy_mode: str = "public-pseudonymous",
+    provenance_level: str = "self-reported",
+    window_start: Optional[str] = None,
+    window_end: Optional[str] = None,
+    window_duration_seconds: Optional[int] = None,
 ) -> dict:
     """
-    Build a complete OTEP v0.1-draft operator record.
+    Build a complete OTEP v0.1-draft telemetry envelope.
 
-    Returns a dict conforming to the telemetry-envelope-v0.1 schema:
-        spec, timestamp, source, telemetry, metrics, warnings.
+    Returns a dict conforming to schemas/telemetry-envelope-v0.1.schema.json:
+        protocol_version, metric_spec_version, observation, source, telemetry,
+        provenance, privacy, metrics, warnings.
 
     The spec_version parameter defaults to "otep/0.1-draft". Pass
-    "sigrank/0.1-draft" for legacy compatibility with the old runner.
+    "sigrank/0.1-draft" for legacy compatibility.
     """
     result = compute_metrics(input_tokens, output_tokens, cache_write, cache_read)
     return {
-        "spec": spec_version,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "source": {"provider": provider, "model": model, "tool": tool},
+        "protocol_version": spec_version,
+        "metric_spec_version": "otep-metrics/0.1-draft",
+        "observation": {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "window_start": window_start,
+            "window_end": window_end,
+            "window_duration_seconds": window_duration_seconds,
+        },
+        "source": {
+            "tool": tool,
+            "platform": platform,
+            "provider": provider,
+            "model": model,
+            "adapter_id": adapter_id,
+            "adapter_version": adapter_version,
+        },
         "telemetry": {
             "input": input_tokens,
             "output": output_tokens,
             "cache_write": cache_write,
             "cache_read": cache_read,
         },
+        "provenance": {
+            "level": provenance_level,
+            "signature_status": "unsigned",
+        },
+        "privacy": {
+            "mode": privacy_mode,
+        },
         "metrics": result["metrics"],
         "warnings": result["warnings"],
     }
+
+
+# Schema-conforming alias
+build_envelope = build_record

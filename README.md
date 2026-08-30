@@ -6,7 +6,7 @@ OTEP defines a minimal common language that any AI tool, IDE, observability plat
 
 ## Current version
 
-**`otep/0.1-draft`** — experimental public draft.
+**`otep/0.1-draft`** — experimental public draft. The name "OTEP" is provisional pending founder ratification (UD-1) and trademark clearance (UD-9). See `oeps/OEP-0001.md` and `DISCLOSURES.md`.
 
 The legacy alias `sigrank/0.1-draft` is accepted for backward compatibility.
 
@@ -67,6 +67,7 @@ otep-spec/
 ├── PRIVACY.md                         — privacy modes and content-independence
 ├── SECURITY.md                        — security considerations
 ├── GOVERNANCE.md                      — maintainer roles, OEP process, change control
+├── DISCLOSURES.md                     — conflict-of-interest disclosures (SRP-GOV-014)
 ├── CONTRIBUTING.md                    — how to contribute
 ├── CODE_OF_CONDUCT.md                 — community code of conduct
 ├── TRADEMARKS.md                      — trademark usage rules

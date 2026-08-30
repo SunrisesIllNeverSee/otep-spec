@@ -53,6 +53,15 @@ jobs:
           python3 integrations/python/example.py > /tmp/py-record.json
           node conformance/otep-validate.mjs /tmp/py-record.json --report text
 
+          # Python package (sigrank_standard.build_record)
+          python3 -c "
+from sigrank_standard import build_record
+import json
+r = build_record(1251211, 11296121, 128196310, 2555179769, provider='anthropic', model='claude-sonnet-4', tool='claude-code')
+print(json.dumps(r, indent=2))
+" > /tmp/pkg-record.json
+          node conformance/otep-validate.mjs /tmp/pkg-record.json --report text
+
           # CLI integration
           node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769 > /tmp/cli-record.json
           node conformance/otep-validate.mjs /tmp/cli-record.json --report text

@@ -1,10 +1,19 @@
 {
-  "spec": "sigrank/0.1-draft",
-  "timestamp": "2026-08-27T00:00:00Z",
+  "protocol_version": "sigrank/0.1-draft",
+  "metric_spec_version": "otep-metrics/0.1-draft",
+  "observation": {
+    "timestamp": "2026-08-27T00:00:00Z",
+    "window_start": null,
+    "window_end": null,
+    "window_duration_seconds": null
+  },
   "source": {
+    "tool": "example-tool",
+    "platform": null,
     "provider": "anthropic",
     "model": "example-model",
-    "tool": "example-tool"
+    "adapter_id": null,
+    "adapter_version": null
   },
   "telemetry": {
     "input": 1251211,
@@ -12,11 +21,19 @@
     "cache_write": 128196310,
     "cache_read": 2555179769
   },
+  "provenance": {
+    "level": "self-reported",
+    "signature_status": "unsigned"
+  },
+  "privacy": {
+    "mode": "public-pseudonymous"
+  },
   "metrics": {
     "yield": 18436.98,
     "leverage": 2042.2,
     "velocity": 9.028,
-    "snr": 0.9003,
-    "dev10x": 3.31
-  }
+    "output_fraction": 0.9003,
+    "log_leverage": 3.31
+  },
+  "warnings": []
 }

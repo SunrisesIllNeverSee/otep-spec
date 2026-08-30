@@ -38,6 +38,8 @@ Normative governance requirements in this document carry stable requirement IDs 
 4. Ensuring conflict-of-interest disclosures are current (see §4).
 5. Publishing meeting summaries and decision logs.
 
+**Interim Lead Maintainer (v0.1-draft):** Deric (DREP1), appointed 2026-08-28 at repository establishment. Commercial affiliation: founder of SignalAF/SigRank (reference implementation). See `DISCLOSURES.md` for the full disclosure record. This appointment is interim and terminates upon TSC establishment (SRP-GOV-009).
+
 The Lead Maintainer MUST NOT unilaterally merge a normative OEP that has not completed its review window (see §7). The Lead Maintainer MAY merge non-normative, editorial, or documentation changes without a formal OEP.
 
 ### 2.2 Contributors

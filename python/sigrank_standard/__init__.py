@@ -21,7 +21,7 @@ Null semantics:
     - When cache_write is None, log_leverage is None.
 """
 
-from .metrics import compute_metrics, build_record
+from .metrics import compute_metrics, build_record, build_envelope
 from .conformance import run_conformance, ConformanceResult
 
 __version__ = "0.1.0"
@@ -29,6 +29,7 @@ __spec__ = "otep/0.1-draft"
 __all__ = [
     "compute_metrics",
     "build_record",
+    "build_envelope",
     "run_conformance",
     "ConformanceResult",
     "__version__",

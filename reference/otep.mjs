@@ -27,6 +27,8 @@
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import Ajv from "ajv/dist/2020.js";
+import addFormats from "ajv-formats";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -164,89 +166,30 @@ export function computeMetrics(telemetry) {
 }
 
 // ─── Schema validation ──────────────────────────────────────────────────────
-// Minimal JSON Schema validator covering the features used by
-// schemas/telemetry-envelope-v0.1.schema.json.
+// Full JSON Schema 2020-12 validation via ajv. The hand-written validator was
+// replaced because it missed format (date-time), additionalProperties with
+// schema objects, and collection constraints.
 
-function validateSchemaValue(value, schema, path, errors) {
-  if (value === null) {
-    if (schema.type) {
-      const types = Array.isArray(schema.type) ? schema.type : [schema.type];
-      if (!types.includes("null")) {
-        errors.push(`${path}: null not allowed (expected ${types.join("|")})`);
-      }
-    }
-    return;
+const _ajv = new Ajv({ allErrors: true, strict: false });
+addFormats(_ajv);
+const _validatorCache = new WeakMap();
+
+function _getValidator(schema) {
+  let v = _validatorCache.get(schema);
+  if (!v) {
+    v = _ajv.compile(schema);
+    _validatorCache.set(schema, v);
   }
+  return v;
+}
 
-  if (schema.type) {
-    const types = Array.isArray(schema.type) ? schema.type : [schema.type];
-    let matched = false;
-    for (const t of types) {
-      if (t === "integer" && Number.isInteger(value)) matched = true;
-      if (t === "number" && typeof value === "number" && !Number.isNaN(value)) matched = true;
-      if (t === "string" && typeof value === "string") matched = true;
-      if (t === "object" && typeof value === "object" && !Array.isArray(value)) matched = true;
-      if (t === "array" && Array.isArray(value)) matched = true;
-      if (t === "boolean" && typeof value === "boolean") matched = true;
-    }
-    if (!matched) {
-      errors.push(`${path}: type mismatch (expected ${types.join("|")}, got ${Array.isArray(value) ? "array" : typeof value})`);
-      return;
-    }
-  }
-
-  if (schema.enum && !schema.enum.includes(value)) {
-    errors.push(`${path}: expected one of ${JSON.stringify(schema.enum)}, got ${JSON.stringify(value)}`);
-  }
-
-  if (schema.const !== undefined && value !== schema.const) {
-    errors.push(`${path}: expected const ${JSON.stringify(schema.const)}, got ${JSON.stringify(value)}`);
-  }
-
-  if (typeof value === "number") {
-    if (schema.minimum !== undefined && value < schema.minimum) {
-      errors.push(`${path}: value ${value} below minimum ${schema.minimum}`);
-    }
-    if (schema.maximum !== undefined && value > schema.maximum) {
-      errors.push(`${path}: value ${value} above maximum ${schema.maximum}`);
-    }
-  }
-
-  if (typeof value === "string") {
-    if (schema.minLength !== undefined && value.length < schema.minLength) {
-      errors.push(`${path}: string length ${value.length} below minLength ${schema.minLength}`);
-    }
-    if (schema.maxLength !== undefined && value.length > schema.maxLength) {
-      errors.push(`${path}: string length ${value.length} above maxLength ${schema.maxLength}`);
-    }
-  }
-
-  if (schema.type === "object" || (Array.isArray(schema.type) && schema.type.includes("object") && typeof value === "object" && !Array.isArray(value))) {
-    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-      if (schema.required) {
-        for (const req of schema.required) {
-          if (!(req in value)) {
-            errors.push(`${path}: missing required field "${req}"`);
-          }
-        }
-      }
-      if (schema.properties) {
-        for (const [key, val] of Object.entries(value)) {
-          if (key in schema.properties) {
-            validateSchemaValue(val, schema.properties[key], `${path}.${key}`, errors);
-          } else if (schema.additionalProperties === false) {
-            errors.push(`${path}: additional property "${key}" not allowed`);
-          }
-        }
-      }
-    }
-  }
-
-  if (schema.type === "array" && Array.isArray(value)) {
-    if (schema.items) {
-      value.forEach((item, i) => {
-        validateSchemaValue(item, schema.items, `${path}[${i}]`, errors);
-      });
+function validateWithAjv(envelope, schema, errors) {
+  const validate = _getValidator(schema);
+  const ok = validate(envelope);
+  if (!ok) {
+    for (const e of validate.errors || []) {
+      const path = e.instancePath || "(root)";
+      errors.push(`${path}: ${e.message}${e.params ? ` (${JSON.stringify(e.params)})` : ""}`);
     }
   }
 }
@@ -262,8 +205,8 @@ export function validateEnvelope(envelope, schema) {
   const schemaErrors = [];
   const semanticErrors = [];
 
-  // 1. Schema validation
-  validateSchemaValue(envelope, schema, "envelope", schemaErrors);
+  // 1. Schema validation (ajv — full JSON Schema 2020-12)
+  validateWithAjv(envelope, schema, schemaErrors);
 
   // 2. Semantic validation (SRP-VAL-002)
   // Forbidden field check runs even when schema validation fails (SRP-VAL-005/006
@@ -298,6 +241,20 @@ export function validateEnvelope(envelope, schema) {
     // Check provenance level (SRP-PROV-002)
     if (envelope.provenance?.level === "signed" && !envelope.extensions) {
       semanticErrors.push("envelope: signed provenance requires extensions with signature object");
+    }
+
+    // P1-5: signed provenance with signature_status "valid" is not verified in v0.1
+    if (envelope.provenance?.level === "signed" && envelope.provenance?.signature_status === "valid") {
+      semanticErrors.push("envelope.provenance.signature_status: 'valid' not supported in v0.1 (no cryptographic verification). Use 'signature-present-unverified'.");
+    }
+
+    // P2-8: raw_provider_fields must only contain scalar values
+    if (envelope.raw_provider_fields) {
+      for (const [key, val] of Object.entries(envelope.raw_provider_fields)) {
+        if (typeof val === "object" && val !== null) {
+          semanticErrors.push(`envelope.raw_provider_fields.${key}: non-scalar value not allowed (SRP-VAL-007)`);
+        }
+      }
     }
   }
 
