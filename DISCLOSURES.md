@@ -33,6 +33,7 @@ The following initial commits established the repository prior to DCO adoption (
 - **No additional maintainers or reviewers** have been appointed at v0.1-draft. When appointments occur, their disclosures will be added here.
 - **No Advisory Board** has been established at v0.1-draft.
 - **Trademark status:** No trademark clearance has been performed for "OTEP." The name is used as a provisional draft name pending founder decision (UD-1) and legal review (UD-9). See `UNRESOLVED-DECISIONS.md`.
+- **MO§ES™ trademark:** The Lead Maintainer's related project, MO§ES™, carries an existing trademark claim. This is noted for transparency; MO§ES™ and OTEP are separate projects with separate naming. No trademark cross-claim is made.
 
 ## Update Schedule
 

@@ -19,7 +19,14 @@
 
 ## 2. Security Reporting Process
 
-**`SRP-SEC-001`** Security vulnerabilities MUST be reported to `security@signalaf.com` (temporary contact; a neutral security contact will be established post-v0.5).
+**`SRP-SEC-001`** Security vulnerabilities MUST be reported to the designated security contact:
+
+- **Contact:** Deric J McHenry
+- **Email:** `deric.mchenry@gmail.com` or `hello@signalaf.com`
+- **Acknowledgement:** within 48 hours (per SRP-SEC-002)
+- **PGP key:** will be published at v0.5 for encrypted reports
+
+Do NOT open public GitHub issues for security vulnerabilities.
 
 **`SRP-SEC-002`** Security reports MUST be acknowledged within 48 hours and addressed within 90 days.
 

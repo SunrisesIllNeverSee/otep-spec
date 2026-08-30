@@ -225,17 +225,63 @@ This document lists all decisions that have been analyzed and proposed but **not
 
 ## Summary
 
-| ID | Title | Blocks (backlog items) | Approver |
-|----|-------|------------------------|----------|
-| UD-1 | Protocol name | 3.2 | Founder + Legal |
-| UD-2 | 10xDEV rename | 1.3, 1.4 | Founder |
-| UD-3 | SNR rename | 1.3, 1.4 | Founder |
-| UD-4 | Υ formula retention | 1.3 | Founder |
-| UD-5 | Conformance certification program | 3.7 | Founder + Legal |
-| UD-6 | Foundation transfer timing | 3.6 | Founder + Community |
-| UD-7 | Contribution model (DCO vs CLA) | 1.10, 2.3 | Founder + Legal |
-| UD-8 | Security contact | 3.3 | Founder |
-| UD-9 | Trademark registration | 3.7, UD-5 | Founder + Legal |
-| UD-10 | Open/closed boundary enforcement | (governance) | Founder |
+| ID | Title | Status | Approver | Date |
+|----|-------|--------|----------|------|
+| UD-1 | Protocol name | **PENDING — overlap discovered** | Founder + Legal | — |
+| UD-2 | 10xDEV rename | **RESOLVED — ratified** | Founder | 2026-08-30 |
+| UD-3 | SNR rename | **RESOLVED — ratified** | Founder | 2026-08-30 |
+| UD-4 | Υ formula retention | **RESOLVED — ratified** | Founder | 2026-08-30 |
+| UD-5 | Conformance certification program | **DEFERRED — offer all three when ready** | Founder + Legal | — |
+| UD-6 | Foundation transfer timing | **DEFERRED — TSC governance deferred by founder** | Founder + Community | — |
+| UD-7 | Contribution model (DCO vs CLA) | **PENDING — founder reviewing DCO vs CLA definitions** | Founder + Legal | — |
+| UD-8 | Security contact | **RESOLVED — designated** | Founder | 2026-08-30 |
+| UD-9 | Trademark registration | **DEFERRED — MO§ES™ trademark noted** | Founder + Legal | — |
+| UD-10 | Open/closed boundary enforcement | **PENDING — founder reviewing options** | Founder | — |
 
-**Recommended resolution order:** UD-2, UD-3, UD-4, UD-7 first (unblock spec finalization and contributions), followed by UD-1, UD-8 (unblock naming and security), then UD-9, UD-5, UD-10, UD-6.
+**Recommended resolution order:** ~~UD-2, UD-3, UD-4, UD-7 first~~ (UD-2/3/4 resolved), followed by UD-1, UD-8 (UD-8 resolved; UD-1 pending overlap review), then UD-9, UD-5, UD-10, UD-6 (all deferred).
+
+---
+
+## Resolution log
+
+### UD-2: 10xDEV rename — RESOLVED (2026-08-30)
+**Decision:** Ratified. `log_leverage` is the normative core name; `10xDEV` is retained as an application-profile alias. Already implemented across spec, schema, runner, and all integrations.
+
+### UD-3: SNR rename — RESOLVED (2026-08-30)
+**Decision:** Ratified. `output_fraction` is the normative core name; `SNR` is retained as an application-profile alias. Already implemented.
+
+### UD-4: Upsilon (Υ) formula retention — RESOLVED (2026-08-30)
+**Decision:** Ratified. `(cache_read × output) / input²` is the canonical Yield formula. Frozen MOSES seed invariant Υ 18436.98 preserved.
+
+### UD-5: Conformance certification program — DEFERRED
+**Decision:** Deferred by founder. When revisited, all three options (paid certification, free self-assertion, free + paid audit hybrid) will be offered. Not blocking v0.1-draft publication.
+
+### UD-6: Foundation transfer timing — DEFERRED
+**Decision:** Deferred by founder. TSC governance transition is deferred until the project reaches sufficient maturity. Lead Maintainer arrangement (§2.1 of GOVERNANCE.md) remains in effect.
+
+### UD-8: Security contact — RESOLVED (2026-08-30)
+**Decision:** Security contact designated as Deric J McHenry. Contact: `deric.mchenry@gmail.com` or `hello@signalaf.com`. Updated in `SECURITY.md`. (Physical address withheld from public repo for privacy — doxxing risk.)
+
+### UD-9: Trademark registration — DEFERRED
+**Decision:** Deferred by founder. Note: MO§ES™ carries an existing trademark claim. No trademark registration for "OTEP" at this time. Trademark status for "OTEP" remains "no clearance performed" per DISCLOSURES.md.
+
+### UD-1: Protocol name — PENDING (overlap discovered 2026-08-30)
+**Status:** Founder indicated provisional approval of "OTEP" contingent on no overlap. Search discovered three overlaps:
+1. **OpenTelemetry** uses "OTEP" as the acronym for "OpenTelemetry Enhancement Proposal" — same industry (telemetry/observability protocols). This is the most significant overlap.
+2. **Open Tracking Event Protocol** — a logistics protocol also called "OTEP" with an MCP server. Different industry.
+3. **WIPO trademark #1296236** — "OTEP" registered by OMNIUM TECHNIQUE D'ETUDES ET DE PRECONTRAINTE (France), Class 019 (building materials). Different class, but the mark is live.
+
+**Awaiting founder decision:** Proceed with "OTEP" despite overlaps, or select an alternative name.
+
+### UD-7: Contribution model (DCO vs CLA) — PENDING
+**Status:** DCO adopted prospectively (2026-08-30). Founder reviewing DCO vs CLA definitions before deciding on permanent model. DCO = lightweight per-commit sign-off, no copyright assignment. CLA = formal legal agreement, grants project license to contributions, stronger legal protection but adds contributor friction.
+
+**Awaiting founder decision:** Keep DCO permanently, or plan CLA at foundation transfer.
+
+### UD-10: Open/closed boundary enforcement — PENDING
+**Status:** Founder reviewing the three options:
+1. Conformance-only enforcement (passive)
+2. Conformance + public divergence registry (transparent, lightweight)
+3. Automated scanning of public docs/APIs (expensive, brittle)
+
+**Awaiting founder decision.**
