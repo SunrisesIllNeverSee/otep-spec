@@ -62,7 +62,9 @@ jobs:
 
       # Gate 7b: Run Python package tests
       - name: 7b. Run Python package tests
-        run: python3 -m pytest python/tests/test_build_envelope.py -v
+        run: |
+          pip install pytest --quiet
+          python3 -m pytest python/tests/test_build_envelope.py -v
 
       # Gate 8: Validate TypeScript integration output
       - name: 8. Validate TypeScript integration output
