@@ -175,18 +175,18 @@ const leverageTies = [
     metric: "leverage", expected: 1.2 },
 ];
 
-// Velocity ties (3 decimals) — input = 2000 (2^4 × 5^3, power-of-2 friendly)
-//   velocity = output / 2000
-//   1/2000 = 0.0005 → 0.000 (0.5 scaled, even→0)
-//   3/2000 = 0.0015 → 0.002 (1.5 scaled, even→2)
-//   5/2000 = 0.0025 → 0.002 (2.5 scaled, even→2)
+// Velocity ties (3 decimals) — input = 16 (power of 2, exact in IEEE-754)
+//   velocity = output / 16
+//   1/16 = 0.0625  → 0.062 (62.5 scaled, even→62)
+//   3/16 = 0.1875  → 0.188 (187.5 scaled, odd→188)
+//   5/16 = 0.3125  → 0.312 (312.5 scaled, even→312)
 const velocityTies = [
-  { telemetry: { input: 2000, output: 1, cache_write: 1, cache_read: 2000 },
-    metric: "velocity", expected: 0.0 },
-  { telemetry: { input: 2000, output: 3, cache_write: 1, cache_read: 2000 },
-    metric: "velocity", expected: 0.002 },
-  { telemetry: { input: 2000, output: 5, cache_write: 1, cache_read: 2000 },
-    metric: "velocity", expected: 0.002 },
+  { telemetry: { input: 16, output: 1, cache_write: 1, cache_read: 16 },
+    metric: "velocity", expected: 0.062 },
+  { telemetry: { input: 16, output: 3, cache_write: 1, cache_read: 16 },
+    metric: "velocity", expected: 0.188 },
+  { telemetry: { input: 16, output: 5, cache_write: 1, cache_read: 16 },
+    metric: "velocity", expected: 0.312 },
 ];
 
 // Output_fraction ties (4 decimals) — input + output = 32 (power of 2)
