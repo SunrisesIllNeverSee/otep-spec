@@ -99,6 +99,15 @@ This release upgrades the `sigrank/0.1-draft` minimal specification to a complet
 
 ## [0.1.4-draft] — 2026-08-30
 
+### Added — Zenodo DOI for v0.1.3-draft release
+- Permanent scholarly citation: DOI [10.5281/zenodo.22179383](https://doi.org/10.5281/zenodo.22179383) (Zenodo record [22179383](https://zenodo.org/record/22179383)).
+- `CITATION.cff` (CFF 1.2.0) added identifying Deric J McHenry as creator; `preferred-citation` block carries the DOI.
+- README updated with DOI badge, npm badge, license badge, and BibTeX citation section.
+- SPEC.md header now carries the permanent citation line.
+- GitHub release `v0.1.3-draft` updated with DOI + citation.
+- SignalAF standard page (`sigrank-standard` repo) updated with DOI reference.
+- Owner action remaining: enable GitHub–Zenodo integration for automatic versioned DOIs on future releases.
+
 ### Added — Stable JavaScript builder API
 - `lib/envelope-builder.mjs` — canonical, production-importable `buildEnvelope(telemetry, options)` function. Ports the TypeScript example's construction logic to a stable `.mjs` module and delegates metric computation to `lib/envelope-validator.mjs` (single source of truth for the five portable metrics with banker's rounding).
 - Exports: `buildEnvelope`, `buildRecord` (backward-compatible alias).
