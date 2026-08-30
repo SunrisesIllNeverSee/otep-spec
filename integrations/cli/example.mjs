@@ -6,8 +6,8 @@
  * from command-line arguments. No dependencies.
  *
  * Imports the TypeScript reference implementation directly (example.ts).
- * Requires Node.js 22+ which has native TypeScript stripping support.
- * No compilation step is needed.
+ * Requires Node.js 22.6+ with --experimental-strip-types (stable in Node 22.7+).
+ * The CI workflow pins node-version: 22. No compilation step is needed.
  *
  * Usage:
  *   node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769

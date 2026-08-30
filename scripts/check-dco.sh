@@ -38,8 +38,22 @@ BOOTSTRAP_COMMITS="6ebc457 dbfb774"
 COMMITS=""
 
 if [ $# -ge 2 ]; then
-    # Explicit range
-    COMMITS=$(git rev-list "$1..$2" 2>/dev/null || true)
+    # Explicit range — fail closed if the range is invalid.
+    # Do NOT suppress errors with || true here; an invalid explicit range
+    # indicates a bug in the caller (e.g. CI providing a bad SHA) and must
+    # not silently become an empty successful check.
+    if ! git rev-parse --verify "$1" >/dev/null 2>&1; then
+        echo "DCO check: invalid base ref '$1' — failing closed"
+        exit 1
+    fi
+    if ! git rev-parse --verify "$2" >/dev/null 2>&1; then
+        echo "DCO check: invalid head ref '$2' — failing closed"
+        exit 1
+    fi
+    COMMITS=$(git rev-list "$1..$2" 2>&1) || {
+        echo "DCO check: git rev-list failed for range $1..$2 — failing closed"
+        exit 1
+    }
 elif [ -n "${GITHUB_EVENT_NAME:-}" ]; then
     case "$GITHUB_EVENT_NAME" in
         pull_request)

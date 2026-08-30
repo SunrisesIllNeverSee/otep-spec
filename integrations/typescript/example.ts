@@ -219,6 +219,8 @@ export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): Tt
   // Attach operator when operator_key or cohort_id is provided.
   // In public-pseudonymous mode, cohort_id MUST be null (SRP-PRIV-002).
   // In private-managed-cohort mode, cohort_id SHOULD be set (SRP-PRIV-004).
+  // cohort_id without operator_key is rejected: a cohort membership without
+  // a pseudonymous operator identifier has no meaningful privacy semantics.
   if (opts.operator_key || opts.cohort_id !== undefined) {
     const privacyMode = opts.privacy_mode ?? "public-pseudonymous";
     let cohortId: string | null = opts.cohort_id ?? null;
@@ -231,6 +233,11 @@ export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): Tt
         pseudonymous_key: opts.operator_key,
         cohort_id: cohortId,
       };
+    } else if (opts.cohort_id !== undefined && opts.cohort_id !== null) {
+      // cohort_id supplied without operator_key — reject explicitly
+      throw new Error(
+        "buildEnvelope: cohort_id requires operator_key — cannot define cohort membership without a pseudonymous operator identifier"
+      );
     }
   }
 
