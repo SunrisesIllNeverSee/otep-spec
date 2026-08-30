@@ -16,8 +16,9 @@
  *   --profile <privacy-mode>    expected deployment profile (asserts envelope matches)
  *                               (public-pseudonymous|private-managed-cohort|enterprise-isolated)
  *                               If omitted, only the envelope's declared mode is enforced.
- *   --class <conformance-class> conformance class to test (full|schema-only|semantic-only)
- *                               default: full
+ *   --class <conformance-class> conformance class to test
+ *                               (producer|consumer|adapter|metric-engine|privacy-profile|full-platform)
+ *                               default: full-platform
  *   --report <format>           output format (json|text|sarif)  default: text
  *
  * Exit codes (per conformance/classes.md §2.3):
@@ -103,12 +104,27 @@ function main() {
 
   // Version check (SRP-VER-002)
   if (envelope.protocol_version && !SUPPORTED_VERSIONS.includes(envelope.protocol_version)) {
+    const versionError = `Unsupported protocol version: ${envelope.protocol_version}`;
     if (reportFormat === "json") {
-      console.log(JSON.stringify({ overall_result: "fail", error: `unsupported_version: ${envelope.protocol_version}` }));
+      // Route through the report builder for consistent JSON output
+      const report = buildConformanceReport({
+        overall: "fail",
+        payloadPath,
+        schemaErrors: [],
+        semanticErrors: [versionError],
+        semanticWarnings: [],
+        metricWarnings: [],
+        metrics: null,
+        expectedProfile,
+        conformanceClass,
+        protocolVersion: envelope.protocol_version,
+        privacyMode: envelope.privacy?.mode,
+      });
+      console.log(JSON.stringify(report, null, 2));
     } else if (reportFormat === "sarif") {
-      console.log(JSON.stringify(sarifReport([{ ruleId: "TTEOP-VER-001", level: "error", message: `Unsupported protocol version: ${envelope.protocol_version}` }]), null, 2));
+      console.log(JSON.stringify(sarifReport([{ ruleId: "TTEOP-VER-001", level: "error", message: versionError }]), null, 2));
     } else {
-      console.error(`Unsupported protocol version: ${envelope.protocol_version}`);
+      console.error(versionError);
     }
     process.exit(3);
   }

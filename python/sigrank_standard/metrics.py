@@ -138,7 +138,15 @@ def build_record(
     "sigrank/0.1-draft" for legacy compatibility.
     """
     result = compute_metrics(input_tokens, output_tokens, cache_write, cache_read)
-    return {
+
+    # Build missingness flags (SRP-MISS-001/002): null cache values MUST be flagged
+    missingness_flags = []
+    if cache_write is None:
+        missingness_flags.append("cache_write_not_reported")
+    if cache_read is None:
+        missingness_flags.append("cache_read_not_reported")
+
+    envelope = {
         "protocol_version": spec_version,
         "metric_spec_version": "tteop-metrics/0.1-draft",
         "observation": {
@@ -171,6 +179,15 @@ def build_record(
         "metrics": result["metrics"],
         "warnings": result["warnings"],
     }
+
+    # Attach validity only when there are missingness flags (keeps minimal envelope clean)
+    if missingness_flags:
+        envelope["validity"] = {
+            "status": "partial",
+            "missingness_flags": missingness_flags,
+        }
+
+    return envelope
 
 
 # Schema-conforming alias

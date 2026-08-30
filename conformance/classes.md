@@ -187,6 +187,9 @@ tteop validate <payload.json> [--profile <privacy-mode>] [--class <conformance-c
 - `<payload.json>` — path to the telemetry envelope JSON file to validate
 - `--profile <privacy-mode>` — privacy mode to validate against (`public-pseudonymous`, `private-managed-cohort`, `enterprise-isolated`, `all`). Default: `all`
 - `--class <conformance-class>` — conformance class to test against (`producer`, `consumer`, `adapter`, `metric-engine`, `privacy-profile`, `full-platform`). Default: `full-platform`
+  - `consumer`: schema validation only
+  - `privacy-profile`: semantic validation only
+  - `producer`, `adapter`, `metric-engine`, `full-platform`: full schema + semantic validation
 - `--report <format>` — output format (`json`, `text`, `sarif`). Default: `text`
 
 ### 2.2 Example usage

@@ -24,7 +24,7 @@ export interface Metrics {
   log_leverage: number | null;
 }
 
-export interface OtepEnvelope {
+export interface TteopEnvelope {
   protocol_version: "tteop/0.1-draft";
   metric_spec_version: string;
   observation: {
@@ -155,10 +155,18 @@ export interface BuildEnvelopeOptions {
   window_duration_seconds?: number | null;
 }
 
-export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): OtepEnvelope {
+export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): TteopEnvelope {
   const { metrics, warnings } = computeMetrics(t);
   const now = new Date().toISOString();
-  return {
+
+  // Build missingness flags (SRP-MISS-001/002): null cache values MUST be flagged
+  const missingnessFlags: string[] = [];
+  const cacheWrite = t.cache_write ?? null;
+  const cacheRead = t.cache_read ?? null;
+  if (cacheWrite === null) missingnessFlags.push("cache_write_not_reported");
+  if (cacheRead === null) missingnessFlags.push("cache_read_not_reported");
+
+  const envelope: TteopEnvelope = {
     protocol_version: "tteop/0.1-draft",
     metric_spec_version: "tteop-metrics/0.1-draft",
     observation: {
@@ -178,8 +186,8 @@ export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): Ot
     telemetry: {
       input: t.input,
       output: t.output,
-      cache_write: t.cache_write ?? null,
-      cache_read: t.cache_read ?? null,
+      cache_write: cacheWrite,
+      cache_read: cacheRead,
     },
     provenance: {
       level: opts.provenance_level ?? "self-reported",
@@ -191,6 +199,16 @@ export function buildEnvelope(t: Telemetry, opts: BuildEnvelopeOptions = {}): Ot
     metrics,
     warnings,
   };
+
+  // Attach validity only when there are missingness flags (keeps minimal envelope clean)
+  if (missingnessFlags.length > 0) {
+    (envelope as any).validity = {
+      status: "partial",
+      missingness_flags: missingnessFlags,
+    };
+  }
+
+  return envelope;
 }
 
 // Backward-compatible alias

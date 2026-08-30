@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 #
-# scripts/check-dco.sh — Verify that commits on the current branch include
-# Developer Certificate of Origin (DCO) sign-off trailers.
+# scripts/check-dco.sh — Verify that commits include DCO sign-off trailers.
+#
+# Event-aware:
+#   - Pull request: check commits between the PR base and HEAD.
+#   - Push to main: check the range of commits pushed (before..after).
+#   - Local: check commits since the DCO adoption date.
 #
 # The DCO was adopted on 2026-08-30. Only commits made on or after that
 # date are checked. Bootstrap commits (prior to adoption) are documented in
 # DISCLOSURES.md and are not retroactively signed off.
 #
 # Usage:
-#   scripts/check-dco.sh
+#   scripts/check-dco.sh              # auto-detect mode
+#   scripts/check-dco.sh <base> <head> # explicit range
 #
 # Exit codes:
 #   0 — all new commits have Signed-off-by trailers (or no commits to check)
@@ -19,23 +24,55 @@ set -euo pipefail
 # DCO adoption date (YYYY-MM-DD). Commits on or after this date must be signed off.
 DCO_ADOPTION_DATE="2026-08-30"
 
-# Determine the merge-base with main so we only check new commits on this branch.
-# Fall back to checking against the adoption date if main is not available.
-MERGE_BASE=""
-if git rev-parse --verify origin/main >/dev/null 2>&1; then
-    MERGE_BASE=$(git merge-base origin/main HEAD 2>/dev/null || true)
-elif git rev-parse --verify main >/dev/null 2>&1; then
-    MERGE_BASE=$(git merge-base main HEAD 2>/dev/null || true)
+# Determine the commit range to check.
+# Priority:
+#   1. Explicit args: $1..$2
+#   2. GitHub push event: GITHUB_BEFORE..GITHUB_AFTER
+#   3. GitHub PR event: GITHUB_BASE..HEAD
+#   4. Local: merge-base of origin/main..HEAD
+#   5. Fallback: all commits since adoption date
+COMMITS=""
+
+if [ $# -ge 2 ]; then
+    # Explicit range
+    COMMITS=$(git rev-list "$1..$2" 2>/dev/null || true)
+elif [ -n "${GITHUB_EVENT_NAME:-}" ]; then
+    case "$GITHUB_EVENT_NAME" in
+        pull_request)
+            BASE="${GITHUB_BASE_REF:-main}"
+            # Fetch the base ref so merge-base works
+            git fetch origin "$BASE" >/dev/null 2>&1 || true
+            MERGE_BASE=$(git merge-base "origin/$BASE" HEAD 2>/dev/null || true)
+            if [ -n "$MERGE_BASE" ]; then
+                COMMITS=$(git rev-list "$MERGE_BASE..HEAD" 2>/dev/null || true)
+            fi
+            ;;
+        push)
+            BEFORE="${GITHUB_BEFORE:-}"
+            AFTER="${GITHUB_AFTER:-HEAD}"
+            if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+                COMMITS=$(git rev-list "$BEFORE..$AFTER" 2>/dev/null || true)
+            else
+                # New branch — check all commits since adoption date
+                COMMITS=$(git rev-list --since="$DCO_ADOPTION_DATE" "$AFTER" 2>/dev/null || true)
+            fi
+            ;;
+    esac
 fi
 
-# Build the list of commits to check.
-# If we have a merge-base, check commits since that point.
-# Otherwise, check all commits since the DCO adoption date.
-if [ -n "$MERGE_BASE" ]; then
-    COMMITS=$(git rev-list "$MERGE_BASE..HEAD" 2>/dev/null || true)
-else
-    # No merge-base available; check commits since the adoption date.
-    COMMITS=$(git rev-list --since="$DCO_ADOPTION_DATE" HEAD 2>/dev/null || true)
+# Fallback: local development
+if [ -z "$COMMITS" ]; then
+    MERGE_BASE=""
+    if git rev-parse --verify origin/main >/dev/null 2>&1; then
+        MERGE_BASE=$(git merge-base origin/main HEAD 2>/dev/null || true)
+    elif git rev-parse --verify main >/dev/null 2>&1; then
+        MERGE_BASE=$(git merge-base main HEAD 2>/dev/null || true)
+    fi
+    if [ -n "$MERGE_BASE" ]; then
+        COMMITS=$(git rev-list "$MERGE_BASE..HEAD" 2>/dev/null || true)
+    else
+        COMMITS=$(git rev-list --since="$DCO_ADOPTION_DATE" HEAD 2>/dev/null || true)
+    fi
 fi
 
 # Handle the case where there are no new commits to check.

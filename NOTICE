@@ -1,4 +1,4 @@
-SigRank Standard
+TTEOP — Token Telemetry Evaluation Operator Protocol
 Copyright 2026 SunrisesIllNeverSee
 
 Specification documents: CC BY 4.0
@@ -6,5 +6,8 @@ Executable code: Apache-2.0
 
 This product includes software developed as part of the SigRank ecosystem
 (https://signalaf.com). The normative specification was originally incubated
-in the sigrank-app repository and extracted to this standalone authority
-on 2026-08-28.
+in the sigrank-app repository under the name "OTEP" (Operator Token Efficiency
+Protocol) and extracted to this standalone authority on 2026-08-28. The
+protocol was renamed to TTEOP on 2026-08-30. The Python distribution name
+"sigrank-standard" is retained on PyPI for backward compatibility. The legacy
+protocol version alias "sigrank/0.1-draft" is accepted by the schema.

@@ -6,15 +6,22 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   conformance:
     name: TTEOP conformance suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # DCO check needs commit history
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -66,8 +73,8 @@ print(json.dumps(r, indent=2))
       - name: 8. Validate TypeScript integration output
         run: |
           node -e "
-            import { buildRecord } from './integrations/typescript/example.ts';
-            const record = buildRecord(
+            import { buildEnvelope } from './integrations/typescript/example.ts';
+            const record = buildEnvelope(
               { input: 1251211, output: 11296121, cache_write: 128196310, cache_read: 2555179769 },
               { provider: 'anthropic', model: 'claude-sonnet-4', tool: 'claude-code' }
             );
@@ -83,15 +90,38 @@ print(json.dumps(r, indent=2))
           node integrations/cli/example.mjs --input 1251211 --output 11296121 --cache-write 128196310 --cache-read 2555179769 > /tmp/cli-record.json
           node conformance/tteop-validate.mjs /tmp/cli-record.json --report text
 
-      # Gate 10: Validate MCP-produced envelope output
-      - name: 10. Validate MCP integration output
+      # Gate 10: Validate MCP integration via real tools/call JSON-RPC exchange
+      - name: 10. Validate MCP integration output (tools/call JSON-RPC)
         run: |
-          node integrations/mcp/example.mjs > /tmp/mcp-record.json 2>/dev/null || true
-          if [ -f /tmp/mcp-record.json ]; then
-            node conformance/tteop-validate.mjs /tmp/mcp-record.json --report text
-          else
-            echo "MCP example does not produce a file (expected for scaffold)"
-          fi
+          # Send a real tools/call JSON-RPC request to the MCP server
+          echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_tteop_record","arguments":{"input":1251211,"output":11296121,"cache_write":128196310,"cache_read":2555179769,"tool":"claude-code","provider":"anthropic","model":"claude-sonnet-4"}}}' | node integrations/mcp/example.mjs > /tmp/mcp-response.json
+          # Extract the envelope from the JSON-RPC response
+          python3 -c "
+import json
+with open('/tmp/mcp-response.json') as f:
+    resp = json.load(f)
+assert resp['jsonrpc'] == '2.0', 'Not a JSON-RPC response'
+assert resp['id'] == 1, 'Response id mismatch'
+envelope = json.loads(resp['result']['content'][0]['text'])
+with open('/tmp/mcp-record.json', 'w') as f:
+    json.dump(envelope, f, indent=2)
+print('MCP envelope extracted')
+"
+          node conformance/tteop-validate.mjs /tmp/mcp-record.json --report text
+
+      # Gate 10b: Validate MCP tools/list
+      - name: 10b. Validate MCP tools/list
+        run: |
+          echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | node integrations/mcp/example.mjs > /tmp/mcp-tools.json
+          python3 -c "
+import json
+with open('/tmp/mcp-tools.json') as f:
+    resp = json.load(f)
+assert resp['jsonrpc'] == '2.0', 'Not a JSON-RPC response'
+assert len(resp['result']['tools']) == 1, 'Expected 1 tool'
+assert resp['result']['tools'][0]['name'] == 'get_tteop_record', 'Wrong tool name'
+print('MCP tools/list verified')
+"
 
       # Gate 11: Exercise half-even tie vectors across implementations
       - name: 11. Run cross-implementation tie tests
@@ -101,8 +131,12 @@ print(json.dumps(r, indent=2))
       - name: 12. Validate conformance reports against schema
         run: node conformance/tests/report-schema-test.mjs
 
-      # Gate 13: Exercise the installed 'tteop' executable
-      - name: 13. Exercise installed tteop executable
+      # Gate 13: Builder regression — missingness semantics on every public surface
+      - name: 13. Builder regression tests (TS, CLI, MCP missingness)
+        run: node conformance/tests/builder-regression-test.mjs
+
+      # Gate 14: Exercise the installed 'tteop' executable
+      - name: 14. Exercise installed tteop executable
         run: |
           npm link --quiet
           tteop version
@@ -113,10 +147,15 @@ print(json.dumps(r, indent=2))
           tteop validate examples/complete-valid.json --class consumer --report text
           tteop validate examples/negative/08-public-pseudo-cohort.json --report json || echo "Correctly rejected negative fixture"
 
-      # Gate 14: Check for DCO sign-off on new commits
-      - name: 14. Check DCO sign-off
+      # Gate 15: Check for DCO sign-off on new commits (event-aware)
+      - name: 15. Check DCO sign-off
         run: bash scripts/check-dco.sh
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+          GITHUB_BEFORE: ${{ github.event.before }}
+          GITHUB_AFTER: ${{ github.event.after }}
 
-      # Gate 15: git diff --check
-      - name: 15. git diff --check
+      # Gate 16: git diff --check
+      - name: 16. git diff --check
         run: git diff --check

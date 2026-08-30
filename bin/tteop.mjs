@@ -45,8 +45,9 @@ Commands:
 Validate options:
   --profile <mode>          Expected privacy profile (asserts envelope matches)
                              (public-pseudonymous|private-managed-cohort|enterprise-isolated)
-  --class <class>           Conformance class (full|schema-only|semantic-only)
-                             default: full
+  --class <class>           Conformance class
+                             (producer|consumer|adapter|metric-engine|privacy-profile|full-platform)
+                             default: full-platform
   --report <format>         Output format (json|text|sarif)
                              default: text
 

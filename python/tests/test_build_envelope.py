@@ -167,13 +167,10 @@ class TestSchemaValidation(unittest.TestCase):
         cls.validator = os.path.join(cls.repo_root, "conformance", "tteop-validate.mjs")
         cls.has_node = subprocess.run(["which", "node"], stdout=subprocess.PIPE, stderr=subprocess.PIPE).returncode == 0
 
-    def test_envelope_validates_against_schema(self):
+    def _validate_via_node(self, envelope):
+        """Helper: write envelope to temp file, validate with node, return (stdout, returncode)."""
         if not self.has_node:
             self.skipTest("node not available")
-        envelope = build_envelope(
-            1251211, 11296121, 128196310, 2555179769,
-            provider="anthropic", model="claude-sonnet-4", tool="claude-code",
-        )
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump(envelope, f)
             tmp_path = f.name
@@ -182,10 +179,52 @@ class TestSchemaValidation(unittest.TestCase):
                 ["node", self.validator, tmp_path, "--report", "text"],
                 capture_output=True, text=True, cwd=self.repo_root,
             )
-            self.assertIn("Overall: PASS", result.stdout, f"Validation failed: {result.stdout}\n{result.stderr}")
-            self.assertEqual(result.returncode, 0)
+            return result.stdout, result.returncode
         finally:
             os.unlink(tmp_path)
+
+    def test_envelope_validates_against_schema(self):
+        stdout, rc = self._validate_via_node(build_envelope(
+            1251211, 11296121, 128196310, 2555179769,
+            provider="anthropic", model="claude-sonnet-4", tool="claude-code",
+        ))
+        self.assertIn("Overall: PASS", stdout)
+        self.assertEqual(rc, 0)
+
+    def test_null_cache_envelope_validates(self):
+        """Regression: build_envelope with null cache MUST produce a schema-valid envelope."""
+        stdout, rc = self._validate_via_node(build_envelope(100, 200, None, None))
+        self.assertIn("Overall: PASS", stdout, f"Null-cache envelope failed validation: {stdout}")
+        self.assertEqual(rc, 0)
+
+    def test_null_cache_write_only_validates(self):
+        """Regression: null cache_write but non-null cache_read MUST validate."""
+        stdout, rc = self._validate_via_node(build_envelope(100, 200, None, 500))
+        self.assertIn("Overall: PASS", stdout, f"Null-cache-write envelope failed: {stdout}")
+        self.assertEqual(rc, 0)
+
+    def test_null_cache_read_only_validates(self):
+        """Regression: non-null cache_write but null cache_read MUST validate."""
+        stdout, rc = self._validate_via_node(build_envelope(100, 200, 300, None))
+        self.assertIn("Overall: PASS", stdout, f"Null-cache-read envelope failed: {stdout}")
+        self.assertEqual(rc, 0)
+
+    def test_null_cache_emits_missingness_flags(self):
+        """Regression: null cache values MUST emit validity.missingness_flags."""
+        env = build_envelope(100, 200, None, None)
+        self.assertIn("validity", env, "Missingness flags require validity object")
+        flags = env["validity"]["missingness_flags"]
+        self.assertIn("cache_write_not_reported", flags)
+        self.assertIn("cache_read_not_reported", flags)
+
+    def test_full_cache_no_missingness_flags(self):
+        """Regression: non-null cache values should NOT emit missingness flags."""
+        env = build_envelope(100, 200, 300, 500)
+        # validity is optional when no missingness — may or may not be present
+        if "validity" in env:
+            flags = env["validity"].get("missingness_flags", [])
+            self.assertNotIn("cache_write_not_reported", flags)
+            self.assertNotIn("cache_read_not_reported", flags)
 
 
 if __name__ == "__main__":
