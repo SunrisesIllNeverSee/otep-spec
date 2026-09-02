@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Designated `10.5281/zenodo.22180349` as the immutable version DOI for `v0.1.5-draft`.
 - Retained `10.5281/zenodo.22179383` as the immutable historical manual deposit for `v0.1.3-draft`; it is not the continuing concept DOI.
 - Updated the README badge, citation example, `CITATION.cff`, and `SPEC.md` citation header accordingly.
+- Corrected the pull-request DCO gate to inspect the event's authored head range rather than GitHub's unsigned synthetic merge commit; missing or invalid event SHAs fail closed.
 - No protocol formulas, schemas, semantics, or conformance requirements changed.
 
 ### Added — TTEOP v0.1-draft public specification package

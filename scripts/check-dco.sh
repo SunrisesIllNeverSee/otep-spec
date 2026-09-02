@@ -3,7 +3,9 @@
 # scripts/check-dco.sh — Verify that commits include DCO sign-off trailers.
 #
 # Event-aware:
-#   - Pull request: check commits between the PR base and HEAD.
+#   - Pull request: check commits between the event's base and head SHAs.
+#     GitHub checks out a synthetic merge commit for pull_request workflows;
+#     that platform-generated commit is deliberately excluded.
 #   - Push to main: check the range of commits pushed (before..after).
 #   - Local: check commits since the DCO adoption date.
 #
@@ -32,7 +34,7 @@ BOOTSTRAP_COMMITS="6ebc457 dbfb774"
 # Priority:
 #   1. Explicit args: $1..$2
 #   2. GitHub push event: GITHUB_BEFORE..GITHUB_AFTER
-#   3. GitHub PR event: GITHUB_BASE..HEAD
+#   3. GitHub PR event: GITHUB_PR_BASE_SHA..GITHUB_PR_HEAD_SHA
 #   4. Local: merge-base of origin/main..HEAD
 #   5. Fallback: all commits since adoption date
 COMMITS=""
@@ -57,13 +59,24 @@ if [ $# -ge 2 ]; then
 elif [ -n "${GITHUB_EVENT_NAME:-}" ]; then
     case "$GITHUB_EVENT_NAME" in
         pull_request)
-            BASE="${GITHUB_BASE_REF:-main}"
-            # Fetch the base ref so merge-base works
-            git fetch origin "$BASE" >/dev/null 2>&1 || true
-            MERGE_BASE=$(git merge-base "origin/$BASE" HEAD 2>/dev/null || true)
-            if [ -n "$MERGE_BASE" ]; then
-                COMMITS=$(git rev-list "$MERGE_BASE..HEAD" 2>/dev/null || true)
+            BASE_SHA="${GITHUB_PR_BASE_SHA:-}"
+            HEAD_SHA="${GITHUB_PR_HEAD_SHA:-}"
+            if [ -z "$BASE_SHA" ] || [ -z "$HEAD_SHA" ]; then
+                echo "DCO check: pull_request event is missing base/head SHAs — failing closed"
+                exit 1
             fi
+            if ! git rev-parse --verify "$BASE_SHA" >/dev/null 2>&1; then
+                echo "DCO check: invalid pull-request base SHA '$BASE_SHA' — failing closed"
+                exit 1
+            fi
+            if ! git rev-parse --verify "$HEAD_SHA" >/dev/null 2>&1; then
+                echo "DCO check: invalid pull-request head SHA '$HEAD_SHA' — failing closed"
+                exit 1
+            fi
+            COMMITS=$(git rev-list "$BASE_SHA..$HEAD_SHA" 2>&1) || {
+                echo "DCO check: git rev-list failed for pull-request range $BASE_SHA..$HEAD_SHA — failing closed"
+                exit 1
+            }
             ;;
         push)
             BEFORE="${GITHUB_BEFORE:-}"
