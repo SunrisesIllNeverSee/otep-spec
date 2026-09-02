@@ -14,6 +14,7 @@ tteop-spec/
 ├── PRIVACY.md                         — privacy modes and content-independence requirements
 ├── SECURITY.md                        — security considerations and reporting process
 ├── GOVERNANCE.md                      — maintainer roles, TEP process, change control
+├── DOI-AND-RELEASE-CITATION-POLICY.md — concept/version DOI and citation rules
 ├── CONTRIBUTING.md                    — how to contribute (code, spec, adapters, tests)
 ├── CODE_OF_CONDUCT.md                 — community code of conduct
 ├── TRADEMARKS.md                      — trademark usage rules and certification marks
@@ -136,6 +137,7 @@ tteop-spec/
 | `PRIVACY.md` | **Normative** | Privacy mode definitions and content-independence requirements. Binding on all implementations. |
 | `SECURITY.md` | **Normative** | Security considerations, threat model, and reporting process. |
 | `GOVERNANCE.md` | **Normative** | Governance process, maintainer roles, TEP lifecycle. Binding on contributors. |
+| `DOI-AND-RELEASE-CITATION-POLICY.md` | **Normative governance** | Binding concept/version DOI, citation-surface, and archival release rules. Does not change protocol semantics. |
 | `CONTRIBUTING.md` | **Informative** | How to contribute. Not normative but follows governance rules. |
 | `CODE_OF_CONDUCT.md` | **Normative** | Community behavior standards. Binding on all participants. |
 | `TRADEMARKS.md` | **Normative** | Trademark usage rules. Binding on anyone using the protocol name or marks. |
