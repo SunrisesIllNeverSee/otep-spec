@@ -1,6 +1,6 @@
 # TTEOP — Token Telemetry Evaluation Operator Protocol
 
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22179383-blue)](https://doi.org/10.5281/zenodo.22179383)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22180348.svg)](https://doi.org/10.5281/zenodo.22180348)
 [![npm version](https://img.shields.io/npm/v/tteop-spec.svg)](https://www.npmjs.com/package/tteop-spec)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
@@ -72,6 +72,7 @@ tteop-spec/
 ├── SECURITY.md                        — security considerations
 ├── GOVERNANCE.md                      — maintainer roles, TEP process, change control
 ├── MAINTENANCE-CHARTER.md             — reopening and maintenance charter (SRP-GOV-057..076)
+├── DOI-AND-RELEASE-CITATION-POLICY.md — approved concept/version DOI policy
 ├── MAINTAINERS.md                     — maintainer roster (lead + reviewers)
 ├── DISCLOSURES.md                     — conflict-of-interest disclosures (SRP-GOV-014)
 ├── CONTRIBUTING.md                    — how to contribute
@@ -149,20 +150,22 @@ TTEOP metrics do NOT prove: code quality, task correctness, productivity, profes
 If you use TTEOP in your research or product, please cite:
 
 ```bibtex
-@software{mchenry_2026_tteop,
+@software{mchenry_2026_tteop_0_1_5,
   author       = {McHenry, Deric J},
   title        = {{TTEOP — Token Telemetry Evaluation Operator Protocol:
-                  Specification and Reference Implementation, v0.1.3-draft}},
+                  Specification and Reference Implementation, v0.1.5-draft}},
   year         = 2026,
-  version      = {0.1.3-draft},
-  url          = {https://doi.org/10.5281/zenodo.22179383},
-  doi          = {10.5281/zenodo.22179383}
+  version      = {0.1.5-draft},
+  url          = {https://doi.org/10.5281/zenodo.22180349},
+  doi          = {10.5281/zenodo.22180349}
 }
 ```
 
-**DOI:** [10.5281/zenodo.22179383](https://doi.org/10.5281/zenodo.22179383)
+- **All releases (concept DOI):** [10.5281/zenodo.22180348](https://doi.org/10.5281/zenodo.22180348)
+- **Current release (`v0.1.5-draft`):** [10.5281/zenodo.22180349](https://doi.org/10.5281/zenodo.22180349)
+- **Historical manual `v0.1.3-draft` deposit:** [10.5281/zenodo.22179383](https://doi.org/10.5281/zenodo.22179383)
 
-See `CITATION.cff` for the full citation metadata.
+See `CITATION.cff` for the full citation metadata and `DOI-AND-RELEASE-CITATION-POLICY.md` for the approved display and release rules.
 
 ## License
 

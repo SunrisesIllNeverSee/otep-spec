@@ -117,6 +117,12 @@ SPDX-License-Identifier = "CC-BY-4.0"
 SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
 
 [[annotations]]
+path = "DOI-AND-RELEASE-CITATION-POLICY.md"
+precedence = "aggregate"
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileCopyrightText = "2026 SunrisesIllNeverSee"
+
+[[annotations]]
 path = "CONTRIBUTING.md"
 precedence = "aggregate"
 SPDX-License-Identifier = "CC-BY-4.0"

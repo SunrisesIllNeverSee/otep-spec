@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — 2026-08-28
 
+### Changed — DOI and Release Citation Policy v1 (owner-approved 2026-09-02)
+
+- Added `DOI-AND-RELEASE-CITATION-POLICY.md` as the binding release/citation metadata policy.
+- Designated `10.5281/zenodo.22180348` as the continuing concept DOI for all TTEOP releases.
+- Designated `10.5281/zenodo.22180349` as the immutable version DOI for `v0.1.5-draft`.
+- Retained `10.5281/zenodo.22179383` as the immutable historical manual deposit for `v0.1.3-draft`; it is not the continuing concept DOI.
+- Updated the README badge, citation example, `CITATION.cff`, and `SPEC.md` citation header accordingly.
+- No protocol formulas, schemas, semantics, or conformance requirements changed.
+
 ### Added — TTEOP v0.1-draft public specification package
 
 This release upgrades the `sigrank/0.1-draft` minimal specification to a complete, implementable public specification package under the proposed neutral name "TTEOP" (Token Telemetry Evaluation Operator Protocol).

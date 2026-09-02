@@ -326,4 +326,5 @@ SignalAF and SigRank may separately own:
 - **RFC 8174** — Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", May 2017.
 - `GOVERNANCE.md` — TTEOP governance, roles, TEP lifecycle, decision process (SRP-GOV-001 through SRP-GOV-056).
 - `OPEN-COMMERCIAL-BOUNDARY.md` — open/commercial boundary matrix.
+- `DOI-AND-RELEASE-CITATION-POLICY.md` — approved concept/version DOI and archival citation rules.
 - `SPEC.md` — TTEOP protocol specification (SRP-* requirement IDs).
