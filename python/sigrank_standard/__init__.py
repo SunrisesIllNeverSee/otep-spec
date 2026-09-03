@@ -24,7 +24,7 @@ Null semantics:
 from .metrics import compute_metrics, build_record, build_envelope
 from .conformance import run_conformance, ConformanceResult
 
-__version__ = "0.1.0"
+__version__ = "0.1.5"
 __spec__ = "tteop/0.1-draft"
 __all__ = [
     "compute_metrics",

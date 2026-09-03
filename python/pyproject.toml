@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 # The package was originally published under this name; renaming would break
 # existing installs. The canonical protocol name is TTEOP (see TEP-0001).
 name = "sigrank-standard"
-version = "0.1.0"
+version = "0.1.5"
 description = "TTEOP (Token Telemetry Evaluation Operator Protocol) v0.1-draft — canonical portable five-metric core for AI operator token-processing efficiency. No dependencies."
 readme = "README.md"
 license = {text = "Apache-2.0"}

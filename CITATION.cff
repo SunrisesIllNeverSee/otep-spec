@@ -38,7 +38,7 @@ keywords:
   - conformance
 license: Apache-2.0
 version: "0.1.5-draft"
-date-released: "2026-08-30"
+date-released: "2026-09-03"
 preferred-citation:
   type: software
   title: "TTEOP — Token Telemetry Evaluation Operator Protocol: Specification and Reference Implementation, v0.1.5-draft"
