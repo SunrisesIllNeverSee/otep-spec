@@ -20,4 +20,4 @@ jobs:
 
       - run: npm ci || npm install
 
-      - run: npm publish --access public --tag draft --provenance
+      - run: npm publish --access public --tag draft
