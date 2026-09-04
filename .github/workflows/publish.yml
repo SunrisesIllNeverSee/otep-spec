@@ -20,6 +20,21 @@ jobs:
 
       - run: npm ci || npm install
 
-      - run: npm publish --access public --tag draft
+      - name: Check if version already published
+        id: check
+        run: |
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view tteop-spec version 2>/dev/null || echo "none")
+          echo "local=$LOCAL_VERSION published=$PUBLISHED"
+          if [ "$LOCAL_VERSION" = "$PUBLISHED" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Version $LOCAL_VERSION already published — skipping."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish
+        if: steps.check.outputs.skip != 'true'
+        run: npm publish --access public --tag draft
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
