@@ -21,5 +21,3 @@ jobs:
       - run: npm ci || npm install
 
       - run: npm publish --access public --tag draft --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
