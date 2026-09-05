@@ -33,6 +33,8 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Publish (OIDC trusted publishing)
+      - name: Publish
         if: steps.check.outputs.skip != 'true'
         run: npm publish --access public --tag draft --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
