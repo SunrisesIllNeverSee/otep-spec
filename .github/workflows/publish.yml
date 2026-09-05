@@ -35,6 +35,6 @@ jobs:
 
       - name: Publish
         if: steps.check.outputs.skip != 'true'
-        run: npm publish --access public --tag draft --provenance
+        run: npm publish --access public --tag draft
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
